@@ -1,0 +1,14 @@
+    <!-- Footer -->
+    <footer>
+        <div class="container text-center">
+            <ul class="list-inline banner-social-buttons">
+                {% for network in site.social %}
+                <a href="{{ network.url }}" class="btn btn-circle page-scroll">
+                    <i class="fa fa-{{ network.title }} animated"></i>
+                </a>
+                {% endfor %}
+            </ul>
+            <!--<p><a href="mailto:{{ site.email }}">{{ site.email }}</a></p>-->
+            <p>Copyright &copy; {{ site.footer }} 20{{ site.time | date: '%y' }}</p>
+        </div>
+    </footer>

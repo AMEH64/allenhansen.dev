@@ -1,0 +1,77 @@
+# Site settings
+title: AMEH.io
+email: your-email@domain.com
+url: https://example.github.io
+description: "Write an awesome description for your new site here. You can edit this line in _config.yml. It will appear in your document head meta (for Google search results) and in your feed.xml site description."
+
+# Color settings (hex-codes without the leading hash-tag)
+color:
+  primary-dark: '#343a40'
+  primary-light: '#FFFFFF'
+  links: '#b70929'
+
+# Footer settings
+footer: AMEH.io
+
+# Social networks usernames (many more available: google-plus, flickr, dribbble, pinterest, instagram, tumblr, linkedin, etc.)
+social:
+  - title: facebook
+    url: https://www.facebook.com/ameh64
+  - title: linkedin
+    url: www.linkedin.com/in/allen-hansen
+  - title: instagram
+    url: https://www.instagram.com/ameh64
+  - title: github
+    url: https://github.com/AMEH64   
+
+left-skills:
+  - icon-class: devicon-html5-plain-wordmark
+    percent: 75
+  - icon-class: devicon-css3-plain-wordmark
+    percent: 75
+  - icon-class: devicon-javascript-plain
+    percent: 65
+  - icon-class: devicon-jquery-plain-wordmark
+    percent: 60
+  - icon-class: devicon-bootstrap-plain-wordmark
+    percent: 70
+  - icon-class: devicon-angularjs-plain
+    percent: 55
+  - icon-class: devicon-windows8-original
+    percent: 90
+  - icon-class: devicon-apple-original
+    percent: 60
+
+right-skills:
+  - icon-class: devicon-dot-net-plain-wordmark
+    percent: 80
+  - icon-class: devicon-csharp-plain-wordmark
+    percent: 85
+  - icon-class: devicon-cplusplus-plain-wordmark
+    percent: 65
+  - icon-class: devicon-c-plain-wordmark
+    percent: 55
+  - icon-class: devicon-gimp-plain
+    percent: 50
+  - icon-class: devicon-visualstudio-plain
+    percent: 85
+  - icon-class: devicon-apache-line-wordmark
+    percent: 55
+  - icon-class: devicon-ubuntu-plain-wordmark
+    percent: 90
+
+Events: 
+  - Heading: Technical Lead - Software Developer
+    SubHeading: Willis Towers Watson (WTW)
+    Paragraph: Testing...
+    Img: WTW.jpg
+    CssClass:
+  - Heading: Software Developer
+    SubHeading: Willis Towers Watson (WTW)
+    Paragraph: Testing...
+    Img: WTW.jpg
+    CssClass: timeline-inverted
+    
+# Build settings
+markdown: kramdown
+permalink: pretty
