@@ -1,8 +1,10 @@
 # Site settings
 title: AMEH.io
 email: your-email@domain.com
-url: https://example.github.io
-description: "Write an awesome description for your new site here. You can edit this line in _config.yml. It will appear in your document head meta (for Google search results) and in your feed.xml site description."
+url: https://www.ameh.io
+description: "Allen Hansen's Portfolio."
+keywords: full stack developer,html,html5,css,css3,asp.net,model view controller,mvc,javascript,jquery,c,c++,c#,.net,bootstrap
+author: Allen Hansen
 
 # Color settings (hex-codes without the leading hash-tag)
 color:
@@ -18,7 +20,7 @@ social:
   - title: facebook
     url: https://www.facebook.com/ameh64
   - title: linkedin
-    url: www.linkedin.com/in/allen-hansen
+    url: https://www.linkedin.com/in/allen-hansen
   - title: instagram
     url: https://www.instagram.com/ameh64
   - title: github
