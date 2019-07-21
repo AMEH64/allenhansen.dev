@@ -64,6 +64,10 @@ a:focus {
   color: rgba(0,0,0,.5)!important;
 }
 
+.bg-light a.active {
+  background-color: hsla(0,0%,75%,0.3)!important;
+}
+
 .bg-dark a {
   color: #FFF;
 }
@@ -472,3 +476,13 @@ div.macbook-mockup {
   .toggle:checked + .toggle-button:after {
     left: 50%;
   }
+
+  /*MAP*/
+
+.map {
+  -webkit-filter: grayscale(100%);
+  -moz-filter: grayscale(100%);
+  -ms-filter: grayscale(100%);
+  -o-filter: grayscale(100%);
+  filter: grayscale(100%);
+}
