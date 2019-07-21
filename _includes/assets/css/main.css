@@ -486,3 +486,10 @@ div.macbook-mockup {
   -o-filter: grayscale(100%);
   filter: grayscale(100%);
 }
+
+img.profile {
+  height: 250px;
+  width: auto;
+  border: solid silver 3px;
+  border-radius: 50%;
+}

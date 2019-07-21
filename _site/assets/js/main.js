@@ -78,7 +78,7 @@ $("#theme-toggle").click(function() {
       $("body").addClass("bg-dark").removeClass("bg-light"); 
       $("#mainNav").addClass("bg-dark").removeClass("bg-light");
       $("#mainNav").addClass("navbar-dark").removeClass("navbar-light");      
-      $("button").addClass("btn-outline-light").removeClass("btn-outline-dark");       
+      $("button:not(.navbar-toggler)").addClass("btn-outline-light").removeClass("btn-outline-dark"); 
       $("#linkedIn-light").hide();
       $("#linkedIn-dark").show();
   }
@@ -86,7 +86,7 @@ $("#theme-toggle").click(function() {
       $("body").addClass("bg-light").removeClass("bg-dark"); 
       $("#mainNav").addClass("bg-light").removeClass("bg-dark");
       $("#mainNav").addClass("navbar-light").removeClass("navbar-dark");   
-      $("button").addClass("btn-outline-dark").removeClass("btn-outline-light");
+      $("button:not(.navbar-toggler)").addClass("btn-outline-dark").removeClass("btn-outline-light");
       $("#linkedIn-dark").hide();
       $("#linkedIn-light").show();
   }   
