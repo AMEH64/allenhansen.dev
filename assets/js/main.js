@@ -1,19 +1,21 @@
 (function($) {
   "use strict"; // Start of use strict
 
-  // Debugging mysterious elements with x-axis overflow
-  // $(document).ready(function() {   
-  //     var docWidth = document.documentElement.offsetWidth;
+  
+  $(document).ready(function() {   
+    // Debugging mysterious elements with x-axis overflow
+    // var docWidth = document.documentElement.offsetWidth;
+    // [].forEach.call(
+    //     document.querySelectorAll('*'),
+    //     function(el) {
+    //         if (el.offsetWidth > docWidth) {
+    //             console.log(el);
+    //         }
+    //     }
+    // );
 
-  //     [].forEach.call(
-  //         document.querySelectorAll('*'),
-  //         function(el) {
-  //             if (el.offsetWidth > docWidth) {
-  //                 console.log(el);
-  //             }
-  //         }
-  //     );
-  // });
+    $('#callToActionModal').modal('show');
+  });
 
   // Add scrollspy to <body>
   $('body').scrollspy({target: "#navbar", offset: 50}); 
@@ -49,7 +51,7 @@
 
   // Animations
   AOS.init({
-    duration: 2000
+    // duration: 1500
   });
 
   // Contact Form
