@@ -14,7 +14,7 @@
         }
     );
 
-    $('#callToActionModal').modal('show');
+    $('#notificationsModal').modal('show');
   });
 
   // Add scrollspy to <body>
