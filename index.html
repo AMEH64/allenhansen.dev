@@ -30,9 +30,10 @@
     <link rel="canonical" href="https://www.ameh.io/">   
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic">
     <link rel="stylesheet" href="https://cdn.rawgit.com/konpa/devicon/df6431e323547add1b4cf45992913f15286456d3/devicon.min.css">
-    <link rel="stylesheet" href="assets/bootstrap/bootstrap-custom.css">
-    <link rel="stylesheet" href="assets/css/main.css"> 
+    <link rel="stylesheet" href="assets/bootstrap/bootstrap-custom.min.css">
     <link rel="stylesheet" href="assets/fontawesome-5.13.0/css/all.min.css">
+    <link rel="stylesheet" href="assets/css/main.min.css"> 
+    <link rel="stylesheet" href="assets/aos-master/dist/aos.css">
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -81,7 +82,7 @@
             <div class="container-fluid h-100 text-center">
                 <div class="row h-100 align-items-center pt-5">
                     <div class="col">
-                        <img src="assets/img/logo-dark-lg.png" class="img-fluid">
+                        <img src="assets/img/logo-dark-lg.png" class="img-fluid" data-aos="fade-in">
                     </div>
                 </div>
                 <!-- <div class="row h-25 align-items-center">
@@ -96,39 +97,37 @@
         <section id="about" class="vh-50 w-100">
             <div class="jumbotron jumbotron-fluid bg-transparent">
                 <div class="row h-100 w-100 align-items-center mb-3">
-                    <div class="col-lg-4 col-md-6 col-12">
+                    <div class="col-md-4 col-12" data-aos="fade-up-right" data-aos-anchor-placement="bottom-bottom">
                         <img src="assets/img/ameh-waving.png" class="img-fluid" alt="">
                     </div>
-                    <div class="col-md-6 col-12 p-3">
-                        <div class="container">
-                            <h1 class="display-4 mt-0">Hello, I&apos;m Allen M. E Hansen</h5>
-                            <p>a.k.a. AMEH (pronunciation: ah &middot; meh).  I am a full stack web developer based in the Twin Cities.</p>
-                            <p class="mb-0">Originally from Michigan, I moved to the Twin Cities to complete my undergrad at the University of Minnesota.  Upon graduating with a degree in Computer Science combined with a management minor, I have been working as a developer in the Twin Cities with a concentration in .NET.</p>
-                        </div>
+                    <div class="col-md-8 col-12 p-5">
+                        <h1 class="display-4 mt-0">Hello, I&apos;m Allen M. E Hansen</h5>
+                        <p>a.k.a. AMEH (pronunciation: ah &middot; meh).  I am a full stack web developer based in the Twin Cities.</p>
+                        <p class="mb-0">Originally from Michigan, I moved to the Twin Cities to complete my undergrad at the University of Minnesota.  Upon graduating with a degree in Computer Science combined with a management minor, I have been working as a developer in the Twin Cities with a concentration in .NET.</p>
                     </div>
                 </div>
-                <div class="row h-100 w-100 align-items-center">
+                <div class="row">
                     <div class="container">
-                        <div class="card-deck">
-                            <div class="card border-0 text-center">
-                                <i class="fas fa-tachometer-alt fa-3x mx-auto"></i>
-                                <div class="card-body">
-                                    <h5 class="card-title">Performance</h5>
-                                    <p class="card-text">No one likes a website that hangs.  That is why performance is one of my top priorities.</p>
-                                </div>
-                            </div>
-                            <div class="card border-0 text-center">
-                                <i class="fas fa-mobile fa-3x mx-auto"></i>
-                                <div class="card-body">
-                                    <h5 class="card-title">Responsive Design</h5>
-                                    <p class="card-text">The users&apos; device shouldn&apos;t impact their experience on your site.  That is why responsive design should never be left out of the requirements.</p>
-                                </div>
-                            </div>
-                            <div class="card border-0 text-center">
+                        <div class="card-deck text-center">
+                            <div class="card border-0" data-aos="zoom-in-right" data-aos-anchor-placement="bottom-bottom">
                                 <i class="fas fa-lightbulb fa-3x mx-auto"></i>
                                 <div class="card-body">
                                     <h5 class="card-title">Intuitive Design</h5>
                                     <p class="card-text">Ever find yourself at a closed door questioning whether to push or pull?  Similar design issues are common on the web and it is my goal to avoid them through intuitive design.</p>
+                                </div>
+                            </div>
+                            <div class="card border-0" data-aos="zoom-in-up" data-aos-anchor-placement="bottom-bottom">
+                                <i class="fas fa-tachometer-alt fa-3x mx-auto"></i>
+                                <div class="card-body">
+                                    <h5 class="card-title">Performance</h5>
+                                    <p class="card-text">No one likes a sit that hangs.  That is why performance is one of my top priorities.</p>
+                                </div>
+                            </div>
+                            <div class="card border-0" data-aos="zoom-in-left" data-aos-anchor-placement="bottom-bottom">
+                                <i class="fas fa-mobile fa-3x mx-auto"></i>
+                                <div class="card-body">
+                                    <h5 class="card-title">Responsive Design</h5>
+                                    <p class="card-text">The users&apos; device shouldn&apos;t impact their experience on your site.  That is why responsive design should never be left out of the requirements.</p>
                                 </div>
                             </div>
                         </div>
@@ -137,7 +136,7 @@
             </div>
         </section>
         <section id="skills" class="min-vh-50 w-100">
-            <div class="container-fluid bg-secondary text-center py-3">
+            <div class="container-fluid bg-secondary text-center py-3" data-aos="flip-up" data-aos-anchor-placement="bottom-bottom">
                 <div class="row align-items-center">
                     <!-- <div class="col-lg-1 col-md-3 col-sm-4">
                         <i class="fab fa-html5 fa-3x"></i>
@@ -145,49 +144,49 @@
                     <div class="col-lg-1 col-md-3 col-sm-4">
                         <i class="fab fa-css3-alt fa-3x"></i>
                     </div> -->
-                    <div class="col-lg-2 col-md-4 col-6 py-3">
+                    <div class="col-lg-1 col-md-2 col-sm-3 col-4 py-3">
                         <i class="fab fa-bootstrap fa-3x"></i>
                     </div>
-                    <div class="col-lg-2 col-md-4 col-6 py-3">
+                    <div class="col-lg-1 col-md-2 col-sm-3 col-4 py-3">
                         <i class="devicon-csharp-plain fa-3x"></i>
                     </div>
-                    <div class="col-lg-2 col-md-4 col-6 py-3">
+                    <div class="col-lg-1 col-md-2 col-sm-3 col-4 py-3">
                         <i class="devicon-css3-plain-wordmark fa-3x"></i>
                     </div>
-                    <div class="col-lg-2 col-md-4 col-6 py-3">
+                    <div class="col-lg-1 col-md-2 col-sm-3 col-4 py-3">
                         <i class="devicon-dot-net-plain-wordmark fa-3x"></i>
                     </div> 
-                    <div class="col-lg-2 col-md-4 col-6 py-3">
+                    <div class="col-lg-1 col-md-2 col-sm-3 col-4 py-3">
                         <i class="fab fa-font-awesome fa-3x"></i>
                     </div>
-                    <div class="col-lg-2 col-md-4 col-6 py-3">
+                    <div class="col-lg-1 col-md-2 col-sm-3 col-4 py-3">
                         <i class="devicon-gimp-plain fa-3x"></i>
                     </div> 
-                    <div class="col-lg-2 col-md-4 col-6 py-3">
+                    <div class="col-lg-1 col-md-2 col-sm-3 col-4 py-3">
                         <i class="fab fa-git-alt fa-3x"></i>
                     </div>
                     <!-- <div class="col-lg-1 col-md-3 col-sm-4">
                         <i class="devicon-github-plain fa-3x"></i>
                     </div>  -->
-                    <div class="col-lg-2 col-md-4 col-6 py-3">
+                    <div class="col-lg-1 col-md-2 col-sm-3 col-4 py-3">
                         <i class="devicon-html5-plain-wordmark fa-3x"></i>
                     </div> 
-                    <div class="col-lg-2 col-md-4 col-6 py-3">
+                    <div class="col-lg-1 col-md-2 col-sm-3 col-4 py-3">
                         <i class="fab fa-js fa-3x"></i>
                     </div> 
-                    <div class="col-lg-2 col-md-4 col-6 py-3">
+                    <div class="col-lg-1 col-md-2 col-sm-3 col-4 py-3">
                         <i class="devicon-jquery-plain-wordmark fa-3x"></i>
                     </div> 
-                    <!-- <div class="col-lg-2 col-md-4 col-6 py-3">
+                    <!-- <div class="col-lg-1 col-md-2 col-sm-3 col-4 py-3">
                         <i class="fab fa-npm fa-3x"></i>
                     </div> -->
-                    <!-- <div class="col-lg-2 col-md-4 col-6 py-3">
+                    <!-- <div class="col-lg-1 col-md-2 col-sm-3 col-4 py-3">
                         <i class="devicon-python-plain-wordmark fa-3x"></i>
                     </div>  -->
-                    <div class="col-lg-2 col-md-4 col-6 py-3">
+                    <div class="col-lg-1 col-md-2 col-sm-3 col-4 py-3">
                         <i class="fab fa-sass fa-3x"></i>
                     </div> 
-                    <div class="col-lg-2 col-md-4 col-6 py-3">
+                    <div class="col-lg-1 col-md-2 col-sm-3 col-4 py-3">
                         <i class="devicon-visualstudio-plain fa-3x"></i>
                     </div> 
                 </div>
@@ -257,92 +256,7 @@
         <script type="text/javascript" src="assets/js/popper.min.js"></script>
         <script type="text/javascript" src="assets/bootstrap/bootstrap-4.5.0/dist/js/bootstrap.min.js"></script>
         <script type="text/javascript" src="assets/fontawesome-5.13.0/js/all.min.js"></script>
-        <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.min.js"></script> -->
-        <script type="text/javascript" src="assets/js/main.js"></script>
-        <!-- <script type="text/javascript" src="https://platform.linkedin.com/badges/js/profile.js" async defer></script> -->
-        <script type="text/javascript">
-            // Debugging mysterious elements with x-axis overflow
-            $(document).ready(function() {   
-                var docWidth = document.documentElement.offsetWidth;
-
-                [].forEach.call(
-                    document.querySelectorAll('*'),
-                    function(el) {
-                        if (el.offsetWidth > docWidth) {
-                            console.log(el);
-                        }
-                    }
-                );
-            });
-
-            // Add scrollspy to <body>
-            $('body').scrollspy({target: "#navbar", offset: 50}); 
-
-            // Add smooth scrolling on all links inside the navbar
-            $("#navbar a").click(function(event) {
-                // Make sure this.hash has a value before overriding default behavior
-                if (this.hash !== "") {
-                    // Prevent default anchor click behavior
-                    event.preventDefault();
-                    // Store hash
-                    var hash = this.hash;
-                    // Using jQuery's animate() method to add smooth page scroll
-                    // The optional number (800) specifies the number of milliseconds it takes to scroll to the specified area
-                    $('html, body').animate({
-                        scrollTop: $(hash).offset().top
-                    }, 800, function() {  
-                        // Add hash (#) to URL when done scrolling (default click behavior)
-                        window.location.hash = hash;
-                    });
-                    $("#navbar").find(".active").removeClass("active");
-                    $(this).addClass("active");
-                }  // End if
-            });
-
-            $(window).scroll(function() {
-                if ($(document).scrollTop() > 50) {
-                    $('#navbar').addClass('shadow-lg');
-                } else {
-                    $('#navbar').removeClass('shadow-lg');
-                }
-            });
-
-            $('#openInMailApp').click(function(event) {    
-                var form = $('form');
-
-                if (form[0].checkValidity() === false) {
-                    event.preventDefault();
-                    event.stopPropagation();
-                }
-                else {
-                    var name = $('#name').val();
-                    var pronouns = $('#pronouns').val();
-                    var subject = $('#subject').val();
-                    var url = "mailto:allen.hansen64@gmail.com" 
-                        + "?subject=[AMEH - " + (subject === "" ? "Inquiry" : subject) + "]"
-                        + "&body=Hello,%0A%0A%0A%0ASincerely, %0A%0A"
-                        + name
-                        + "%0A"
-                        + pronouns;
-
-                    window.open(url, '_blank');
-                }
-
-                form.addClass('was-validated');
-            });
-
-            // Carousel settings
-            // $('.carousel').carousel({
-            //     interval: 2000
-            // });
-
-            // Toasts
-            // $('.toast').toast('show');
-
-            // Tooltips
-            // $("body").tooltip({ 
-            //     selector: '[data-toggle=tooltip]' 
-            // });
-        </script>
+        <script type="text/javascript" src="assets/aos-master/dist/aos.js"></script>
+        <script type="text/javascript" src="assets/js/main.min.js"></script>
     </body>
 </html>
