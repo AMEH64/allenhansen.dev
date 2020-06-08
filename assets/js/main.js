@@ -66,7 +66,7 @@
           var name = $('#name').val();
           var pronouns = $('#pronouns').val();
           var subject = $('#subject').val();
-          var url = "mailto:allen.hansen64@gmail.com" 
+          var url = "mailto:contact@ameh.io" 
               + "?subject=[AMEH - " + (subject === "" ? "Inquiry" : subject) + "]"
               + "&body=Hello,%0A%0A%0A%0ASincerely, %0A%0A"
               + name

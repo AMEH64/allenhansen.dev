@@ -119,3 +119,16 @@ header {
   transform-origin: top left;
   transform: skewY(-3deg);
 }
+
+footer {
+  /* transform: skewY(3deg) translate(0%, 50%); */
+  /* clip-path: polygon(0 0, 100% 50%, 100% 100%, 0% 100%); */
+}
+
+/*
+-webkit-transform: value;
+  -moz-transform:    value;
+  -ms-transform:     value;
+  -o-transform:      value;
+  transform:         value;
+*/
