@@ -1,21 +1,18 @@
 (function($) {
   "use strict"; // Start of use strict
 
-  
-  $(document).ready(function() {   
+//   $(document).ready(function() {   
     // Debugging mysterious elements with x-axis overflow
-    var docWidth = document.documentElement.offsetWidth;
-    [].forEach.call(
-        document.querySelectorAll('*'),
-        function(el) {
-            if (el.offsetWidth > docWidth) {
-                console.log(el);
-            }
-        }
-    );
-
-    $('#notificationsModal').modal('show');
-  });
+    // var docWidth = document.documentElement.offsetWidth;
+    // [].forEach.call(
+    //     document.querySelectorAll('*'),
+    //     function(el) {
+    //         if (el.offsetWidth > docWidth) {
+    //             console.log(el);
+    //         }
+    //     }
+    // );
+//   });
 
   // Add scrollspy to <body>
   $('body').scrollspy({target: "#navbar", offset: 50}); 
@@ -49,46 +46,28 @@
       }
   });
 
-  // Animations
-  AOS.init({
-    // duration: 1500
-  });
+  AOS.init();
 
-  // Contact Form
-  $('#openInMailApp').click(function(event) {    
-      var form = $('form');
+  function openInMailApp(btn) {
+    var form = $('form');
 
-      if (form[0].checkValidity() === false) {
-          event.preventDefault();
-          event.stopPropagation();
-      }
-      else {
-          var name = $('#name').val();
-          var pronouns = $('#pronouns').val();
-          var subject = $('#subject').val();
-          var url = "mailto:contact@ameh.io" 
-              + "?subject=[AMEH - " + (subject === "" ? "Inquiry" : subject) + "]"
-              + "&body=Hello,%0A%0A%0A%0ASincerely, %0A%0A"
-              + name
-              + "%0A"
-              + pronouns;
+    if (form[0].checkValidity() === false) {
+        event.preventDefault();
+        event.stopPropagation();
+    } else {
+        var name = $('#name').val();
+        var pronouns = $('#pronouns').val();
+        var subject = $('#subject').val();
+        var url = "mailto:contact@ameh.io" 
+            + "?subject=[AMEH - " + (subject === "" ? "Inquiry" : subject) + "]"
+            + "&body=Hello,%0A%0A%0A%0ASincerely, %0A%0A"
+            + name
+            + "%0A"
+            + pronouns;
 
-          window.open(url, '_blank');
-      }
+        window.open(url, '_blank');
+    }
 
-      form.addClass('was-validated');
-  });
-
-  // Carousel settings
-  // $('.carousel').carousel({
-  //     interval: 2000
-  // });
-
-  // Toasts
-  // $('.toast').toast('show');
-
-  // Tooltips
-  // $("body").tooltip({ 
-  //     selector: '[data-toggle=tooltip]' 
-  // });
+    form.addClass('was-validated');
+  }
 })(jQuery); // End of use strict
