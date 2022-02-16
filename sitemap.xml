@@ -3,23 +3,7 @@
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
   xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
   <url>
-    <loc>https://ameh.io/</loc>
-    <lastmod>2020-06-12T20:52:43+00:00</lastmod>
-  </url>
-  <url>
-    <loc>https://ameh.io/#home</loc>
-    <lastmod>2020-06-12T20:52:43+00:00</lastmod>
-  </url>
-  <url>
-    <loc>https://ameh.io/#about</loc>
-    <lastmod>2020-06-12T20:52:43+00:00</lastmod>
-  </url>
-  <url>
-    <loc>https://ameh.io/#contact</loc>
-    <lastmod>2020-06-12T20:52:43+00:00</lastmod>
-  </url>
-  <url>
-    <loc>https://ameh.io/404.html</loc>
+    <loc>https://allenhansen.dev/</loc>
     <lastmod>2020-06-12T20:52:43+00:00</lastmod>
   </url>
 </urlset>
