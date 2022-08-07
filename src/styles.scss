@@ -1,1 +1,13 @@
-/* You can add global styles to this file, and also import other style files */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    @apply font-roboto;
+  }
+}
+
+body {
+  @apply h-full w-full bg-gradient-to-r from-blue-300 via-violet-200 to-blue-400;
+}
