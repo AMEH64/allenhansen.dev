@@ -9,5 +9,5 @@
 }
 
 body {
-  @apply h-full w-full bg-gradient-to-r from-blue-300 via-violet-200 to-blue-400;
+  @apply h-full w-full bg-gradient-to-r from-blue-300 via-violet-200 to-blue-400/100;
 }
