@@ -6,10 +6,11 @@ import { ErrorComponent, PageNotFoundComponent } from '@shared/components';
 const routes: Routes = [
   {
     path: '',
+    title: 'Home',
     loadChildren: () => import('./home/home.module').then((m) => m.HomeModule),
   },
-  { path: 'error', component: ErrorComponent },
-  { path: '**', component: PageNotFoundComponent },
+  { path: 'error', title: 'Error', component: ErrorComponent },
+  { path: '**', title: 'Not Found', component: PageNotFoundComponent },
 ];
 
 @NgModule({
