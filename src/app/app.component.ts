@@ -8,6 +8,4 @@ import { Component } from '@angular/core';
     class: 'block h-full w-full',
   },
 })
-export class AppComponent {
-  title = 'ameh';
-}
+export class AppComponent {}
