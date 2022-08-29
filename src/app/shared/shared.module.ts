@@ -5,7 +5,13 @@ import {
   FaIconLibrary,
   FontAwesomeModule,
 } from '@fortawesome/angular-fontawesome';
-import { faArrowDown } from '@fortawesome/free-solid-svg-icons';
+import {
+  faArrowDown,
+  faEnvelope,
+  faEnvelopeOpenText,
+  faMailBulk,
+  faMessage,
+} from '@fortawesome/free-solid-svg-icons';
 import {
   faGithub,
   faLinkedin,
@@ -22,6 +28,6 @@ import { ErrorComponent, PageNotFoundComponent } from './components';
 export class SharedModule {
   constructor(library: FaIconLibrary) {
     // Add an icon to the library for convenient access in other components
-    library.addIcons(faArrowDown, faGithub, faLinkedin, faTwitter);
+    library.addIcons(faArrowDown, faEnvelope, faGithub, faLinkedin, faTwitter);
   }
 }
