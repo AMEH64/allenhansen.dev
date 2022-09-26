@@ -1,4 +1,4 @@
-<div class="flex flex-auto self-end justify-end md:max-h-full">
+<div class="flex flex-1 self-end justify-end md:max-h-full dark:grayscale">
   <img
     src="assets/images/hero.webp"
     alt="Allen Hansen"
@@ -7,53 +7,63 @@
   />
 </div>
 <div
-  class="flex flex-col flex-auto flex-wrap justify-end md:justify-center items-center gap-4 text-slate-700 font-extrabold"
+  class="flex flex-col flex-1 flex-wrap justify-end md:justify-center items-center md:items-end text-center md:text-right gap-4 font-extrabold"
 >
-  <h1 class="text-4xl md:text-5xl lg:text-6xl xl:text-7xl whitespace-nowrap">
-    Allen Hansen
+  <h1 class="text-3xl lg:text-4xl whitespace-nowrap">
+    <span class="text-neutral-400 dark:text-neutral-500">Hi, I&apos;m</span>
+    Allen Hansen<span class="text-neutral-400 dark:text-neutral-500">,</span>
   </h1>
-  <h2 class="text-xl md:text-2xl lg:text-3xl xl:text-4xl whitespace-nowrap">
-    <span class="inline-block bg-slate-700 -skew-x-12">
-      <span class="relative bg-clip-text text-transparent bg-indigo-300 p-1"
-        >Full Stack</span
+  <h2 class="text-2xl lg:text-3xl whitespace-nowrap text-rose-500">
+    <!-- <span class="inline-block bg-neutral-800 -skew-x-12">
+      <span class="relative bg-clip-text text-transparent bg-rose-500 p-1"
+        >Full Stack Software Developer</span
       >
-    </span>
-    Developer
+    </span> -->
+    <span class="text-neutral-400 dark:text-neutral-500">a</span> full stack
+    software developer
   </h2>
-  <h3 class="text-lg md:text-xl lg:text-2xl xl:text-3xl whitespace-nowrap">
-    he/him/his
+  <h3 class="text-inherit">
+    <span class="text-neutral-400 dark:text-neutral-500"
+      >with 5+ years of industry experience developing web applications. I
+      specialize in using</span
+    >
+    Angular <span class="text-neutral-400 dark:text-neutral-500">and</span> .NET
+    <span class="text-neutral-400 dark:text-neutral-500"
+      >to build resilient REST APIs and accessible single page applications
+      (SPAs) that perform at scale.</span
+    >
   </h3>
-  <div class="flex gap-5">
+  <div class="flex gap-6 text-neutral-400 dark:text-neutral-500">
     <a
-      class="scale-125 ease-in-out duration-300 hover:scale-150"
+      class="scale-125 ease-in-out duration-300 hover:scale-150 hover:text-rose-500"
       href="https://github.com/AMEH64"
       target="_blank"
       rel="norefer noopener"
-      title="Allen's GitHub Profile"
+      title="My GitHub Profile"
       ><fa-icon [icon]="['fab', 'github']" size="lg"></fa-icon
     ></a>
     <a
-      class="scale-125 ease-in-out duration-300 hover:scale-150"
+      class="scale-125 ease-in-out duration-300 hover:scale-150 hover:text-rose-500"
       href="https://www.linkedin.com/in/allen-hansen"
       target="_blank"
       rel="norefer noopener"
-      title="Allen's LinkedIn Profile"
+      title="My LinkedIn Profile"
       ><fa-icon [icon]="['fab', 'linkedin']" size="lg"></fa-icon
     ></a>
     <a
-      class="scale-125 ease-in-out duration-300 hover:scale-150"
+      class="scale-125 ease-in-out duration-300 hover:scale-150 hover:text-rose-500"
       href="https://twitter.com/ameh64"
       target="_blank"
       rel="norefer noopener"
-      title="Allen's Twitter Profile"
+      title="My Twitter Profile"
       ><fa-icon [icon]="['fab', 'twitter']" size="lg"></fa-icon
     ></a>
     <a
-      class="scale-125 ease-in-out duration-300 hover:scale-150"
+      class="scale-125 ease-in-out duration-300 hover:scale-150 hover:text-rose-500"
       href="mailto:me@allenhansen.dev"
       target="_blank"
       rel="norefer noopener"
-      title="Contact Allen"
+      title="Contact Me"
       ><fa-icon [icon]="['fas', 'envelope']" size="lg"></fa-icon
     ></a>
   </div>

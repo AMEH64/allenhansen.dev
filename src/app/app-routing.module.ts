@@ -6,7 +6,7 @@ import { ErrorComponent, PageNotFoundComponent } from '@shared/components';
 const routes: Routes = [
   {
     path: '',
-    title: 'Home',
+    title: 'Allen Hansen',
     loadChildren: () => import('./home/home.module').then((m) => m.HomeModule),
   },
   { path: 'error', title: 'Error', component: ErrorComponent },
