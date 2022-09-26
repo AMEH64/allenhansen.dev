@@ -5,7 +5,6 @@ module.exports = {
     extend: {
       fontFamily: {
         roboto: ["Roboto", "serif"],
-        // "fira-code": ["Fira Code", "monospace"],
       },
     },
   },
