@@ -1,0 +1,8 @@
+{
+  "azure": {
+    "applicationInsights": {
+      "enabled": false,
+      "connectionString": null
+    }
+  }
+}
