@@ -35,6 +35,8 @@ jobs:
           ###### End of Repository/Build Configurations ######
           production_branch: "main"
           dev_branch: "dev"
+        env: # Add environment variables here
+          AZURE_APPLICATION_INSIGHTS_CONNECTION_STRING: ${{ secrets.AZURE_APPLICATION_INSIGHTS_CONNECTION_STRING }}
 
   close_pull_request_job:
     if: github.event_name == 'pull_request' && github.event.action == 'closed'
