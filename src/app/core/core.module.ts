@@ -12,6 +12,7 @@ import { catchError, map, Observable, of } from 'rxjs';
 import { environment } from '@environment/environment';
 import { SharedModule } from '@shared/shared.module';
 import { AppSettings } from '@shared/models';
+import { ClickAnalyticsPlugin } from '@microsoft/applicationinsights-clickanalytics-js';
 
 function appInitializerFactory(
   httpClient: HttpClient,
@@ -29,15 +30,27 @@ function appInitializerFactory(
           }
 
           const angularPlugin = new AngularPlugin();
+          const clickAnalyticsPlugin = new ClickAnalyticsPlugin();
+          const clickAnalyticsConfig = {
+            autoCapture: true,
+            dataTags: {
+              useDefaultContentNameOrId: true,
+            },
+          };
           const appInsights = new ApplicationInsights({
             config: {
               connectionString:
                 environment.appSettings.azure.applicationInsights
                   .connectionString,
-              extensions: [angularPlugin],
+              extensions: [angularPlugin, clickAnalyticsPlugin],
               extensionConfig: {
                 [angularPlugin.identifier]: { router: router },
+                [clickAnalyticsPlugin.identifier]: clickAnalyticsConfig,
               },
+              enableCorsCorrelation: true,
+              enableRequestHeaderTracking: true,
+              enableResponseHeaderTracking: true,
+              loggingLevelConsole: 1,
             },
           });
           appInsights.loadAppInsights();
