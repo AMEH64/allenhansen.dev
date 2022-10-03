@@ -17,7 +17,7 @@ import { ClickAnalyticsPlugin } from '@microsoft/applicationinsights-clickanalyt
 function appInitializerFactory(
   httpClient: HttpClient,
   router: Router
-): () => Observable<any> {
+): () => Observable<void> {
   return () =>
     httpClient
       .get<AppSettings>(`${window.location.origin}/app.settings.json`)
