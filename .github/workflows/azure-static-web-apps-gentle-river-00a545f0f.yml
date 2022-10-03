@@ -26,6 +26,7 @@ jobs:
         with:
           files: "src/app.settings.json"
         env: # Add environment variables here
+          azure.applicationInsights.enabled: true
           azure.applicationInsights.connectionString: ${{ secrets.AZURE_APPLICATION_INSIGHTS_CONNECTION_STRING }}
           repositoryUrl: https://github.com/${{github.repository}}
       - name: Build And Deploy
