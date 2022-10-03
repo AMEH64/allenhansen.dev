@@ -35,6 +35,7 @@ jobs:
           output_location: "dist/ameh" # Built app content directory - optional
           ###### End of Repository/Build Configurations ######
           production_branch: "main"
+          files: "app.settings.json"
         env: # Add environment variables here
           azure.applicationInsights.connectionString: ${{ secrets.AZURE_APPLICATION_INSIGHTS_CONNECTION_STRING }}
           repositoryUrl: https://github.com/${{github.repository}}
