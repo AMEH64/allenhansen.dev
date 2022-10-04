@@ -5,13 +5,7 @@ import {
   FaIconLibrary,
   FontAwesomeModule,
 } from '@fortawesome/angular-fontawesome';
-import {
-  faArrowDown,
-  faEnvelope,
-  faEnvelopeOpenText,
-  faMailBulk,
-  faMessage,
-} from '@fortawesome/free-solid-svg-icons';
+import { faArrowDown, faEnvelope } from '@fortawesome/free-solid-svg-icons';
 import {
   faGithub,
   faLinkedin,
@@ -19,10 +13,11 @@ import {
 } from '@fortawesome/free-brands-svg-icons';
 
 import { ErrorComponent, PageNotFoundComponent } from './components';
+import { RouterModule } from '@angular/router';
 
 @NgModule({
   declarations: [ErrorComponent, PageNotFoundComponent],
-  imports: [CommonModule, FontAwesomeModule],
+  imports: [CommonModule, FontAwesomeModule, RouterModule],
   exports: [CommonModule, FontAwesomeModule],
 })
 export class SharedModule {
