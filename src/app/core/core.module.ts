@@ -7,14 +7,23 @@ import {
   ApplicationinsightsAngularpluginErrorService,
 } from '@microsoft/applicationinsights-angularplugin-js';
 import { ApplicationInsights } from '@microsoft/applicationinsights-web';
-import { catchError, map, Observable, of } from 'rxjs';
+import { ClickAnalyticsPlugin } from '@microsoft/applicationinsights-clickanalytics-js';
+import { map, Observable } from 'rxjs';
 
 import { environment } from '@environment/environment';
 import { SharedModule } from '@shared/shared.module';
 import { AppSettings } from '@shared/models';
-import { ClickAnalyticsPlugin } from '@microsoft/applicationinsights-clickanalytics-js';
+import { GlobalErrorHandlerService } from './services/global-error-handler.service';
 
+/**
+ * Initializes application by pulling app settings and loading application insights when enabled.
+ * @param errorHandler
+ * @param httpClient
+ * @param router
+ * @returns @type {Observable<void>}
+ */
 function appInitializerFactory(
+  errorHandler: ErrorHandler,
   httpClient: HttpClient,
   router: Router
 ): () => Observable<void> {
@@ -44,7 +53,10 @@ function appInitializerFactory(
                   .connectionString,
               extensions: [angularPlugin, clickAnalyticsPlugin],
               extensionConfig: {
-                [angularPlugin.identifier]: { router: router },
+                [angularPlugin.identifier]: {
+                  router: router,
+                  errorServices: [errorHandler],
+                },
                 [clickAnalyticsPlugin.identifier]: clickAnalyticsConfig,
               },
               enableCorsCorrelation: true,
@@ -54,10 +66,6 @@ function appInitializerFactory(
             },
           });
           appInsights.loadAppInsights();
-        }),
-        catchError((error: any): Observable<void> => {
-          console.error(error);
-          return of(undefined);
         })
       );
 }
@@ -68,13 +76,13 @@ function appInitializerFactory(
  * with the '@microsoft/applicationinsights-web' module, if the analytics
  * extension is not included during initialization of the SDK this Error Service
  * will not be able to send any caught unhandled errors.
- * @returns
+ * @param router
+ * @returns @type {GlobalErrorHandlerService} when app insights is disable and @type {ApplicationinsightsAngularpluginErrorService} when enabled.
  */
-function errorHandlerFactory(): () => ErrorHandler {
-  return () =>
-    environment.appSettings.azure.applicationInsights.enabled
-      ? new ApplicationinsightsAngularpluginErrorService()
-      : new ErrorHandler();
+function errorHandlerFactory(router: Router): ErrorHandler {
+  return environment.appSettings.azure.applicationInsights.enabled
+    ? new ApplicationinsightsAngularpluginErrorService()
+    : new GlobalErrorHandlerService(router);
 }
 
 @NgModule({
@@ -83,12 +91,13 @@ function errorHandlerFactory(): () => ErrorHandler {
     {
       provide: APP_INITIALIZER,
       useFactory: appInitializerFactory,
-      deps: [HttpClient, Router],
+      deps: [ErrorHandler, HttpClient, Router],
       multi: true,
     },
     {
       provide: ErrorHandler,
       useFactory: errorHandlerFactory,
+      deps: [Router],
     },
   ],
 })
