@@ -13,7 +13,7 @@ import { map, Observable } from 'rxjs';
 import { environment } from '@environment/environment';
 import { SharedModule } from '@shared/shared.module';
 import { AppSettings } from '@shared/models';
-import { GlobalErrorHandlerService } from './services/global-error-handler.service';
+import { GlobalErrorHandlerService } from './services';
 
 /**
  * Initializes application by pulling app settings and loading application insights when enabled.
