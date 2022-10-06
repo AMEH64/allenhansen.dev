@@ -8,8 +8,6 @@ import { Component, OnInit } from '@angular/core';
     class: 'flex flex-col justify-center items-center h-screen w-screen gap-3',
   },
 })
-export class PageNotFoundComponent implements OnInit {
+export class PageNotFoundComponent {
   constructor() {}
-
-  ngOnInit(): void {}
 }

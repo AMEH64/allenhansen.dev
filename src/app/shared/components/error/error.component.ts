@@ -8,8 +8,6 @@ import { Component, OnInit } from '@angular/core';
     class: 'flex flex-col justify-center items-center h-screen w-screen gap-3',
   },
 })
-export class ErrorComponent implements OnInit {
+export class ErrorComponent {
   constructor() {}
-
-  ngOnInit(): void {}
 }
