@@ -1,6 +1,6 @@
 {
   "name": "ameh",
-  "version": "3.0.0",
+  "version": "3.1.0",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
@@ -22,6 +22,9 @@
     "@fortawesome/fontawesome-svg-core": "^6.1.2",
     "@fortawesome/free-brands-svg-icons": "^6.1.2",
     "@fortawesome/free-solid-svg-icons": "^6.1.2",
+    "@microsoft/applicationinsights-angularplugin-js": "^3.0.0",
+    "@microsoft/applicationinsights-clickanalytics-js": "^2.8.7",
+    "@microsoft/applicationinsights-web": "^2.8.7",
     "rxjs": "~7.5.6",
     "tslib": "^2.4.0",
     "zone.js": "~0.11.7"

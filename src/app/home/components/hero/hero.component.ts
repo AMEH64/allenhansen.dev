@@ -9,8 +9,6 @@ import { Component, OnInit } from '@angular/core';
       'h-screen w-full flex flex-col-reverse md:flex-row justify-center items-center gap-3',
   },
 })
-export class HeroComponent implements OnInit {
+export class HeroComponent {
   constructor() {}
-
-  ngOnInit(): void {}
 }

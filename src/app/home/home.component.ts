@@ -8,8 +8,6 @@ import { Component, OnInit } from '@angular/core';
     class: 'block container mx-auto px-8 md:px-14 lg:px-16',
   },
 })
-export class HomeComponent implements OnInit {
+export class HomeComponent {
   constructor() {}
-
-  ngOnInit(): void {}
 }
