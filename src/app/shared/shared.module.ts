@@ -5,7 +5,11 @@ import {
   FaIconLibrary,
   FontAwesomeModule,
 } from '@fortawesome/angular-fontawesome';
-import { faArrowDown, faEnvelope } from '@fortawesome/free-solid-svg-icons';
+import {
+  faArrowDown,
+  faEnvelope,
+  faFilePdf,
+} from '@fortawesome/free-solid-svg-icons';
 import {
   faGithub,
   faLinkedin,
@@ -23,6 +27,13 @@ import { RouterModule } from '@angular/router';
 export class SharedModule {
   constructor(library: FaIconLibrary) {
     // Add an icon to the library for convenient access in other components
-    library.addIcons(faArrowDown, faEnvelope, faGithub, faLinkedin, faTwitter);
+    library.addIcons(
+      faArrowDown,
+      faEnvelope,
+      faFilePdf,
+      faGithub,
+      faLinkedin,
+      faTwitter
+    );
   }
 }
