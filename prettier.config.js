@@ -16,6 +16,7 @@ const config = {
   trailingComma: 'all',
   useTabs: false,
   plugins: ['prettier-plugin-tailwindcss'],
+  tailwindFunctions: ['classNames'],
 }
 
 export default config
