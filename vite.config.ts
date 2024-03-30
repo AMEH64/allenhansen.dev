@@ -8,4 +8,10 @@ installGlobals()
 
 export default defineConfig({
   plugins: [remix({ presets: [vercelPreset()] }), tsconfigPaths()],
+  test: {
+    coverage: {
+      include: ['app/**'],
+    },
+    reporters: ['default', 'html'],
+  },
 })
