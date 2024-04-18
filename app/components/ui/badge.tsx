@@ -73,7 +73,7 @@ export const BadgeButton = React.forwardRef(function BadgeButton(
     'group relative inline-flex rounded-md focus:outline-none data-[focus]:outline data-[focus]:outline-2 data-[focus]:outline-offset-2 data-[focus]:outline-blue-500',
   )
 
-  return 'href' in props ? (
+  return 'to' in props ? (
     <Link
       {...props}
       className={classes}
