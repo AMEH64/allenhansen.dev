@@ -1,8 +1,7 @@
 'use client'
 
 import { clsx } from 'clsx'
-import type React from 'react'
-import { createContext, useContext, useState } from 'react'
+import React, { createContext, useContext, useState } from 'react'
 import { Link } from './link'
 
 const TableContext = createContext<{
@@ -172,7 +171,7 @@ export function TableCell({
       {href && (
         <Link
           data-row-link
-          href={href}
+          to={href}
           target={target}
           aria-label={title}
           tabIndex={cellRef?.previousElementSibling === null ? 0 : -1}

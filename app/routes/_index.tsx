@@ -8,7 +8,7 @@ import { Strong, Text } from '~/components/ui/text'
 export const meta: MetaFunction = () => {
   return [
     { title: 'Allen Hansen' },
-    { name: 'description', content: 'Welcome to Remix!' },
+    { name: 'description', content: `Allen Hansen's Portfolio` },
   ]
 }
 

@@ -1,7 +1,7 @@
 import { expect, test } from 'vitest'
 import { classNames } from '../classNames'
 
-test('should not filter out truthy values', values => {
+test('should not filter out truthy values', () => {
   expect(
     classNames(
       'hello-world',
@@ -13,7 +13,7 @@ test('should not filter out truthy values', values => {
   ).toBe('hello-world 1 object array true')
 })
 
-test('should filter out falsy values', values => {
+test('should filter out falsy values', () => {
   expect(
     classNames(
       '',

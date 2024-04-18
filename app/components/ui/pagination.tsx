@@ -1,5 +1,5 @@
 import clsx from 'clsx'
-import type React from 'react'
+import React from 'react'
 import { Button } from './button'
 
 export function Pagination({
@@ -101,7 +101,7 @@ export function PaginationPage({
 }) {
   return (
     <Button
-      href={href}
+      to={href}
       plain
       aria-label={`Page ${children}`}
       aria-current={current ? 'page' : undefined}

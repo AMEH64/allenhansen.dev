@@ -2,14 +2,13 @@ import {
   Description as HeadlessDescription,
   Dialog as HeadlessDialog,
   DialogPanel as HeadlessDialogPanel,
+  type DialogProps as HeadlessDialogProps,
   DialogTitle as HeadlessDialogTitle,
   Transition as HeadlessTransition,
   TransitionChild as HeadlessTransitionChild,
-  type DialogProps as HeadlessDialogProps,
 } from '@headlessui/react'
 import clsx from 'clsx'
-import type React from 'react'
-import { Fragment } from 'react'
+import React, { Fragment } from 'react'
 import { Text } from './text'
 
 const sizes = {
