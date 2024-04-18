@@ -8,6 +8,7 @@ import {
 import { Analytics } from '@vercel/analytics/react'
 import type { LinksFunction } from '@vercel/remix'
 import stylesheet from '~/root.css?url'
+import React from 'react'
 
 export const links: LinksFunction = () => [
   { rel: 'stylesheet', href: stylesheet },
