@@ -1,27 +1,41 @@
-# Ameh
+# Remix
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 13.2.3.
+This directory is a brief example of a [Remix](https://remix.run/docs) site that
+can be deployed to Vercel with zero configuration.
 
-## Development server
+To get started, run the Remix cli with this template
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+```sh
+npx create-remix@latest --template vercel/vercel/examples/remix
+```
 
-## Code scaffolding
+## Deploy Your Own
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/vercel/vercel/tree/main/examples/remix&template=remix)
 
-## Build
+_Live Example: https://remix-run-template.vercel.app_
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+You can also deploy using the [Vercel CLI](https://vercel.com/docs/cli):
 
-## Running unit tests
+```sh
+npm i -g vercel
+vercel
+```
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+## Development
 
-## Running end-to-end tests
+To run your Remix app locally, make sure your project's local dependencies are
+installed:
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+```sh
+npm install
+```
 
-## Further help
+Afterwards, start the Remix development server like so:
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+```sh
+npm run dev
+```
+
+Open up [http://localhost:5173](http://localhost:5173) and you should be ready
+to go!

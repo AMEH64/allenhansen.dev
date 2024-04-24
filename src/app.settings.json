@@ -1,9 +1,0 @@
-{
-  "repositoryUrl": "",
-  "azure": {
-    "applicationInsights": {
-      "enabled": false,
-      "connectionString": null
-    }
-  }
-}
