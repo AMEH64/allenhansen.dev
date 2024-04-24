@@ -1,17 +1,3 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
-@layer base {
-  @font-face {
-    font-family: 'GeistSans';
-    font-display: swap;
-    src: url('/fonts/GeistVF.woff2') format('woff2');
-  }
-
-  @font-face {
-    font-family: 'GeistMono';
-    font-display: block;
-    src: url('/fonts/GeistMonoVF.woff2') format('woff2');
-  }
-}
