@@ -12,6 +12,25 @@ import React from 'react'
 
 export const links: LinksFunction = () => [
   { rel: 'stylesheet', href: stylesheet },
+  {
+    rel: 'apple-touch-icon',
+    sizes: '180x180',
+    href: '/favicons/apple-touch-icon.png',
+  },
+  {
+    rel: 'icon',
+    type: 'image/png',
+    sizes: '32x32',
+    href: '/favicons/favicon-32x32.png',
+  },
+  {
+    rel: 'icon',
+    type: 'image/png',
+    sizes: '16x16',
+    href: '/favicons/favicon-16x16.png',
+  },
+  { rel: 'shortcut icon', href: '/favicon.ico' },
+  { rel: 'manifest', href: '/site.webmanifest' },
 ]
 
 export function Layout({ children }: { children: React.ReactNode }) {
