@@ -16,8 +16,8 @@ export default function Index() {
   return (
     <div className="flex min-h-svh flex-col">
       <Header />
-      <main className="mx-auto flex max-w-7xl flex-1 px-4 sm:px-6 lg:px-8">
-        <div className="relative isolate mx-auto flex max-w-3xl flex-1">
+      <main className="mx-auto flex max-w-screen-xl flex-1 px-4 sm:px-6 lg:px-8">
+        <div className="mx-auto flex max-w-screen-md flex-1">
           {/*<div*/}
           {/*  className="absolute inset-x-0 -top-40 -z-10 transform-gpu overflow-hidden blur-3xl sm:-top-80"*/}
           {/*  aria-hidden="true"*/}
