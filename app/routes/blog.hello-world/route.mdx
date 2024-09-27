@@ -1,4 +1,5 @@
 import keysLeftImg from './585fdadb-590e-4905-b7dd-9207a6ef8642.png'
+import { getPostMeta } from '../../utils/meta/get-post-meta.ts'
 
 export const handle = {
   title: 'Hello World! 👋',
@@ -8,14 +9,7 @@ export const handle = {
   modifiedOn: '2024-09-27T19:09:01.096Z',
 }
 
-export const meta = () => {
-  const { title, description, draft } = handle
-  return [
-    { title },
-    { description },
-    draft ? { robots: 'noindex' } : null,
-  ].filter(Boolean)
-}
+export const meta = () => getPostMeta(handle)
 
 Hey, I'm Allen Hansen, a full stack software developer specializing in building
 web apps and microservices. I'm passionate about leveraging web standards to
