@@ -42,7 +42,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <Meta />
         <Links />
       </head>
-      <body className="bg-zinc-100 text-zinc-950 dark:bg-zinc-950 dark:text-zinc-50">
+      <body className="bg-white text-zinc-950 dark:bg-zinc-900 dark:text-zinc-50">
         {children}
         <ScrollRestoration />
         <Scripts />
