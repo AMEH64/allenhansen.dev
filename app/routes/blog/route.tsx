@@ -4,15 +4,17 @@ import { Layout } from '~/components/layout'
 import { intlFormat } from 'date-fns/intlFormat'
 import { postMetaSchema } from '~/types/blog/post-meta'
 
-export default function Route() {
-  const matches = useMatches()
-
-  const postMeta = postMetaSchema.parse(
+const getPostMeta = (matches: ReturnType<typeof useMatches>) =>
+  postMetaSchema.parse(
     matches
       .filter(m => m.handle)
       .map(m => m.handle)
       .at(0),
   )
+
+export default function Route() {
+  const matches = useMatches()
+  const postMeta = getPostMeta(matches)
 
   return (
     <Layout>

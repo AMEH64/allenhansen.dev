@@ -8,6 +8,15 @@ export const handle = {
   modifiedOn: '2024-09-27T19:09:01.096Z',
 }
 
+export const meta = () => {
+  const { title, description, draft } = handle
+  return [
+    { title },
+    { description },
+    draft ? { robots: 'noindex' } : null,
+  ].filter(Boolean)
+}
+
 Hey, I'm Allen Hansen, a full stack software developer specializing in building
 web apps and microservices. I'm passionate about leveraging web standards to
 create accessible and intuitive user experiences that perform at scale.
