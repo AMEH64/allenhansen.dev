@@ -1,57 +1,80 @@
-import { Header } from '~/components/header'
 import React from 'react'
-import { Footer } from '~/components/footer'
-import { allPosts } from 'content-collections'
-import { formatISO } from 'date-fns/formatISO'
+import { Layout } from '~/components/layout'
+import { allPosts } from '~/utils/blog/posts/all-posts'
+import { compareDesc } from 'date-fns/compareDesc'
+import { json, Link, useLoaderData } from '@remix-run/react'
+import { intlFormat } from 'date-fns/intlFormat'
+import { ChevronRightIcon } from '@heroicons/react/16/solid'
 
-// export const meta = () => [
-//   { title: allPosts[0].title },
-//   {
-//     name: 'summary',
-//     content: allPosts[0].summary,
-//   },
-//   // {
-//   //     name: 'published',
-//   //     content: allPosts[0].publishedOn,
-//   // },
-// ]
+export const loader = () => {
+  const posts = Object.entries(allPosts)
+    .sort(([, p1], [, p2]) => compareDesc(p1.publishedOn, p2.publishedOn))
+    .map(([slug, post]) => ({ slug, ...post }))
+  return json(posts)
+}
 
-export default function Component() {
+export default function Route() {
+  const posts = useLoaderData<typeof loader>()
+
   return (
-    <div className="flex min-h-svh flex-col">
-      <Header />
-      <main className="mx-auto flex max-w-screen-xl flex-1 px-4 sm:px-6 lg:px-8">
-        <div className="mx-auto flex max-w-screen-md flex-1">
-          <div className="prose m-auto flex flex-col p-10 dark:prose-invert">
-            <h1>Posts</h1>
-            <ul>
-              {allPosts
-                .filter(p => p._meta.directory === 'hello-world')
-                .map(post => (
-                  <li className="list-none" key={post._meta.path}>
-                    <article className="prose m-auto flex flex-col p-10 dark:prose-invert">
-                      <header>
-                        <h1>{post.title}</h1>
-                        <p>
-                          <time dateTime={post.publishedOn}>
-                            {formatISO(post.publishedOn)}
-                          </time>
-                        </p>
-                        <p>
-                          <time dateTime={post.lastModifiedOn}>
-                            {formatISO(post.lastModifiedOn)}
-                          </time>
-                        </p>
-                      </header>
-                      <p className="my-0">{post.summary}</p>
-                    </article>
-                  </li>
-                ))}
-            </ul>
-          </div>
+    <Layout>
+      <div className="m-auto flex w-full flex-col items-center justify-center">
+        <header className="max-w-2xl">
+          <h1 className="text-4xl font-bold tracking-tight text-zinc-800 sm:text-5xl dark:text-zinc-100">
+            Notes from a full stack developer.
+          </h1>
+          <p className="mt-6 text-base text-zinc-600 dark:text-zinc-400">
+            All of my thoughts on programming, life, and more, collected in
+            reverse chronological order.
+          </p>
+        </header>
+        <div className="mt-16 flex w-full flex-col space-y-16">
+          {posts.map(post => (
+            <article
+              className="md:grid md:grid-cols-4 md:items-baseline"
+              key={post.slug}
+            >
+              <div className="group relative flex flex-col items-start md:col-span-3">
+                <h2 className="text-base font-semibold tracking-tight text-zinc-800 dark:text-zinc-100">
+                  <div className="absolute -inset-x-4 -inset-y-6 z-0 scale-95 bg-zinc-50 opacity-0 transition group-hover:scale-100 group-hover:opacity-100 sm:-inset-x-6 sm:rounded-2xl dark:bg-zinc-800/50"></div>
+                  <Link to={`./${post.slug}`}>
+                    <span className="absolute -inset-x-4 -inset-y-6 z-20 sm:-inset-x-6 sm:rounded-2xl"></span>
+                    <span className="relative z-10">{post.title}</span>
+                  </Link>
+                </h2>
+                <time
+                  className="relative z-10 order-first mb-3 flex items-center pl-3.5 text-sm text-zinc-400 md:hidden dark:text-zinc-500"
+                  dateTime={post.publishedOn}
+                >
+                  <span
+                    className="absolute inset-y-0 left-0 flex items-center"
+                    aria-hidden="true"
+                  >
+                    <span className="h-4 w-0.5 rounded-full bg-zinc-200 dark:bg-zinc-500"></span>
+                  </span>
+                  {intlFormat(post.publishedOn)}
+                </time>
+                <p className="relative z-10 mt-2 text-sm text-zinc-600 dark:text-zinc-400">
+                  {post.description}
+                </p>
+                <div
+                  aria-hidden="true"
+                  className="relative z-10 mt-4 flex items-center text-sm font-medium text-blue-500"
+                >
+                  Read article
+                  <ChevronRightIcon className="size-4" />
+                </div>
+              </div>
+              <time
+                className="relative z-10 order-first mb-3 mt-1 flex hidden items-center text-sm text-zinc-400 md:block dark:text-zinc-500"
+                dateTime={post.publishedOn}
+              >
+                {intlFormat(post.publishedOn)}
+              </time>
+            </article>
+          ))}
         </div>
-      </main>
-      <Footer />
-    </div>
+      </div>
+    </Layout>
   )
 }

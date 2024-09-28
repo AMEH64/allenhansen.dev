@@ -5,7 +5,6 @@ import { vercelPreset } from '@vercel/remix/vite'
 import tsconfigPaths from 'vite-tsconfig-paths'
 import mdx from '@mdx-js/rollup'
 import rehypePrettyCode from 'rehype-pretty-code'
-import contentCollections from '@content-collections/remix-vite'
 
 installGlobals()
 
@@ -17,7 +16,6 @@ export default defineConfig({
     }),
     remix({ presets: [vercelPreset()] }),
     tsconfigPaths(),
-    contentCollections(),
   ],
   test: {
     coverage: {
