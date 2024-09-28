@@ -28,7 +28,7 @@ export default function Route() {
             All of my thoughts on programming, life, and more, collected in
             reverse chronological order.
           </p>
-          <Button outline className="mt-3">
+          <Button outline className="mt-3" to="./rss.xml">
             <RssIcon /> RSS Feed
           </Button>
         </header>
