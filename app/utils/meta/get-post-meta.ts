@@ -1,7 +1,7 @@
-import type { PostMeta } from '~/types/blog/post-meta'
+import type { Post } from '~/types/blog/post'
 
-export const getPostMeta = (postMeta: PostMeta) => {
-  const { title, description, draft } = postMeta
+export const getPostMeta = (post: Post) => {
+  const { title, description, draft } = post
   return [
     { title },
     { description },
