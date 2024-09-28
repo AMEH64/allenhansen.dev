@@ -4,7 +4,8 @@ import { allPosts } from '~/utils/blog/posts/all-posts'
 import { compareDesc } from 'date-fns/compareDesc'
 import { json, Link, useLoaderData } from '@remix-run/react'
 import { intlFormat } from 'date-fns/intlFormat'
-import { ChevronRightIcon } from '@heroicons/react/16/solid'
+import { ChevronRightIcon, RssIcon } from '@heroicons/react/16/solid'
+import { Button } from '~/components/ui/button'
 
 export const loader = () => {
   const posts = Object.entries(allPosts)
@@ -18,17 +19,20 @@ export default function Route() {
 
   return (
     <Layout>
-      <div className="m-auto flex w-full flex-col items-center justify-center">
-        <header className="max-w-2xl">
-          <h1 className="text-4xl font-bold tracking-tight text-zinc-800 sm:text-5xl dark:text-zinc-100">
+      <div className="flex w-full flex-col items-center justify-center">
+        <header className="w-full max-w-prose self-start">
+          <h1 className="text-balance text-4xl font-bold tracking-tight text-zinc-800 sm:text-5xl dark:text-zinc-100">
             Notes from a full stack developer.
           </h1>
-          <p className="mt-6 text-base text-zinc-600 dark:text-zinc-400">
+          <p className="mt-6 text-pretty text-base text-zinc-600 dark:text-zinc-400">
             All of my thoughts on programming, life, and more, collected in
             reverse chronological order.
           </p>
+          <Button outline className="mt-3">
+            <RssIcon /> RSS Feed
+          </Button>
         </header>
-        <div className="mt-16 flex w-full flex-col space-y-16">
+        <div className="mt-16 flex w-full flex-col space-y-16 md:border-l md:border-zinc-100 md:pl-6 md:dark:border-zinc-700/40">
           {posts.map(post => (
             <article
               className="md:grid md:grid-cols-4 md:items-baseline"
@@ -59,14 +63,14 @@ export default function Route() {
                 </p>
                 <div
                   aria-hidden="true"
-                  className="relative z-10 mt-4 flex items-center text-sm font-medium text-blue-500"
+                  className="relative z-10 mt-4 flex items-center text-sm font-medium text-blue-600 dark:text-blue-400"
                 >
                   Read article
                   <ChevronRightIcon className="size-4" />
                 </div>
               </div>
               <time
-                className="relative z-10 order-first mb-3 mt-1 flex hidden items-center text-sm text-zinc-400 md:block dark:text-zinc-500"
+                className="relative z-10 order-first mb-3 mt-1 hidden items-center text-sm text-zinc-400 md:block dark:text-zinc-500"
                 dateTime={post.publishedOn}
               >
                 {intlFormat(post.publishedOn)}
