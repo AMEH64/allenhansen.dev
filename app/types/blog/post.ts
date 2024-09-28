@@ -1,6 +1,6 @@
 import { z } from 'zod'
 
-export const postMetaSchema = z.object({
+export const postSchema = z.object({
   title: z.string().min(1),
   description: z.string().min(1),
   draft: z.boolean().optional(),
@@ -8,4 +8,4 @@ export const postMetaSchema = z.object({
   modifiedOn: z.string().datetime().optional(),
 })
 
-export type PostMeta = z.infer<typeof postMetaSchema>
+export type Post = z.infer<typeof postSchema>
