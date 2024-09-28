@@ -3,12 +3,16 @@ import { postSchema } from '~/types/blog/post'
 
 const allPosts = Object.fromEntries(
   Object.entries(
-    import.meta.glob('../../../routes/blog.*/*.mdx', {
+    import.meta.glob('../../../routes/blog.*/post.ts', {
       eager: true,
-      import: 'handle',
+      import: 'default',
     }),
   ).map(([filePath, postMeta]) => {
-    const slug = filePath.split('/').at(-2)?.split('.').at(-1)
+    const slug = filePath // '../../../routes/blog.hello-world/post.ts'
+      .split('/') // [ '..', '..', '..', 'routes', 'blog.hello-world', 'post.ts' ]
+      .at(-2) // 'blog.hello-world'
+      ?.split('.') // [ 'blog', 'hello-world' ]
+      .at(-1) // 'hello-world'
     invariant(slug, `Unable to parse slug from file path ${filePath}`)
     return [slug, postSchema.parse(postMeta)]
   }),
