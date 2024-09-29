@@ -1,14 +1,9 @@
-import React from 'react'
+import React, { forwardRef, type SVGProps } from 'react'
 
-type GitHubIconProps = React.SVGProps<SVGSVGElement> & {
-  title?: string
-  titleId?: string
-}
-
-const GitHubIcon = React.forwardRef<SVGSVGElement, GitHubIconProps>(
-  ({ title, titleId, ...props }, ref) => (
+export const GitHubIcon = forwardRef<SVGSVGElement, SVGProps<SVGSVGElement>>(
+  (props, ref) => (
     <svg
-      aria-labelledby={titleId}
+      aria-hidden="true"
       data-slot="icon"
       height="16"
       ref={ref}
@@ -17,7 +12,6 @@ const GitHubIcon = React.forwardRef<SVGSVGElement, GitHubIconProps>(
       xmlns="http://www.w3.org/2000/svg"
       {...props}
     >
-      {title ? <title id={titleId}>{title}</title> : null}
       <path
         fill="currentColor"
         fillRule="evenodd"
@@ -28,5 +22,3 @@ const GitHubIcon = React.forwardRef<SVGSVGElement, GitHubIconProps>(
   ),
 )
 GitHubIcon.displayName = 'GitHubIcon'
-
-export { GitHubIcon, type GitHubIconProps }
