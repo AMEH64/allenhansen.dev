@@ -1,6 +1,7 @@
 import { XIcon } from '~/components/icons/x-icon'
 import { Button } from '~/components/ui/button'
 import { GitHubIcon } from '~/components/icons/git-hub-icon'
+import { Link } from '~/components/ui/link'
 
 export const Header = () => (
   <header className="sticky top-0 z-10 w-full border-b border-zinc-300/40 bg-white shadow backdrop-blur supports-[backdrop-filter]:bg-white/65 dark:border-zinc-700/40 dark:bg-zinc-900 dark:shadow-zinc-950 dark:supports-[backdrop-filter]:bg-zinc-900/65">
@@ -9,6 +10,7 @@ export const Header = () => (
         <Button to="/" className="font-mono italic tracking-tight" plain>
           &lt;AllenHansen&nbsp;/&gt;
         </Button>
+        <Link to="/blog">Blog</Link>
       </div>
       <div className="flex items-center justify-end gap-3">
         <Button
