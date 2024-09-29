@@ -4,8 +4,6 @@ import { Layout } from '~/components/layout'
 import type { LoaderFunctionArgs } from '@remix-run/router'
 import { getPostBySlug } from '~/utils/blog/posts/get-post-by-slug'
 import invariant from 'tiny-invariant'
-import { format } from 'date-fns/format'
-import { enUS } from 'date-fns/locale/en-US'
 
 export function loader({ request }: LoaderFunctionArgs) {
   const url = new URL(request.url)
@@ -39,12 +37,7 @@ export default function Route() {
             className="order-first flex items-center text-base text-zinc-400 dark:text-zinc-500"
           >
             <span className="h-4 w-0.5 rounded-full bg-zinc-200 dark:bg-zinc-500"></span>
-            <span className="ml-3">
-              {' '}
-              {format(post.publishedOn, 'PPPP', {
-                locale: enUS,
-              })}
-            </span>
+            <span className="ml-3">{post.publishedOn}</span>
           </time>
         </header>
         <div className="prose mt-8 dark:prose-invert">
