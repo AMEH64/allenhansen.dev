@@ -5,8 +5,7 @@ import { compareDesc } from 'date-fns/compareDesc'
 import { json, Link, useLoaderData } from '@remix-run/react'
 import { ChevronRightIcon, RssIcon } from '@heroicons/react/16/solid'
 import { Button } from '~/components/ui/button'
-import { format } from 'date-fns/format'
-import { enUS } from 'date-fns/locale/en-US'
+import { intlFormat } from 'date-fns/intlFormat'
 
 export const loader = () => {
   const posts = Object.entries(allPosts)
@@ -57,8 +56,10 @@ export default function Route() {
                   >
                     <span className="h-4 w-0.5 rounded-full bg-zinc-200 dark:bg-zinc-500"></span>
                   </span>
-                  {format(post.publishedOn, 'PPPP', {
-                    locale: enUS,
+                  {intlFormat(post.publishedOn, {
+                    year: 'numeric',
+                    month: 'long',
+                    day: 'numeric',
                   })}
                 </time>
                 <p className="relative z-10 mt-2 text-sm text-zinc-600 dark:text-zinc-400">
@@ -76,9 +77,11 @@ export default function Route() {
                 className="relative z-10 order-first mb-3 mt-1 hidden items-center text-sm text-zinc-400 md:block dark:text-zinc-500"
                 dateTime={post.publishedOn}
               >
-                {format(post.publishedOn, 'PPPP', {
-                  locale: enUS,
-                })}{' '}
+                {intlFormat(post.publishedOn, {
+                  year: 'numeric',
+                  month: 'long',
+                  day: 'numeric',
+                })}
               </time>
             </article>
           ))}
