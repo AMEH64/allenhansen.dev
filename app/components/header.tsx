@@ -12,26 +12,22 @@ export const Header = () => (
       </div>
       <div className="flex items-center justify-end gap-3">
         <Button
+          aria-label="Allen's GitHub Profile"
           to="https://github.com/AMEH64"
           target="_blank"
           rel="noreferrer"
           plain
         >
-          <GitHubIcon
-            className="[--btn-icon:theme(colors.zinc.950)] dark:[--btn-icon:theme(colors.zinc.50)]"
-            title="Allen's GitHub Profile"
-          />
+          <GitHubIcon className="[--btn-icon:theme(colors.zinc.950)] dark:[--btn-icon:theme(colors.zinc.50)]" />
         </Button>
         <Button
+          aria-label="Allen's Twitter Profile"
           to="https://x.com/ameh64"
           target="_blank"
           rel="noreferrer"
           plain
         >
-          <XIcon
-            className="[--btn-icon:theme(colors.zinc.950)] dark:[--btn-icon:theme(colors.zinc.50)]"
-            title="Allen's Twitter Profile"
-          />
+          <XIcon className="[--btn-icon:theme(colors.zinc.950)] dark:[--btn-icon:theme(colors.zinc.50)]" />
         </Button>
       </div>
     </div>
