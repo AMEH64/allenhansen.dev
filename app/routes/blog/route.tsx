@@ -32,7 +32,6 @@ export default function Route() {
           <h1 className="mt-6 text-balance text-4xl font-bold tracking-tight sm:text-5xl">
             {post.title}
           </h1>
-          <p className="mt-3">{post.description}</p>
           <time
             dateTime={post.publishedOn}
             className="order-first flex items-center text-base text-zinc-400 dark:text-zinc-500"
