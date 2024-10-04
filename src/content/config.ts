@@ -8,15 +8,8 @@ const blog = defineCollection({
       title: z.string(),
       description: z.string(),
       // Transform string to Date object
-      pubDate: z
-        .string()
-        .date()
-        .transform(arg => new Date(arg)),
-      updatedDate: z
-        .string()
-        .date()
-        .optional()
-        .transform(arg => (arg ? new Date(arg) : undefined)),
+      pubDate: z.string().date(),
+      updatedDate: z.string().date().optional(),
       image: image().refine(img => img.width >= 1080, {
         message: 'Cover image must be at least 1080 pixels wide!',
       }),

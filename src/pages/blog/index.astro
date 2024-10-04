@@ -2,11 +2,11 @@
 import { getCollection } from 'astro:content'
 import { Image } from 'astro:assets'
 import { SITE_TITLE } from '~/consts'
-import FormattedDate from '../../components/FormattedDate.astro'
 import MainLayout from '../../layouts/MainLayout.astro'
+import { compareDesc } from 'date-fns/compareDesc'
 
-const posts = (await getCollection('blog')).sort(
-  (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
+const posts = (await getCollection('blog')).sort((a, b) =>
+  compareDesc(b.data.pubDate, a.data.pubDate),
 )
 ---
 
@@ -27,9 +27,7 @@ const posts = (await getCollection('blog')).sort(
                 alt={post.data.title}
               />
               <h4 class="title">{post.data.title}</h4>
-              <p class="date">
-                <FormattedDate date={post.data.pubDate} />
-              </p>
+              <p class="date" />
             </a>
           </li>
         ))
