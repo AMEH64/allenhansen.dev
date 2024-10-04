@@ -1,0 +1,49 @@
+---
+import type { HTMLAttributes } from 'astro/types'
+import Button from './Button.astro'
+import XMarkIcon from './icons/XMarkIcon.astro'
+
+type Props = HTMLAttributes<'dialog'>
+
+const { class: className, ...props } = Astro.props
+---
+
+<dialog
+  class:list={[
+    className,
+    'max-w-[calc(theme(screens.sm)-theme(spacing.4))] sm:max-w-[calc(theme(screens.sm)-theme(spacing.6))] md:max-w-[calc(theme(screens.md)-theme(spacing.6))] lg:max-w-screen-md',
+    'mx-auto mb-0 w-full rounded-t-xl bg-white p-8 shadow-lg sm:mb-auto sm:rounded-b-xl dark:bg-zinc-900',
+    'backdrop:bg-gray-950/25 backdrop:backdrop-blur dark:backdrop:bg-gray-950/50',
+    '[&>:not([data-slot=close]):mt-6',
+    'transition-allow-discrete transition-[display_opacity_overlay] duration-300',
+    'backdrop:transition-allow-discrete backdrop:transition-[display_opacity_overlay] backdrop:duration-300',
+    'opacity-0 motion-safe:translate-y-3/4',
+    'backdrop:opacity-0',
+    'open:opacity-100 motion-safe:open:translate-y-0',
+    'open:backdrop:opacity-100',
+    'open:starting:opacity-0 motion-safe:open:starting:translate-y-3/4',
+    'open:backdrop:starting:opacity-0',
+  ]}
+  {...props}
+>
+  <slot />
+  <span class="absolute end-3 top-3">
+    <Button data-slot="close" type="button" variant="text">
+      <XMarkIcon />
+      <span class="sr-only">Close</span>
+    </Button>
+  </span>
+</dialog>
+
+<script>
+  document.addEventListener('astro:page-load', () => {
+    const dialog = document.querySelector('dialog')
+    const closeButton = document.querySelector('dialog button[data-slot=close]')
+
+    closeButton?.addEventListener('click', () => {
+      if (dialog?.open && dialog?.matches('dialog:modal')) {
+        dialog?.close()
+      }
+    })
+  })
+</script>

@@ -1,7 +1,9 @@
 ---
+import Bars3BottomRightIcon from './icons/Bars3BottomRightIcon.astro'
 import Button from './Button.astro'
 import GitHubIcon from './icons/GitHubIcon.astro'
 import HeaderLink from './HeaderLink.astro'
+import Modal from './Modal.astro'
 ---
 
 <header
@@ -15,12 +17,14 @@ import HeaderLink from './HeaderLink.astro'
       <Button as="a" class="font-mono tracking-tight" href="/" variant="text">
         &lt;AllenHansen&nbsp;/&gt;
       </Button>
-      <div
-        class="inline-block h-6 w-0.5 rounded-full bg-zinc-300 dark:bg-zinc-700"
-      >
+      <div class="hidden sm:contents">
+        <div
+          class="inline-block h-6 w-0.5 rounded-full bg-zinc-300 dark:bg-zinc-700"
+        >
+        </div>
+        <HeaderLink href="/about">About</HeaderLink>
+        <HeaderLink href="/blog">Blog</HeaderLink>
       </div>
-      <HeaderLink href="/about">About</HeaderLink>
-      <HeaderLink href="/blog">Blog</HeaderLink>
     </nav>
     <div class="flex items-center justify-end gap-3">
       <Button
@@ -31,9 +35,31 @@ import HeaderLink from './HeaderLink.astro'
         rel="noopener noreferrer"
         variant="text"
       >
-        <GitHubIcon class="size-6" />
+        <GitHubIcon />
         <span class="sr-only">GitHub</span>
+      </Button>
+      <Button class="sm:hidden" data-slot="open" variant="text">
+        <Bars3BottomRightIcon />
+        <span class="sr-only">Open Menu</span>
       </Button>
     </div>
   </div>
 </header>
+<Modal class="sm:hidden">
+  <h1 class="block text-balance text-xl font-semibold">Menu</h1>
+  <div class="flex flex-col items-start gap-3">
+    <HeaderLink href="/about">About</HeaderLink>
+    <HeaderLink href="/blog">Blog</HeaderLink>
+  </div>
+</Modal>
+
+<script>
+  document.addEventListener('astro:page-load', () => {
+    const dialog = document.querySelector('dialog')
+    const closeButton = document.querySelector('button[data-slot=open]')
+
+    closeButton?.addEventListener('click', () => {
+      dialog?.showModal()
+    })
+  })
+</script>

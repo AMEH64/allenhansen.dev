@@ -2,7 +2,8 @@
 import type { HTMLAttributes } from 'astro/types'
 
 const variants = {
-  primary: '',
+  primary:
+    'bg-blue-600 dark:bg-blue-400 text-blue-50 dark:text-blue-950 hover:bg-blue-500',
   secondary:
     'bg-blue-500/10 text-blue-700 dark:text-blue-300 hover:bg-blue-500/20',
   outline:
@@ -30,8 +31,8 @@ const {
 <Tag
   class:list={[
     className,
-    'relative inline-flex items-center justify-center gap-x-2 whitespace-nowrap rounded-md text-base font-medium transition-all',
-    variant !== 'text' && 'px-4 py-3',
+    'relative inline-flex items-center justify-center whitespace-nowrap rounded-md text-base font-medium transition-all',
+    'gap-x-2 px-4 py-3',
     'focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2',
     'focus-visible:outline-blue-600 dark:focus-visible:outline-blue-400',
     'disabled:pointer-events-none disabled:opacity-50',
