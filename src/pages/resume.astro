@@ -1,0 +1,233 @@
+---
+import { compareDesc } from 'date-fns/compareDesc'
+import { format } from 'date-fns/format'
+import { getCollection } from 'astro:content'
+import AngularIcon from '~/components/icons/AngularIcon.astro'
+import AtSymbolIcon from '~/components/icons/AtSymbolIcon.astro'
+import AzureDevOpsIcon from '~/components/icons/AzureDevOpsIcon.astro'
+import AzureIcon from '~/components/icons/AzureIcon.astro'
+import Badge from '~/components/Badge.astro'
+import BootstrapIcon from '~/components/icons/BootstrapIcon.astro'
+import CSharpIcon from '~/components/icons/CSharpIcon.astro'
+import CssIcon from '~/components/icons/CssIcon.astro'
+import DotNetIcon from '~/components/icons/DotNetIcon.astro'
+import FigmaIcon from '~/components/icons/FigmaIcon.astro'
+import GitHubIcon from '~/components/icons/GitHubIcon.astro'
+import GitIcon from '~/components/icons/GitIcon.astro'
+import HtmlIcon from '~/components/icons/HtmlIcon.astro'
+import invariant from 'tiny-invariant'
+import JavaScriptIcon from '~/components/icons/JavaScriptIcon.astro'
+import LinkIcon from '~/components/icons/LinkIcon.astro'
+import ReactIcon from '~/components/icons/ReactIcon.astro'
+import ResumeLagout from '~/layouts/ResumeLagout.astro'
+import SassIcon from '~/components/icons/SassIcon.astro'
+import SqlServerIcon from '~/components/icons/SqlServerIcon.astro'
+import TailwindCssIcon from '~/components/icons/TailwindCssIcon.astro'
+import TypeScriptIcon from '~/components/icons/TypeScriptIcon.astro'
+
+const jobs = await getCollection('jobs')
+const education = await getCollection('education')
+
+const skillsIcons = {
+  Angular: AngularIcon,
+  'Azure DevOps': AzureDevOpsIcon,
+  Azure: AzureIcon,
+  Bootstrap: BootstrapIcon,
+  'C#': CSharpIcon,
+  CSS: CssIcon,
+  '.NET': DotNetIcon,
+  Figma: FigmaIcon,
+  Git: GitIcon,
+  HTML: HtmlIcon,
+  JavaScript: JavaScriptIcon,
+  React: ReactIcon,
+  Sass: SassIcon,
+  'SQL Server': SqlServerIcon,
+  'Tailwind CSS': TailwindCssIcon,
+  TypeScript: TypeScriptIcon,
+} satisfies Record<string, Function>
+---
+
+<style>
+  @media print {
+    @page {
+      size: letter;
+      margin: 1in;
+      page-orientation: upright;
+    }
+  }
+</style>
+
+<ResumeLagout
+  class="grid min-h-svh place-content-center space-y-10 bg-white p-12 text-zinc-950 dark:bg-zinc-900 dark:text-zinc-50 print:bg-white print:p-0 print:text-zinc-950"
+>
+  <header class="max-w-prose">
+    <h1
+      class="text-3xl font-bold text-blue-600 dark:text-blue-400 print:text-zinc-950"
+    >
+      Allen Hansen
+    </h1>
+    <h2 class="mb-8 text-xl">Senior Full Stack Software Developer</h2>
+    <p class="mb-4">
+      Experienced software developer specializing in building web apps and
+      microservices, passionate about leveraging web standards to create
+      accessible and intuitive user experiences that perform at scale.
+    </p>
+    <ul class="flex flex-wrap gap-3">
+      <li>
+        <a
+          class="inline-flex items-center gap-2"
+          href="https://github.com/AMEH64"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <LinkIcon class="size-3.5" />
+          allenhansen.dev
+        </a>
+      </li>
+      <li>
+        <a
+          class="inline-flex items-center gap-2"
+          href="mailto:me@allenhansen.dev"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <AtSymbolIcon class="size-3.5" />
+          me@allenhansen.dev
+        </a>
+      </li>
+      <li>
+        <a
+          class="inline-flex items-center gap-2"
+          href="https://github.com/AMEH64"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <GitHubIcon class="size-3.5" />
+          github.com/ameh64
+        </a>
+      </li>
+    </ul>
+  </header>
+  <main class="max-w-prose space-y-10">
+    <section aria-labelledby="experience" class="space-y-10">
+      <h2
+        id="experience"
+        class="after:mt-1/2 mb-8 text-xl font-semibold uppercase after:block after:h-1.5 after:w-[1.25em] after:rounded after:bg-blue-600 dark:after:bg-blue-400 print:border-b print:border-zinc-700 print:after:hidden"
+      >
+        Experience
+      </h2>
+      {
+        jobs
+          .sort((a, b) => compareDesc(a.data.startDate, b.data.startDate))
+          .map(job => (
+            <article>
+              <div class="mb-6 flex flex-col justify-between">
+                <div class="mb-2 flex items-center justify-between">
+                  <h3 class="text-lg font-bold">{job.data.position}</h3>
+                  <p>
+                    <time datetime={job.data.startDate}>
+                      {format(job.data.startDate, 'MMMM yyyy')}
+                    </time>
+                    {' - '}
+                    <time datetime={job.data.endDate}>
+                      {job.data.endDate
+                        ? format(job.data.endDate, 'MMMM yyyy')
+                        : 'Present'}
+                    </time>
+                  </p>
+                </div>
+                <div class="flex items-center justify-between">
+                  <p>{job.data.company}</p>
+                  <p>{job.data.location}</p>
+                </div>
+              </div>
+              <p class="mb-2">{job.data.summary}</p>
+              <ul class="mb-4 ml-6 list-disc space-y-2">
+                {job.data.highlights.map(highlight => (
+                  <li>{highlight}</li>
+                ))}
+              </ul>
+              <ul class="mb-4 flex flex-wrap gap-3">
+                {job.data.skills?.map(skill => {
+                  const Icon = skillsIcons[skill as keyof typeof skillsIcons]
+                  invariant(Icon, `Icon for skill ${skill} could not be found.`)
+                  return (
+                    <li>
+                      <Badge>
+                        <Icon class="size-3.5" />
+                        {skill}
+                      </Badge>
+                    </li>
+                  )
+                })}
+              </ul>
+            </article>
+          ))
+      }
+      <article class="hidden">
+        <ul class="mb-4 flex flex-wrap gap-2" aria-label="Technologies used">
+          <li>
+            <Badge>
+              <AzureIcon
+                class="size-3.5 stroke-white dark:stroke-zinc-950 print:stroke-white"
+              />
+              Azure
+            </Badge>
+          </li>
+          <li>
+            <Badge>
+              <FigmaIcon
+                class="size-3.5 stroke-white dark:stroke-zinc-950 print:stroke-white"
+              />
+              Figma
+            </Badge>
+          </li>
+          <li>
+            <Badge>
+              <svg
+                class="size-3.5 stroke-white dark:stroke-zinc-950 print:stroke-white"
+                fill="currentColor"
+                viewBox="0 0 128 128"
+              >
+                <path
+                  d="M91.557 1.92 49.05 10.248a1.057 1.057 0 0 0-.856.977l-2.617 44.168a1.05 1.05 0 0 0 1.299 1.097l11.836-2.736c1.444-.332 2.78.972 2.482 2.424l-3.517 17.218a1.047 1.047 0 0 0 1.35 1.227l7.308-2.223c1.475-.447 2.929.881 2.62 2.391l-5.59 27.047c-.128.62.192 1.014.638 1.197.446.183.95.127 1.293-.404l.61-.945 34.626-69.106c.41-.818-.254-1.692-1.146-1.52L87.2 33.413c-1.49.29-2.792-1.136-2.369-2.594l7.951-27.562A1.046 1.046 0 0 0 91.56 1.92h-.002zM6.086 14.86a3.123 3.123 0 0 0-.463.02c-2.106.254-3.467 2.637-2.318 4.651l58.582 102.73c1.203 2.11 4.25 2.098 5.437-.023L124.766 19.52c1.289-2.305-.688-5.067-3.286-4.594l-32.744 5.969-2.943 10.2v.003a1.043 1.043 0 0 0 1.217 1.334h.002l12.183-2.354v.002c1.646-.319 2.986 1.446 2.233 2.947l-34.653 69.155-.638.992a2.055 2.055 0 0 1-2.512.787 2.057 2.057 0 0 1-1.238-2.324l5.59-27.047a1.05 1.05 0 0 0-1.35-1.233l-7.309 2.223c-1.472.448-2.927-.875-2.62-2.383l3.517-17.218a1.049 1.049 0 0 0-1.278-1.25l-11.835 2.736c-1.328.304-2.6-.771-2.522-2.131l1.973-33.277L6.566 14.91a3.279 3.279 0 0 0-.48-.05z"
+                ></path>
+              </svg>
+              Vite
+            </Badge>
+          </li>
+        </ul>
+      </article>
+    </section>
+    <section aria-labelledby="education">
+      <h2
+        id="education"
+        class="after:mt-1/2 mb-8 text-xl font-semibold uppercase after:block after:h-1.5 after:w-[1.25em] after:rounded after:bg-blue-600 dark:after:bg-blue-400 print:border-b print:border-zinc-700"
+      >
+        Education
+      </h2>
+      {
+        education.map(item => (
+          <article>
+            <div class="mb-6 flex flex-col justify-between">
+              <div class="mb-2 flex items-center justify-between">
+                <h3 class="text-lg font-bold">{item.data.degree}</h3>
+                <p>
+                  <time datetime={item.data.graduationDate}>
+                    {format(item.data.graduationDate, 'MMMM yyyy')}
+                  </time>
+                </p>
+              </div>
+              <div class="flex items-center justify-between">
+                <p>{item.data.school}</p>
+                <p>{item.data.location}</p>
+              </div>
+            </div>
+            <p>{item.data.summary}</p>
+          </article>
+        ))
+      }
+    </section>
+  </main>
+</ResumeLagout>

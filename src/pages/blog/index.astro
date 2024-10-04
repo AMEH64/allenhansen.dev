@@ -1,0 +1,38 @@
+---
+import { getCollection } from 'astro:content'
+import FormattedDate from '../../components/FormattedDate.astro'
+import { Image } from 'astro:assets'
+import MainLayout from '../../layouts/MainLayout.astro'
+
+const posts = (await getCollection('blog')).sort(
+  (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
+)
+---
+
+<MainLayout
+  title="Blog | Allen Hansen"
+  description="Notes from a full stack developer; all of my thoughts on programming, life, and more, collected in reverse chronological order."
+>
+  <section>
+    <ul>
+      {
+        posts.map(post => (
+          <li>
+            <a href={`/blog/${post.slug}/`} transition:name={post.slug}>
+              <Image
+                width={720}
+                height={360}
+                src={post.data.image}
+                alt={post.data.title}
+              />
+              <h4 class="title">{post.data.title}</h4>
+              <p class="date">
+                <FormattedDate date={post.data.pubDate} />
+              </p>
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+  </section>
+</MainLayout>
