@@ -1,16 +1,17 @@
 ---
 import { getCollection } from 'astro:content'
-import FormattedDate from '../../components/FormattedDate.astro'
 import { Image } from 'astro:assets'
+import { SITE_TITLE } from '~/consts'
+import FormattedDate from '../../components/FormattedDate.astro'
 import MainLayout from '../../layouts/MainLayout.astro'
 
 const posts = (await getCollection('blog')).sort(
-  (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
+  (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
 )
 ---
 
 <MainLayout
-  title="Blog | Allen Hansen"
+  title={`Blog | ${SITE_TITLE}`}
   description="Notes from a full stack developer; all of my thoughts on programming, life, and more, collected in reverse chronological order."
 >
   <section>

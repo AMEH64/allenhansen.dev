@@ -1,10 +1,11 @@
 ---
+import { SITE_DESCRIPTION, SITE_TITLE } from '~/consts'
 import Badge from '../components/Badge.astro'
 import MainLayout from '~/layouts/MainLayout.astro'
 import Strong from '../components/Strong.astro'
 ---
 
-<MainLayout title="Allen Hansen" description="Welcome to my portfolio!">
+<MainLayout title={SITE_TITLE} description={SITE_DESCRIPTION}>
   <div class="flex flex-col items-center justify-center gap-3 text-center">
     <h1
       class="font-display mx-auto max-w-4xl text-balance text-5xl font-medium tracking-normal text-slate-950 sm:text-7xl dark:text-slate-50"
