@@ -18,16 +18,11 @@ const { title, description, pubDate, updatedDate, image, slug } = Astro.props
         height={510}
         src={image}
         alt={title}
-        class="rounded-lg contain-content"
+        class="mb-6 rounded-lg contain-content"
         transition:name={slug}
       />
-      <h1
-        class="mb-2 mt-6 text-balance text-4xl font-bold tracking-tight sm:text-5xl"
-      >
-        {title}
-      </h1>
       <p
-        class="mb-1 flex items-center text-base text-zinc-600 dark:text-zinc-400"
+        class="mb-4 flex items-center text-base text-zinc-600 dark:text-zinc-400"
       >
         <span class="mr-3 h-4 w-0.5 rounded-full bg-zinc-600 dark:bg-zinc-400"
         ></span>
@@ -41,20 +36,9 @@ const { title, description, pubDate, updatedDate, image, slug } = Astro.props
           }
         </time>
       </p>
-      {
-        updatedDate && (
-          <p class="ml-3.5 text-xs text-zinc-600 dark:text-zinc-400">
-            Updated on
-            <time datetime={updatedDate}>
-              {intlFormat(updatedDate, {
-                year: 'numeric',
-                month: 'long',
-                day: 'numeric',
-              })}
-            </time>
-          </p>
-        )
-      }
+      <h1 class="text-balance text-4xl font-bold tracking-tight sm:text-5xl">
+        {title}
+      </h1>
     </header>
     <div class="prose mt-8 dark:prose-invert">
       <slot />
