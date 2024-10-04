@@ -1,7 +1,8 @@
 ---
+import { Image } from 'astro:assets'
+import { intlFormat } from 'date-fns/intlFormat'
 import MainLayout from './MainLayout.astro'
 import type { CollectionEntry } from 'astro:content'
-import { intlFormat } from 'date-fns/intlFormat'
 
 type Blog = CollectionEntry<'blog'>
 type Props = Blog['data'] & { slug?: Blog['slug'] }
@@ -11,7 +12,15 @@ const { title, description, pubDate, updatedDate, image, slug } = Astro.props
 
 <MainLayout title={title} description={description} image={image.src}>
   <article>
-    <header class="flex flex-col">
+    <header class="flex max-w-prose flex-col">
+      <Image
+        width={1020}
+        height={510}
+        src={image}
+        alt={title}
+        class="rounded-lg contain-content"
+        transition:name={slug}
+      />
       <h1
         class="mb-2 mt-6 text-balance text-4xl font-bold tracking-tight sm:text-5xl"
       >
