@@ -1,0 +1,102 @@
+---
+import { compareDesc } from 'date-fns/compareDesc'
+import { getCollection } from 'astro:content'
+import { intlFormat } from 'date-fns/intlFormat'
+import { SITE_TITLE } from '~/consts'
+import ChevronRightIcon from '~/components/icons/ChevronRightIcon.astro'
+import MainLayout from '../../layouts/MainLayout.astro'
+import RssIcon from '~/components/icons/RssIcon.astro'
+
+const posts = (await getCollection('blog')).sort((a, b) =>
+  compareDesc(b.data.pubDate, a.data.pubDate)
+)
+---
+
+<MainLayout
+  title={`Blog | ${SITE_TITLE}`}
+  description="Notes from a full stack developer; all of my thoughts on programming, life, and more, collected in reverse chronological order."
+>
+  <div class="flex w-full flex-col items-center justify-center">
+    <header class="w-full max-w-prose self-start">
+      <h1
+        class="text-balance text-4xl font-bold tracking-tight text-zinc-800 sm:text-5xl dark:text-zinc-100"
+      >
+        Notes from a full stack developer.
+      </h1>
+      <p class="mt-6 text-pretty text-base text-zinc-600 dark:text-zinc-400">
+        All of my thoughts on programming, life, and more, collected in reverse
+        chronological order.
+      </p>
+      <a
+        class:list={[
+          'mt-3',
+          'relative inline-flex items-center justify-center gap-x-2 whitespace-nowrap rounded-md px-4 py-3 text-base font-medium transition-all',
+          'border border-zinc-600 dark:border-zinc-400',
+          'text-zinc-600 hover:bg-blue-500/10 hover:text-zinc-700 dark:text-zinc-400 hover:dark:text-zinc-300',
+          'focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2',
+          'focus-visible:outline-blue-600 dark:focus-visible:outline-blue-400',
+          'disabled:pointer-events-none disabled:opacity-50',
+          '[&>[data-slot=icon]]:my-1 [&>[data-slot=icon]]:size-4 [&>[data-slot=icon]]:shrink-0',
+        ]}
+        href="/blog/rss.xml"
+      >
+        <RssIcon /> RSS Feed
+      </a>
+    </header>
+    <div
+      class="mt-16 flex w-full flex-col space-y-16 md:border-l md:border-zinc-100 md:pl-6 md:dark:border-zinc-700/40"
+    >
+      {
+        posts.map(post => (
+          <article class="md:grid md:grid-cols-4 md:items-baseline">
+            <div class="group relative flex flex-col items-start md:col-span-3">
+              <h2 class="text-base font-semibold tracking-tight text-zinc-800 dark:text-zinc-100">
+                <div class="absolute -inset-x-4 -inset-y-6 z-0 scale-95 bg-zinc-50 opacity-0 transition group-hover:scale-100 group-hover:opacity-100 sm:-inset-x-6 sm:rounded-2xl dark:bg-zinc-800/50" />
+                <a href={`/blog/${post.slug}`}>
+                  <span class="absolute -inset-x-4 -inset-y-6 z-20 sm:-inset-x-6 sm:rounded-2xl" />
+                  <span class="relative z-10">{post.data.title}</span>
+                </a>
+              </h2>
+              <time
+                class="relative z-10 order-first mb-3 flex items-center pl-3.5 text-sm text-zinc-400 md:hidden dark:text-zinc-500"
+                datetime={post.data.pubDate}
+              >
+                <span
+                  class="absolute inset-y-0 left-0 flex items-center"
+                  aria-hidden="true"
+                >
+                  <span class="h-4 w-0.5 rounded-full bg-zinc-200 dark:bg-zinc-500" />
+                </span>
+                {intlFormat(post.data.pubDate, {
+                  year: 'numeric',
+                  month: 'long',
+                  day: 'numeric',
+                })}
+              </time>
+              <p class="relative z-10 mt-2 text-sm text-zinc-600 dark:text-zinc-400">
+                {post.data.description}
+              </p>
+              <div
+                aria-hidden="true"
+                class="relative z-10 mt-4 flex items-center text-sm font-medium text-blue-600 dark:text-blue-400"
+              >
+                Read article
+                <ChevronRightIcon />
+              </div>
+            </div>
+            <time
+              class="relative z-10 order-first mb-3 mt-1 hidden items-center text-sm text-zinc-400 md:block dark:text-zinc-500"
+              datetime={post.data.pubDate}
+            >
+              {intlFormat(post.data.pubDate, {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric',
+              })}
+            </time>
+          </article>
+        ))
+      }
+    </div>
+  </div>
+</MainLayout>

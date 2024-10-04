@@ -1,0 +1,36 @@
+---
+import HeaderLink from './HeaderLink.astro'
+import GitHubIcon from './icons/GitHubIcon.astro'
+---
+
+<header
+  class="sticky top-0 z-10 w-full border-b border-zinc-300/40 bg-white shadow backdrop-blur supports-[backdrop-filter]:bg-white/65 dark:border-zinc-700/40 dark:bg-zinc-900 dark:shadow-zinc-950 dark:supports-[backdrop-filter]:bg-zinc-900/65"
+  transition:animate="none"
+>
+  <div
+    class="mx-auto flex h-16 max-w-screen-2xl flex-1 items-center justify-between gap-4 px-4 sm:px-6 lg:px-8"
+  >
+    <nav class="flex items-center justify-start gap-3">
+      <a href="/" class="font-mono tracking-tight">
+        &lt;AllenHansen&nbsp;/&gt;
+      </a>
+      <div
+        class="inline-block h-6 w-0.5 rounded-full bg-zinc-300 dark:bg-zinc-700"
+      >
+      </div>
+      <HeaderLink href="/about">About</HeaderLink>
+      <HeaderLink href="/blog">Blog</HeaderLink>
+    </nav>
+    <div class="flex items-center justify-end gap-3">
+      <a
+        aria-label="Allen's GitHub Profile"
+        href="https://github.com/AMEH64"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        <GitHubIcon class="size-6" />
+        <span class="sr-only">GitHub</span>
+      </a>
+    </div>
+  </div>
+</header>

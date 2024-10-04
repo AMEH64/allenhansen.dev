@@ -1,0 +1,32 @@
+{
+  "position": "Software Developer",
+  "company": "Mortgage Cadence, an Accenture Company",
+  "location": "Remote",
+  "startDate": "2020-03-04",
+  "endDate": "2022-11-11",
+  "summary": "Worked as part of a scrum team on Collaboration Center, a multi-tenant B2B SaaS solution that powers collaboration within the mortgage industry.",
+  "highlights": [
+    "Developed and maintained a RESTful APIs using .NET and C# for internal and external integrations.",
+    "Designed and implemented an OAuth 2.0 Authorization Code Grant solution using OWIN Katana for .NET, replacing password storage with revocable, scoped access and refresh tokens for secure third-party integrations.",
+    "Led the upgrade from ASP.NET Web Forms to Angular, modernizing the UI/UX and increasing maintainability.",
+    "Developed a mechanism to embed key features into other web apps using micro frontends, boosting flexibility and reducing time-to-market.",
+    "Built a CI pipeline for the Angular SPA using Azure Pipelines, enabling early detection of issues.",
+    "Developed a proof of concept for a multi-phase upgrade from .NET Framework to .NET Core, aimed at reducing technical debt and modernizing the platform.",
+    "Collaborated with the UI/UX design team to improve accessibility, adhering to WCAG 2.1 Level AA requirements."
+  ],
+  "skills": [
+    "Angular",
+    "Azure DevOps",
+    "Bootstrap",
+    "CSS",
+    "C#",
+    ".NET",
+    "Figma",
+    "Git",
+    "HTML",
+    "JavaScript",
+    "Sass",
+    "SQL Server",
+    "TypeScript"
+  ]
+}

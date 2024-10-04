@@ -1,0 +1,24 @@
+{
+  "position": "Senior Software Developer",
+  "company": "Kincentric, a Spencer Stuart Company",
+  "location": "Remote",
+  "startDate": "2022-11-28",
+  "summary": "TODO",
+  "highlights": [
+    "One",
+    "Implemented a stopgap theming solution for the legacy survey engine, improving UX with WCAG 2.1 AA-compliant prebuilt themes, dynamic color contrast checks, and a preview option for custom themes.",
+    "Three"
+  ],
+  "skills": [
+    "Azure",
+    "Azure DevOps",
+    "C#",
+    ".NET",
+    "Figma",
+    "Git",
+    "React",
+    "SQL Server",
+    "Tailwind CSS",
+    "TypeScript"
+  ]
+}

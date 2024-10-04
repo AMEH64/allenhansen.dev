@@ -1,0 +1,14 @@
+{
+  "position": "Software Developer",
+  "company": "Willis Towers Watson (WTW)",
+  "location": "Minneapolis, MN/Remote",
+  "startDate": "2017-06-05",
+  "endDate": "2018-11-14",
+  "summary": " Worked as part of a cross-functional and international team on Benefit Connect, a single-tenant B2B SaaS solution that powers the employee benefits experience for employers.",
+  "highlights": [
+    "Spearheaded the revamp of several billing exports to improve their accuracy and ensure we met our service level agreements.",
+    "Administered our product release consumption process, ensuring the reliability of client solutions.",
+    "Assisted our talent development team in conducting interviews for college recruits."
+  ],
+  "skills": ["CSS", "C#", ".NET", "HTML", "JavaScript", "SQL Server"]
+}

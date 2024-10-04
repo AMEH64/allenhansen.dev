@@ -1,0 +1,17 @@
+{
+  "position": "Software Developer Technical Lead",
+  "company": "Willis Towers Watson (WTW)",
+  "location": "Minneapolis, MN/Remote",
+  "startDate": "2018-11-15",
+  "endDate": "2020-02-28",
+  "summary": "Led a team of four developers working on Benefit Connect, a single-tenant B2B SaaS solution used by employers to power their employee benefits experience.",
+  "highlights": [
+    "Co-led the upgrade of an employee self-service web app from ASP.NET Web Forms to ASP.NET MVC, resulting in an increased adoption rate and reduced manual processes.",
+    "Co-led a new client implementation",
+    "Led the integration of multi-factor authentication.",
+    "Coordinated with client vendors on SSO using SAML 2.0.",
+    "Pioneered our product release consumption process.",
+    "Provided guidance to both new hires and peers through code reviews and training sessions."
+  ],
+  "skills": ["CSS", "C#", ".NET", "HTML", "JavaScript", "SQL Server"]
+}
