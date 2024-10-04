@@ -1,6 +1,7 @@
 ---
-import HeaderLink from './HeaderLink.astro'
+import Button from './Button.astro'
 import GitHubIcon from './icons/GitHubIcon.astro'
+import HeaderLink from './HeaderLink.astro'
 ---
 
 <header
@@ -11,9 +12,9 @@ import GitHubIcon from './icons/GitHubIcon.astro'
     class="mx-auto flex h-16 max-w-screen-2xl flex-1 items-center justify-between gap-4 px-4 sm:px-6 lg:px-8"
   >
     <nav class="flex items-center justify-start gap-3">
-      <a href="/" class="font-mono tracking-tight">
+      <Button as="a" class="font-mono tracking-tight" href="/" variant="text">
         &lt;AllenHansen&nbsp;/&gt;
-      </a>
+      </Button>
       <div
         class="inline-block h-6 w-0.5 rounded-full bg-zinc-300 dark:bg-zinc-700"
       >
@@ -22,15 +23,17 @@ import GitHubIcon from './icons/GitHubIcon.astro'
       <HeaderLink href="/blog">Blog</HeaderLink>
     </nav>
     <div class="flex items-center justify-end gap-3">
-      <a
+      <Button
         aria-label="Allen's GitHub Profile"
+        as="a"
         href="https://github.com/AMEH64"
         target="_blank"
         rel="noopener noreferrer"
+        variant="text"
       >
         <GitHubIcon class="size-6" />
         <span class="sr-only">GitHub</span>
-      </a>
+      </Button>
     </div>
   </div>
 </header>
