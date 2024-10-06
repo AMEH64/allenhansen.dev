@@ -8,9 +8,9 @@ import Button from '~/components/Button.astro'
 import MainLayout from '../../layouts/MainLayout.astro'
 import RssIcon from '~/components/icons/RssIcon.astro'
 
-const posts = (await getCollection('blog')).sort((a, b) =>
-  compareDesc(b.data.pubDate, a.data.pubDate),
-)
+const posts = (
+  await getCollection('blog', p => !p.data.draft || import.meta.env.DEV)
+).sort((a, b) => compareDesc(b.data.pubDate, a.data.pubDate))
 ---
 
 <MainLayout

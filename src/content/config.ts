@@ -2,12 +2,11 @@ import { defineCollection, z } from 'astro:content'
 
 const blog = defineCollection({
   type: 'content',
-  // Type-check frontmatter using a schema
   schema: ({ image }) =>
     z.object({
       title: z.string(),
       description: z.string(),
-      // Transform string to Date object
+      draft: z.boolean().optional().default(false),
       pubDate: z.string().date(),
       updatedDate: z.string().date().optional(),
       image: image().refine(img => img.width >= 1080, {
