@@ -17,6 +17,7 @@ import GitIcon from '~/components/icons/GitIcon.astro'
 import HtmlIcon from '~/components/icons/HtmlIcon.astro'
 import invariant from 'tiny-invariant'
 import JavaScriptIcon from '~/components/icons/JavaScriptIcon.astro'
+import LInkedInIcon from '~/components/icons/LInkedInIcon.astro'
 import LinkIcon from '~/components/icons/LinkIcon.astro'
 import ReactIcon from '~/components/icons/ReactIcon.astro'
 import ResumeLagout from '~/layouts/ResumeLagout.astro'
@@ -48,36 +49,28 @@ const skillsIcons = {
 } satisfies Record<string, Function>
 ---
 
-<style>
-  @media print {
-    @page {
-      size: letter;
-      margin: 1in;
-      page-orientation: upright;
-    }
-  }
-</style>
-
 <ResumeLagout
-  class="grid min-h-svh place-content-center space-y-10 bg-white p-12 text-zinc-950 dark:bg-zinc-900 dark:text-zinc-50 print:bg-white print:p-0 print:text-zinc-950"
+  class="grid min-h-svh place-content-center space-y-10 bg-white p-12 text-zinc-950 dark:bg-zinc-900 dark:text-zinc-50 print:space-y-4 print:bg-white print:p-0 print:text-zinc-950"
 >
   <header class="max-w-prose">
     <h1
-      class="text-3xl font-bold text-blue-600 dark:text-blue-400 print:text-zinc-950"
+      class="text-balance text-3xl font-bold text-blue-600 dark:text-blue-400 print:text-blue-600"
     >
       Allen Hansen
     </h1>
-    <h2 class="mb-8 text-xl">Senior Full Stack Software Developer</h2>
-    <p class="mb-4">
+    <h2 class="mb-6 text-balance text-xl print:mb-3">
+      Senior Full Stack Software Developer
+    </h2>
+    <p class="mb-6 text-pretty print:mb-3 print:text-sm">
       Experienced software developer specializing in building web apps and
       microservices, passionate about leveraging web standards to create
       accessible and intuitive user experiences that perform at scale.
     </p>
-    <ul class="flex flex-wrap gap-3">
+    <ul class="flex flex-wrap gap-3 text-xs">
       <li>
         <a
-          class="inline-flex items-center gap-2"
-          href="https://github.com/AMEH64"
+          class="inline-flex items-center gap-1"
+          href="https://allenhansen.dev"
           target="_blank"
           rel="noopener noreferrer"
         >
@@ -87,7 +80,7 @@ const skillsIcons = {
       </li>
       <li>
         <a
-          class="inline-flex items-center gap-2"
+          class="inline-flex items-center gap-1"
           href="mailto:me@allenhansen.dev"
           target="_blank"
           rel="noopener noreferrer"
@@ -98,7 +91,7 @@ const skillsIcons = {
       </li>
       <li>
         <a
-          class="inline-flex items-center gap-2"
+          class="inline-flex items-center gap-1"
           href="https://github.com/AMEH64"
           target="_blank"
           rel="noopener noreferrer"
@@ -107,13 +100,24 @@ const skillsIcons = {
           github.com/ameh64
         </a>
       </li>
+      <li>
+        <a
+          class="inline-flex items-center gap-1"
+          href="https://www.linkedin.com/in/allen-hansen"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <LInkedInIcon class="size-3.5" />
+          linkedin.com/in/allen-hansen
+        </a>
+      </li>
     </ul>
   </header>
-  <main class="max-w-prose space-y-10">
-    <section aria-labelledby="experience" class="space-y-10">
+  <main class="max-w-prose space-y-10 print:space-y-4">
+    <section aria-labelledby="experience" class="space-y-10 print:space-y-4">
       <h2
         id="experience"
-        class="after:mt-1/2 mb-8 text-xl font-semibold uppercase after:block after:h-1.5 after:w-[1.25em] after:rounded after:bg-blue-600 dark:after:bg-blue-400 print:border-b print:border-zinc-700 print:after:hidden"
+        class="after:mt-1/2 mb-8 text-xl font-semibold after:block after:h-1.5 after:w-[1.25em] after:rounded after:bg-blue-600 dark:after:bg-blue-400 print:mb-4 print:border-b print:border-zinc-700 print:after:hidden"
       >
         Experience
       </h2>
@@ -122,10 +126,12 @@ const skillsIcons = {
           .sort((a, b) => compareDesc(a.data.startDate, b.data.startDate))
           .map(job => (
             <article>
-              <div class="mb-6 flex flex-col justify-between">
-                <div class="mb-2 flex items-center justify-between">
-                  <h3 class="text-lg font-bold">{job.data.position}</h3>
-                  <p>
+              <div class="mb-6 flex flex-col justify-between print:mb-3">
+                <div class="mb-2 flex items-center justify-between print:mb-1">
+                  <h3 class="text-lg font-bold print:text-base">
+                    {job.data.position}
+                  </h3>
+                  <p class="print:text-sm">
                     <time datetime={job.data.startDate}>
                       {format(job.data.startDate, 'MMMM yyyy')}
                     </time>
@@ -137,18 +143,18 @@ const skillsIcons = {
                     </time>
                   </p>
                 </div>
-                <div class="flex items-center justify-between">
+                <div class="flex items-center justify-between print:text-sm">
                   <p>{job.data.company}</p>
                   <p>{job.data.location}</p>
                 </div>
               </div>
-              <p class="mb-2">{job.data.summary}</p>
-              <ul class="mb-4 ml-6 list-disc space-y-2">
+              <p class="mb-2 hidden">{job.data.summary}</p>
+              <ul class="mb-4 ml-6 list-disc space-y-2 print:space-y-0 print:text-sm">
                 {job.data.highlights.map(highlight => (
                   <li>{highlight}</li>
                 ))}
               </ul>
-              <ul class="mb-4 flex flex-wrap gap-3">
+              <ul class="flex flex-wrap gap-3">
                 {job.data.skills?.map(skill => {
                   const Icon = skillsIcons[skill as keyof typeof skillsIcons]
                   invariant(Icon, `Icon for skill ${skill} could not be found.`)
@@ -165,7 +171,7 @@ const skillsIcons = {
             </article>
           ))
       }
-      <article class="hidden">
+      <!-- <article class="hidden">
         <ul class="mb-4 flex flex-wrap gap-2" aria-label="Technologies used">
           <li>
             <Badge>
@@ -198,21 +204,23 @@ const skillsIcons = {
             </Badge>
           </li>
         </ul>
-      </article>
+      </article>-->
     </section>
     <section aria-labelledby="education">
       <h2
         id="education"
-        class="after:mt-1/2 mb-8 text-xl font-semibold uppercase after:block after:h-1.5 after:w-[1.25em] after:rounded after:bg-blue-600 dark:after:bg-blue-400 print:border-b print:border-zinc-700"
+        class="after:mt-1/2 mb-8 text-xl font-semibold after:block after:h-1.5 after:w-[1.25em] after:rounded after:bg-blue-600 dark:after:bg-blue-400 print:mb-4 print:border-b print:border-zinc-700 print:after:hidden"
       >
         Education
       </h2>
       {
         education.map(item => (
           <article>
-            <div class="mb-6 flex flex-col justify-between">
-              <div class="mb-2 flex items-center justify-between">
-                <h3 class="text-lg font-bold">{item.data.degree}</h3>
+            <div class="mb-6 flex flex-col justify-between print:mb-3">
+              <div class="mb-2 flex items-center justify-between print:mb-1">
+                <h3 class="text-lg font-bold print:text-base">
+                  {item.data.degree}
+                </h3>
                 <p>
                   <time datetime={item.data.graduationDate}>
                     {format(item.data.graduationDate, 'MMMM yyyy')}
@@ -224,10 +232,20 @@ const skillsIcons = {
                 <p>{item.data.location}</p>
               </div>
             </div>
-            <p>{item.data.summary}</p>
+            <p class="print:text-sm">{item.data.summary}</p>
           </article>
         ))
       }
     </section>
   </main>
 </ResumeLagout>
+
+<style>
+  @media print {
+    @page {
+      size: letter;
+      margin: 1in;
+      page-orientation: upright;
+    }
+  }
+</style>

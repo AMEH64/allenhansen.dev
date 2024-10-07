@@ -1,32 +1,25 @@
 {
-  "position": "Software Developer",
-  "company": "Mortgage Cadence, an Accenture Company",
+  "position": "Senior Software Developer",
+  "company": "Kincentric, a Spencer Stuart Company",
   "location": "Remote",
-  "startDate": "2020-03-04",
-  "endDate": "2022-11-11",
-  "summary": "Worked as part of a scrum team on Collaboration Center, a multi-tenant B2B SaaS solution that powers collaboration within the mortgage industry.",
+  "startDate": "2022-11-28",
+  "summary": "TODO",
   "highlights": [
-    "Developed and maintained a RESTful APIs using .NET and C# for internal and external integrations.",
-    "Designed and implemented an OAuth 2.0 Authorization Code Grant solution using OWIN Katana for .NET, replacing password storage with revocable, scoped access and refresh tokens for secure third-party integrations.",
-    "Led the upgrade from ASP.NET Web Forms to Angular, modernizing the UI/UX and increasing maintainability.",
-    "Developed a mechanism to embed key features into other web apps using micro frontends, boosting flexibility and reducing time-to-market.",
-    "Built a CI pipeline for the Angular SPA using Azure Pipelines, enabling early detection of issues.",
-    "Developed a proof of concept for a multi-phase upgrade from .NET Framework to .NET Core, aimed at reducing technical debt and modernizing the platform.",
-    "Collaborated with the UI/UX design team to improve accessibility, adhering to WCAG 2.1 Level AA requirements."
+    "Spearhead the redevelopment of the Survey Engine front end, transitioning from ASP.NET Web Forms to React, eliminating legacy code, enhancing accessibility, and improving overall UI/UX.",
+    "Develop a theming solution using CSS custom properties (variables), reducing custom CSS by 84%, leading to faster load times and improved performance. Enhanced user experience with prebuilt themes, dynamic color contrast checks, and a live preview feature.",
+    "Lead accessibility initiatives, implementing WCAG 2.1 AA-compliant features, improving platform usability through enhancements such as screen reader support, keyboard navigation, adaptive themes, user preferences, and improved mobile interactions.",
+    "Advocate for modern testing practices, promoting the adoption of React Testing Library for user-centric testing."
   ],
   "skills": [
-    "Angular",
+    "Azure",
     "Azure DevOps",
-    "Bootstrap",
-    "CSS",
     "C#",
     ".NET",
     "Figma",
     "Git",
-    "HTML",
-    "JavaScript",
-    "Sass",
+    "React",
     "SQL Server",
+    "Tailwind CSS",
     "TypeScript"
   ]
 }

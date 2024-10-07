@@ -6,12 +6,10 @@
   "endDate": "2020-02-28",
   "summary": "Led a team of four developers working on Benefit Connect, a single-tenant B2B SaaS solution used by employers to power their employee benefits experience.",
   "highlights": [
-    "Co-led the upgrade of an employee self-service web app from ASP.NET Web Forms to ASP.NET MVC, resulting in an increased adoption rate and reduced manual processes.",
-    "Co-led a new client implementation",
-    "Led the integration of multi-factor authentication.",
-    "Coordinated with client vendors on SSO using SAML 2.0.",
-    "Pioneered our product release consumption process.",
-    "Provided guidance to both new hires and peers through code reviews and training sessions."
+    "Co-led the implementation for a new client, delivering a highly configurable solution tailored to the client's specific needs.",
+    "Upgraded a client's Employee Self Service (ESS) application from ASP.NET Web Forms to ASP.NET MVC, enhancing performance, user experience, and maintainability.",
+    "Integrated Multi-Factor Authentication (MFA) and Single Sign-On (SSO) using SAML 2.0 for multiple clients, enhancing application security and overall UX.",
+    "Assisted in talent acquisition, conducting interviews for college recruits to support team growth."
   ],
   "skills": ["CSS", "C#", ".NET", "HTML", "JavaScript", "SQL Server"]
 }
