@@ -64,22 +64,14 @@ const skillsIcons = {
       Senior Full Stack Software Developer
     </h2>
     <p class="mb-6 text-pretty print:mb-3 print:text-sm">
-      Experienced software developer specializing in building web apps and
-      microservices, passionate about leveraging web standards to create
-      accessible and intuitive user experiences that perform at scale.
+      Software Developer with over 7 years of experience specializing in
+      building web apps and microservices. Passionate about leveraging web
+      standards to create accessible and intuitive user experiences that perform
+      at scale.
     </p>
-    <ul class="grid grid-cols-2 gap-3 text-sm">
-      <li>
-        <a
-          class="inline-flex items-center gap-2"
-          href="https://allenhansen.dev"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <LinkIcon class="size-3.5" />
-          allenhansen.dev
-        </a>
-      </li>
+    <ul
+      class="flex flex-wrap gap-3 text-sm print:gap-1.5 print:divide-x print:divide-zinc-400 print:[&>li:not(:first-child)]:pl-1.5"
+    >
       <li>
         <a
           class="inline-flex items-center gap-2"
@@ -87,19 +79,19 @@ const skillsIcons = {
           target="_blank"
           rel="noopener noreferrer"
         >
-          <AtSymbolIcon class="size-3.5" />
+          <AtSymbolIcon class="size-3.5 print:hidden" />
           me@allenhansen.dev
         </a>
       </li>
       <li>
         <a
           class="inline-flex items-center gap-2"
-          href="https://github.com/AMEH64"
+          href="https://allenhansen.dev"
           target="_blank"
           rel="noopener noreferrer"
         >
-          <GitHubIcon class="size-3.5" />
-          github.com/ameh64
+          <LinkIcon class="size-3.5 print:hidden" />
+          allenhansen.dev
         </a>
       </li>
       <li>
@@ -109,8 +101,19 @@ const skillsIcons = {
           target="_blank"
           rel="noopener noreferrer"
         >
-          <LInkedInIcon class="size-3.5" />
+          <LInkedInIcon class="size-3.5 print:hidden" />
           linkedin.com/in/allen-hansen
+        </a>
+      </li>
+      <li>
+        <a
+          class="inline-flex items-center gap-2"
+          href="https://github.com/AMEH64"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <GitHubIcon class="size-3.5 print:hidden" />
+          github.com/ameh64
         </a>
       </li>
     </ul>
@@ -166,7 +169,9 @@ const skillsIcons = {
       >
         Skills
       </h2>
-      <ul class="flex flex-wrap gap-3 text-sm print:gap-0">
+      <ul
+        class="flex flex-wrap gap-3 text-sm print:gap-1.5 print:divide-x print:divide-zinc-300 print:[&>li:not(:first-child)]:pl-1.5"
+      >
         {
           [...new Set(jobs.flatMap(job => job.data.skills))]
             .sort(
@@ -178,17 +183,10 @@ const skillsIcons = {
               const Icon = skillsIcons[skill as keyof typeof skillsIcons]
               invariant(Icon, `Icon for skill ${skill} could not be found.`)
               return (
-                <li class="group">
+                <li>
                   <Badge>
                     <Icon class="size-3.5 print:hidden" />
-                    <>
-                      <span>
-                        {skill}
-                        <span class="hidden group-last:hidden print:inline-block">
-                          {', '}
-                        </span>
-                      </span>
-                    </>
+                    {skill}
                   </Badge>
                 </li>
               )
