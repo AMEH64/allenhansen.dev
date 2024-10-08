@@ -66,7 +66,7 @@ const skillsIcons = {
       microservices, passionate about leveraging web standards to create
       accessible and intuitive user experiences that perform at scale.
     </p>
-    <ul class="flex flex-wrap gap-3 text-xs">
+    <ul class="flex flex-col gap-3 text-xs sm:flex-row sm:flex-wrap">
       <li>
         <a
           class="inline-flex items-center gap-1"
@@ -126,27 +126,23 @@ const skillsIcons = {
           .sort((a, b) => compareDesc(a.data.startDate, b.data.startDate))
           .map(job => (
             <article>
-              <div class="mb-6 flex flex-col justify-between print:mb-3">
-                <div class="mb-2 flex items-center justify-between print:mb-1">
-                  <h3 class="text-lg font-bold print:text-base">
-                    {job.data.position}
-                  </h3>
-                  <p class="print:text-sm">
-                    <time datetime={job.data.startDate}>
-                      {format(job.data.startDate, 'MMMM yyyy')}
-                    </time>
-                    {' - '}
-                    <time datetime={job.data.endDate}>
-                      {job.data.endDate
-                        ? format(job.data.endDate, 'MMMM yyyy')
-                        : 'Present'}
-                    </time>
-                  </p>
-                </div>
-                <div class="flex items-center justify-between print:text-sm">
-                  <p>{job.data.company}</p>
-                  <p>{job.data.location}</p>
-                </div>
+              <div class="mb-6 grid grid-cols-1 gap-2 sm:grid-cols-2 print:mb-3 print:gap-1">
+                <h3 class="order-1 text-lg font-bold print:text-base">
+                  {job.data.position}
+                </h3>
+                <p class="order-3 sm:order-2 sm:text-end print:text-sm">
+                  <time datetime={job.data.startDate}>
+                    {format(job.data.startDate, 'MMMM yyyy')}
+                  </time>
+                  {' - '}
+                  <time datetime={job.data.endDate}>
+                    {job.data.endDate
+                      ? format(job.data.endDate, 'MMMM yyyy')
+                      : 'Present'}
+                  </time>
+                </p>
+                <p class="order-2 sm:order-3">{job.data.company}</p>
+                <p class="order-4 sm:text-end">{job.data.location}</p>
               </div>
               <p class="mb-2 hidden">{job.data.summary}</p>
               <ul class="mb-4 ml-6 list-disc space-y-2 print:space-y-0 print:text-sm">
@@ -216,21 +212,17 @@ const skillsIcons = {
       {
         education.map(item => (
           <article>
-            <div class="mb-6 flex flex-col justify-between print:mb-3">
-              <div class="mb-2 flex items-center justify-between print:mb-1">
-                <h3 class="text-lg font-bold print:text-base">
-                  {item.data.degree}
-                </h3>
-                <p>
-                  <time datetime={item.data.graduationDate}>
-                    {format(item.data.graduationDate, 'MMMM yyyy')}
-                  </time>
-                </p>
-              </div>
-              <div class="flex items-center justify-between">
-                <p>{item.data.school}</p>
-                <p>{item.data.location}</p>
-              </div>
+            <div class="mb-6 grid grid-cols-1 gap-2 sm:grid-cols-2 print:mb-3 print:gap-1">
+              <h3 class="order-1 text-lg font-bold print:text-base">
+                {item.data.degree}
+              </h3>
+              <p class="order-3 sm:order-2 sm:text-end print:text-sm">
+                <time datetime={item.data.graduationDate}>
+                  {format(item.data.graduationDate, 'MMMM yyyy')}
+                </time>
+              </p>
+              <p class="order-2 sm:order-3">{item.data.school}</p>
+              <p class="order-4 sm:text-end">{item.data.location}</p>
             </div>
             <p class="print:text-sm">{item.data.summary}</p>
           </article>
