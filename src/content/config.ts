@@ -35,7 +35,7 @@ const educationCollection = defineCollection({
     school: z.string().min(1),
     location: z.string().min(1),
     graduationDate: z.string().date(),
-    summary: z.string().min(1),
+    highlights: z.string().min(1).array().min(1).max(7),
   }),
 })
 

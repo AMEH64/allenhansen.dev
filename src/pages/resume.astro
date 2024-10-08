@@ -218,7 +218,17 @@ const skillsIcons = {
                 {item.data.location}
               </p>
             </div>
-            <p class="print:text-sm">{item.data.summary}</p>
+            <ul
+              class:list={[
+                item.data.highlights.length > 1 &&
+                  'ml-6 list-disc space-y-2 print:space-y-0',
+                'print:text-sm',
+              ]}
+            >
+              {item.data.highlights.map(highlight => (
+                <li>{highlight}</li>
+              ))}
+            </ul>
           </article>
         ))
       }

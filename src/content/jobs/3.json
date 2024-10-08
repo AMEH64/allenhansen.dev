@@ -5,6 +5,7 @@
   "startDate": "2022-11-28",
   "highlights": [
     "Lead the redevelopment of the Survey Engine front end, transitioning from ASP.NET Web Forms to React, eliminating legacy code, enhancing accessibility, and improving overall UI/UX.",
+    "Contribute to the redeveopment of the Survey Builder application, transitioning from a monolithic architecture to a microservices-based architecture using .NET, improving the scalability and resiliency of the platform.",
     "Developed a theming solution that reduced custom CSS by 84%, resulting in faster load times and an improved user experience with prebuilt themes, color contrast checks, and a live preview.",
     "Lead accessibility initiatives, implementing WCAG 2.1 AA-compliant features, improving platform usability through enhancements such as screen reader support, keyboard navigation, adaptive themes, user preferences, and improved mobile interactions.",
     "Advocate for modern testing practices, promoting the adoption of React Testing Library for user-centric testing."
