@@ -4,7 +4,6 @@
   "location": "Minneapolis, MN/Remote",
   "startDate": "2018-11-15",
   "endDate": "2020-02-28",
-  "summary": "Led a team of four developers working on Benefit Connect, a single-tenant B2B SaaS solution used by employers to power their employee benefits experience.",
   "highlights": [
     "Co-led the implementation for a new client, delivering a highly configurable solution tailored to the client's specific needs.",
     "Upgraded a client's Employee Self Service (ESS) application from ASP.NET Web Forms to ASP.NET MVC, enhancing performance, user experience, and maintainability.",

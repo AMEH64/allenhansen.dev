@@ -4,9 +4,8 @@
   "location": "Remote",
   "startDate": "2020-03-04",
   "endDate": "2022-11-11",
-  "summary": "Worked as part of a scrum team on Collaboration Center, a multi-tenant B2B SaaS solution that powers collaboration within the mortgage industry.",
   "highlights": [
-    "Rewrote Collaboration Center’s front-end, transitioning from ASP.NET Web Forms to Angular, reducing legacy code, enhancing accessibility, and improving overall UI/UX.",
+    "Rewrote Collaboration Center&apos;s front-end, transitioning from ASP.NET Web Forms to Angular, reducing legacy code, enhancing accessibility, and improving overall UI/UX.",
     "Developed a micro-frontend architecture to embed Collaboration Center features into other web applications, enabling seamless integrations with automatic updates.",
     "Enhanced application security by designing and implementing an OAuth 2.0 Authorization Code Grant solution using .NET, eliminating the need to store user credentials and enabling secure third-party integrations.",
     "Collaborated with the UI/UX design team to enhance accessibility, aligning the application with WCAG 2.1 AA by implementing features such as roving tabindex, keyboard navigation, and screen reader support.",

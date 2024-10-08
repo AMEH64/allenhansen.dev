@@ -3,7 +3,6 @@
   "company": "Kincentric, a Spencer Stuart Company",
   "location": "Remote",
   "startDate": "2022-11-28",
-  "summary": "TODO",
   "highlights": [
     "Spearhead the redevelopment of the Survey Engine front end, transitioning from ASP.NET Web Forms to React, eliminating legacy code, enhancing accessibility, and improving overall UI/UX.",
     "Develop a theming solution using CSS custom properties (variables), reducing custom CSS by 84%, leading to faster load times and improved performance. Enhanced user experience with prebuilt themes, dynamic color contrast checks, and a live preview feature.",
