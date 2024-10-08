@@ -1,4 +1,20 @@
-<svg class="size-3.5" fill="currentColor" viewBox="0 0 128 128">
+---
+import type { HTMLAttributes } from 'astro/types'
+
+type Props = Omit<HTMLAttributes<'svg'>, 'xmlns' | 'viewBox' | 'fill'>
+
+const { class: className = 'size-4', ...props } = Astro.props
+---
+
+<svg
+  aria-hidden="true"
+  xmlns="http://www.w3.org/2000/svg"
+  viewBox="0 0 128 128"
+  fill="currentColor"
+  class={className}
+  data-slot="icon"
+  {...props}
+>
   <path
     fill-rule="evenodd"
     clip-rule="evenodd"

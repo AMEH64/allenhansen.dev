@@ -1,8 +1,19 @@
+---
+import type { HTMLAttributes } from 'astro/types'
+
+type Props = Omit<HTMLAttributes<'svg'>, 'xmlns' | 'viewBox' | 'fill'>
+
+const { class: className = 'size-4', ...props } = Astro.props
+---
+
 <svg
-  class="size-3.5"
-  viewBox="0 0 456 456"
-  fill="none"
+  aria-hidden="true"
   xmlns="http://www.w3.org/2000/svg"
+  viewBox="0 0 456 456"
+  fill="currentColor"
+  class={className}
+  data-slot="icon"
+  {...props}
 >
   <rect class="size-full fill-current"></rect>
   <path

@@ -24,7 +24,7 @@ const jobsCollection = defineCollection({
     startDate: z.string().date(),
     endDate: z.string().date().optional(),
     highlights: z.string().min(1).array().min(3).max(7),
-    skills: z.string().min(1).array().min(1).optional(),
+    skills: z.string().min(1).array().min(1),
   }),
 })
 

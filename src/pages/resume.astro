@@ -159,29 +159,40 @@ const skillsIcons = {
           ))
       }
     </section>
-    <section aria-labelledby="skills">
+    <section aria-labelledby="skills" class="space-y-4 print:space-y-2">
       <h2
         id="skills"
         class="mb-8 text-xl font-semibold text-blue-600 dark:text-blue-400 print:mb-4 print:text-blue-600"
       >
         Skills
       </h2>
-      <ul class="grid grid-cols-4 gap-3">
+      <ul class="flex flex-wrap gap-3 text-sm print:gap-0">
         {
-          [...new Set(jobs.flatMap(job => job.data.skills ?? []))].map(
-            skill => {
+          [...new Set(jobs.flatMap(job => job.data.skills))]
+            .sort(
+              (a, b) =>
+                Object.keys(skillsIcons).indexOf(a) -
+                Object.keys(skillsIcons).indexOf(b)
+            )
+            .map(skill => {
               const Icon = skillsIcons[skill as keyof typeof skillsIcons]
               invariant(Icon, `Icon for skill ${skill} could not be found.`)
               return (
-                <li>
+                <li class="group">
                   <Badge>
-                    <Icon class="size-3.5" />
-                    {skill}
+                    <Icon class="size-3.5 print:hidden" />
+                    <>
+                      <span>
+                        {skill}
+                        <span class="hidden group-last:hidden print:inline-block">
+                          {', '}
+                        </span>
+                      </span>
+                    </>
                   </Badge>
                 </li>
               )
-            }
-          )
+            })
         }
       </ul>
     </section>

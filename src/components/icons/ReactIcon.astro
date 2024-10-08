@@ -1,12 +1,20 @@
 ---
-interface Props {
-  class?: string
-}
+import type { HTMLAttributes } from 'astro/types'
 
-const { class: className } = Astro.props
+type Props = Omit<HTMLAttributes<'svg'>, 'xmlns' | 'viewBox' | 'fill'>
+
+const { class: className = 'size-4', ...props } = Astro.props
 ---
 
-<svg class={className} fill="currentColor" viewBox="0 0 128 128">
+<svg
+  aria-hidden="true"
+  xmlns="http://www.w3.org/2000/svg"
+  viewBox="0 0 128 128"
+  fill="currentColor"
+  class={className}
+  data-slot="icon"
+  {...props}
+>
   <g>
     <circle cx="64" cy="64" r="11.4"></circle>
     <path

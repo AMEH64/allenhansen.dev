@@ -1,8 +1,19 @@
+---
+import type { HTMLAttributes } from 'astro/types'
+
+type Props = Omit<HTMLAttributes<'svg'>, 'xmlns' | 'viewBox' | 'fill'>
+
+const { class: className = 'size-4', ...props } = Astro.props
+---
+
 <svg
+  aria-hidden="true"
   xmlns="http://www.w3.org/2000/svg"
   viewBox="0 0 16 16"
   fill="currentColor"
-  class="size-4"
+  class={className}
+  data-slot="icon"
+  {...props}
 >
   <path
     fill-rule="evenodd"
