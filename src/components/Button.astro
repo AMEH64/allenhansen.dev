@@ -25,7 +25,7 @@ const {
   class: className,
   variant = 'secondary',
   ...props
-} = Astro.props as Props
+} = Astro.props
 ---
 
 <Tag
@@ -37,7 +37,7 @@ const {
     'focus-visible:outline-blue-600 dark:focus-visible:outline-blue-400',
     'disabled:pointer-events-none disabled:opacity-50',
     '[&>[data-slot=icon]]:my-1 [&>[data-slot=icon]]:size-4 [&>[data-slot=icon]]:shrink-0',
-    variants[variant],
+    variants[variant as Variant],
   ]}
   {...props}
 >
