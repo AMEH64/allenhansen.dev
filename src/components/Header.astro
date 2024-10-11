@@ -27,17 +27,6 @@ import Modal from './Modal.astro'
       </div>
     </nav>
     <div class="flex items-center justify-end gap-3">
-      <Button
-        aria-label="Allen's GitHub Profile"
-        as="a"
-        href="https://github.com/AMEH64"
-        target="_blank"
-        rel="noopener noreferrer"
-        variant="text"
-      >
-        <GitHubIcon />
-        <span class="sr-only">GitHub</span>
-      </Button>
       <Button class="sm:hidden" data-slot="open" variant="text">
         <Bars3BottomRightIcon />
         <span class="sr-only">Open Menu</span>
@@ -46,11 +35,11 @@ import Modal from './Modal.astro'
   </div>
 </header>
 <Modal class="sm:hidden">
-  <h1 class="block text-balance text-xl font-semibold">Menu</h1>
-  <div class="flex flex-col items-start gap-3">
+  <h1 class="mb-3 block text-balance text-xl font-semibold">Menu</h1>
+  <nav class="flex flex-col items-start gap-3">
     <HeaderLink href="/about">About</HeaderLink>
     <HeaderLink href="/blog">Blog</HeaderLink>
-  </div>
+  </nav>
 </Modal>
 
 <script>
