@@ -1,5 +1,10 @@
 ---
-import type { HTMLAttributes } from 'astro/types'
+import type {
+  HTMLAttributes,
+  HTMLTag,
+  Polymorphic,
+  PolymorphicAttributes,
+} from 'astro/types'
 
 const variants = {
   primary:
@@ -13,9 +18,9 @@ const variants = {
 
 type Variant = keyof typeof variants
 
-type AsType = 'a' | 'button'
+type ButtonTag = 'a' | 'button'
 
-type Props<T extends AsType = 'button'> = {
+type Props<T extends ButtonTag = 'button'> = {
   as?: T
   variant?: Variant
 } & HTMLAttributes<T>
@@ -25,7 +30,7 @@ const {
   class: className,
   variant = 'secondary',
   ...props
-} = Astro.props
+} = Astro.props as Props
 ---
 
 <Tag
