@@ -11,8 +11,8 @@ const { title, description, pubDate, updatedDate, image, slug } = Astro.props
 ---
 
 <MainLayout title={title} description={description} image={image.src}>
-  <article>
-    <header class="flex max-w-prose flex-col">
+  <article class="mx-auto max-w-prose">
+    <header class="flex flex-col">
       <Image
         width={1020}
         height={510}
