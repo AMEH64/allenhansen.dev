@@ -10,7 +10,7 @@ import RssIcon from '~/components/icons/RssIcon.astro'
 
 const posts = (
   await getCollection('blog', p => !p.data.draft || import.meta.env.DEV)
-).sort((a, b) => compareDesc(b.data.pubDate, a.data.pubDate))
+).sort((a, b) => compareDesc(a.data.pubDate, b.data.pubDate))
 ---
 
 <MainLayout
