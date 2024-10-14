@@ -5,7 +5,11 @@ import typography from '@tailwindcss/typography'
 export default {
   content: ['./src/**/*.{astro,html,js,jsx,md,mdx,svelte,ts,tsx,vue}'],
   theme: {
-    extend: {},
+    extend: {
+      supports: {
+        'field-sizing-content': 'field-sizing: content',
+      },
+    },
   },
   plugins: [
     plugin(({ addVariant, addUtilities }) => {
@@ -16,6 +20,9 @@ export default {
       addUtilities({
         '.transition-allow-discrete': {
           'transition-behavior': 'allow-discrete',
+        },
+        '.field-sizing-content': {
+          'field-sizing': 'content',
         },
       })
     }),
