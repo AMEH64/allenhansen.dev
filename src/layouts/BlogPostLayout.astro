@@ -3,6 +3,7 @@ import { Image } from 'astro:assets'
 import { intlFormat } from 'date-fns/intlFormat'
 import MainLayout from './MainLayout.astro'
 import type { CollectionEntry } from 'astro:content'
+import { SITE_TITLE } from '~/consts'
 
 type Blog = CollectionEntry<'blog'>
 type Props = Blog['data'] & { slug?: Blog['slug'] }
@@ -10,7 +11,11 @@ type Props = Blog['data'] & { slug?: Blog['slug'] }
 const { title, description, pubDate, updatedDate, image, slug } = Astro.props
 ---
 
-<MainLayout title={title} description={description} image={image.src}>
+<MainLayout
+  title={`${title} | Blog | ${SITE_TITLE}`}
+  description={description}
+  image={image.src}
+>
   <article class="mx-auto max-w-prose">
     <header class="flex flex-col">
       <Image
