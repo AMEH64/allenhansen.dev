@@ -12,7 +12,7 @@ export default {
     },
   },
   plugins: [
-    plugin(({ addVariant, addUtilities }) => {
+    plugin(({ addVariant, addUtilities, matchUtilities }) => {
       addVariant('popover-open', '&:popover-open')
       // https://github.com/tailwindlabs/tailwindcss/pull/13329
       addVariant('starting', '@starting-style')
@@ -24,6 +24,10 @@ export default {
         '.field-sizing-content': {
           'field-sizing': 'content',
         },
+      })
+      matchUtilities({
+        'block-size': value => ({ blockSize: value }),
+        'max-block-size': value => ({ maxBlockSize: value }),
       })
     }),
     typography,

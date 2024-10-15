@@ -1,0 +1,181 @@
+---
+title: 'Auto-Resizing Form Fields: A Pure CSS Solution'
+description:
+  'Discover how the new CSS `field-sizing` property enables form fields to
+  automatically adjust their size based on their content—no JavaScript required.'
+pubDate: '2024-10-15'
+image: './css-field-sizing.png'
+---
+
+import Alert from '~/components/Alert.astro'
+
+<Alert class="supports-field-sizing-content:hidden" variant="warning">
+  You are using a browser that doesn't support the CSS `field-sizing` property.
+  Some of the examples in this post will not work as a result.
+</Alert>
+
+## Overcoming the Limitations of Fixed-Size Form Fields
+
+Form fields like `<input>`, `<textarea>`, and `<select>` are essential for
+collecting user input. However, they often come with a common drawback: fixed
+sizes with variable content.
+
+When a form field's content exceeds its fixed size, the overflow can make it
+difficult for users to interact with the field.
+
+<label class="font-semibold text-zinc-950 dark:text-zinc-50">
+  Example `<textarea>` with overflowing content.
+  <textarea
+    class:list={[
+      'block w-full px-4 py-3 resize-none max-block-size-[10lh]',
+      'bg-white/5 text-zinc-950 dark:text-zinc-50 font-normal',
+      'rounded border border-zinc-300 dark:border-zinc-700',
+      'placeholder:text-zinc-700 dark:placeholder:text-zinc-300',
+      'focus-visible:outline-offset-2 focus-visible:outline-blue-600 dark:focus-visible:outline-blue-400',
+    ]}
+    placeholder="Type here..."
+  >
+    {`Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
+tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+cillum dolore eu fugiat nulla pariatur.`}
+  </textarea>
+</label>
+
+Conversely, when the content is significantly smaller than the fixed size, the
+field may make the interface feel unbalanced.
+
+<label class="font-semibold text-zinc-950 dark:text-zinc-50">
+  Example `<textarea>` with a large intrinsic size.
+  <textarea
+    class:list={[
+      'block w-full px-4 py-3 resize-none block-size-[10lh]',
+      'bg-white/5 text-zinc-950 dark:text-zinc-50 font-normal',
+      'rounded border border-zinc-300 dark:border-zinc-700',
+      'placeholder:text-zinc-700 dark:placeholder:text-zinc-300',
+      'focus-visible:outline-offset-2 focus-visible:outline-blue-600 dark:focus-visible:outline-blue-400',
+    ]}
+    placeholder="Type here..."
+  >
+    {`Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
+tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+cillum dolore eu fugiat nulla pariatur.`}
+  </textarea>
+</label>
+
+Setting a form field's size often requires finding a middle ground to avoid it
+being too small or too large. When dealing with a `<select>` field with a static
+list of options, this solution can work fairly well. For `<input>` and
+`<textarea>` fields where the content is more dynamic, this solution can fall
+apart fairly quickly.
+
+Some elements, like `<textarea>`, offer the ability to manually resize by
+dragging a handle in the corner of the form field. To enable this you can set
+the CSS `resize` property to `vertical`, `horizontal`, or `both`. In fact, most
+browsers default this property to `both`.
+
+<label class="font-semibold text-zinc-950 dark:text-zinc-50">
+  Example `<textarea>` with `resize: vertical`.
+  <textarea
+    class:list={[
+      'block w-full px-4 py-3 resize-y max-block-size-[10lh]',
+      'bg-white/5 text-zinc-950 dark:text-zinc-50 font-normal',
+      'rounded border border-zinc-300 dark:border-zinc-700',
+      'placeholder:text-zinc-700 dark:placeholder:text-zinc-300',
+      'focus-visible:outline-offset-2 focus-visible:outline-blue-600 dark:focus-visible:outline-blue-400',
+    ]}
+    placeholder="Type here..."
+  >
+    {`Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
+tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+cillum dolore eu fugiat nulla pariatur.`}
+  </textarea>
+</label>
+
+This gives users some control, but it's not a perfect solution. Wouldn't it be
+great if all form fields could adjust automatically based on their content?
+
+## JavaScript to the Rescue
+
+To tackle these issues, developers have often turned to JavaScript solutions
+that dynamically adjust form field sizes based on content. For React developers,
+packages like
+[React Textarea Autosize](https://github.com/Andarist/react-textarea-autosize)
+have been a popular choice. This package provides a drop-in replacement for the
+`<textarea>` element that automatically resizes as the user types. At the time
+of writing this post, this package has more than 11 million downloads per month.
+
+While effective, this approach adds complexity to your codebase. Wouldn't it be
+great if there was a pure CSS solution?
+
+## Enter the CSS `field-sizing` Property
+
+CSS now offers a pure solution to auto-resize textareas. The new CSS
+`field-sizing` property allows form fields to adjust their size dynamically
+based on their content, eliminating the need for JavaScript.
+
+```css
+input,
+select,
+textarea {
+  field-sizing: content;
+}
+```
+
+<Alert variant="warning">
+  As of now, the `field-sizing` property is relatively new and not widely
+  supported. Until support is more widespread, I would recommend leveraging a
+  `@supports` rule with fallback styles, effectively making it a [progressive
+  enhancement](https://developer.mozilla.org/en-US/docs/Glossary/Progressive_Enhancement).
+</Alert>
+
+<label class="font-semibold text-zinc-950 dark:text-zinc-50">
+  Example `<textarea>` with `field-sizing: content`.
+  <textarea
+    class:list={[
+      'block w-full px-4 py-3 resize-y max-block-size-[10lh]',
+      'bg-white/5 text-zinc-950 dark:text-zinc-50 font-normal',
+      'rounded border border-zinc-300 dark:border-zinc-700',
+      'placeholder:text-zinc-700 dark:placeholder:text-zinc-300',
+      'focus-visible:outline-offset-2 focus-visible:outline-blue-600 dark:focus-visible:outline-blue-400',
+      'supports-field-sizing-content:resize-none supports-field-sizing-content:field-sizing-content',
+    ]}
+    placeholder="Type here..."
+  >
+    {`Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
+tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+cillum dolore eu fugiat nulla pariatur.`}
+  </textarea>
+</label>
+
+By setting `field-sizing: content`, form fields automatically resize to fit
+their content. This property works with several form elements, including
+`<input>`, `<textarea>`, and `<select>`.
+
+<Alert variant="info">
+    To maintain usability and prevent layout issues, I recommend setting minimum
+    and maximum size constraints on your form fields. You can achieve this using
+    the CSS `min-inline-size`, `min-block-size`, `max-inline-size`, and
+    `max-block-size` properties. These properties control the minimum and
+    maximum width and height of form fields, similar to `min-width`,
+    `min-height`, `max-width`, and `max-height`, but they adapt to different
+    writing modes.
+
+    Alternatively, you can use placeholders, which also impact the intrinsic
+    size of the fields. The length of the placeholder text determines the
+    initial size of the field when using `field-sizing: content`.
+
+</Alert>
+
+## References
+
+- [field-sizing - CSS: Cascading Style Sheets | MDN](https://developer.mozilla.org/en-US/docs/Web/CSS/field-sizing)
+- [CSS field-sizing | Chrome for Developers](https://developer.chrome.com/docs/css-ui/css-field-sizing)
+- ["field-sizing" | Can I use... Support tables for HTML5, CSS3, etc](https://caniuse.com/?search=field-sizing)
