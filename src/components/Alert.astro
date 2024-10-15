@@ -1,0 +1,26 @@
+---
+const variants = {
+  info: 'prose-sky border-s-sky-600 dark:border-s-sky-400 bg-sky-500/10',
+  warning:
+    'prose-yellow border-s-yellow-600 dark:border-s-yellow-400 bg-yellow-500/10',
+} as const
+
+type Variant = keyof typeof variants
+
+type Props = {
+  class?: string
+  variant: Variant
+}
+
+const { class: className, variant } = Astro.props
+---
+
+<div
+  class:list={[
+    'rounded-md border-s-4 px-4 py-3 dark:prose-invert forced-colors:outline [&>:first-child]:mt-0 [&>:last-child]:mb-0',
+    variants[variant],
+    className,
+  ]}
+>
+  <slot />
+</div>
