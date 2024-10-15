@@ -1,11 +1,12 @@
 ---
 import { type CollectionEntry, getCollection } from 'astro:content'
+import Anchor from '~/components/mdx/Anchor.astro'
 import BlogPostLayout from '../../layouts/BlogPostLayout.astro'
 
 export async function getStaticPaths() {
   const posts = await getCollection(
     'blog',
-    p => !p.data.draft || import.meta.env.DEV,
+    p => !p.data.draft || import.meta.env.DEV
   )
   return posts.map(post => ({
     params: { slug: post.slug },
@@ -20,5 +21,5 @@ const { Content } = await post.render()
 ---
 
 <BlogPostLayout {...post.data} slug={post.slug}>
-  <Content />
+  <Content components={{ a: Anchor }} />
 </BlogPostLayout>

@@ -1,0 +1,9 @@
+---
+import type { HTMLAttributes } from 'astro/types'
+
+type Props = HTMLAttributes<'a'>
+
+const { target = '_blank', rel = 'noopener noreferrer', ...props } = Astro.props
+---
+
+<a target={target} rel={rel} {...props}><slot /></a>
