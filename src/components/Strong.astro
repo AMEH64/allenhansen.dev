@@ -1,1 +1,9 @@
-<strong class="font-medium text-zinc-950 dark:text-white"><slot /></strong>
+---
+import type { HTMLAttributes } from 'astro/types'
+
+type Props = HTMLAttributes<'strong'>
+
+const { class: className, ...props } = Astro.props
+---
+
+<strong class:list={['font-medium', className]} {...props}><slot /></strong>
