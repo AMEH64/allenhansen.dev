@@ -9,11 +9,6 @@ image: './css-field-sizing.png'
 
 import Alert from '~/components/Alert.astro'
 
-<Alert class="supports-field-sizing-content:hidden" variant="warning">
-  You are using a browser that doesn't support the CSS `field-sizing` property.
-  Some of the examples in this post will not work as a result.
-</Alert>
-
 ## Overcoming the Limitations of Fixed-Size Form Fields
 
 Form fields like `<input>`, `<textarea>`, and `<select>` are essential for
@@ -58,11 +53,6 @@ field may make the interface feel unbalanced.
     ]}
     placeholder="Type here..."
   >
-    {`Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-cillum dolore eu fugiat nulla pariatur.`}
   </textarea>
 </label>
 
@@ -76,6 +66,12 @@ Some elements, like `<textarea>`, offer the ability to manually resize by
 dragging a handle in the corner of the form field. To enable this you can set
 the CSS `resize` property to `vertical`, `horizontal`, or `both`. In fact, most
 browsers default this property to `both`.
+
+<Alert class="supports-resize-y:hidden" variant="info">
+  The browser you are currently using doesn't support the CSS `resize` property.
+  As a result, the below example will not be resizable. See
+  https://caniuse.com/css-resize for more details.
+</Alert>
 
 <label class="font-semibold text-zinc-950 dark:text-zinc-50">
   Example `<textarea>` with `resize: vertical`.
@@ -115,6 +111,14 @@ great if there was a pure CSS solution?
 
 ## Enter the CSS `field-sizing` Property
 
+<Alert variant="warning">
+  As of now, the `field-sizing` property is relatively new and not widely
+  supported. Until support is more widespread, I would recommend leveraging a
+  `@supports` rule with fallback styles, effectively making it a [progressive
+  enhancement](https://developer.mozilla.org/en-US/docs/Glossary/Progressive_Enhancement).
+  See https://caniuse.com/?search=field-sizing for more details.
+</Alert>
+
 CSS now offers a pure solution to auto-resize textareas. The new CSS
 `field-sizing` property allows form fields to adjust their size dynamically
 based on their content, eliminating the need for JavaScript.
@@ -127,11 +131,10 @@ textarea {
 }
 ```
 
-<Alert variant="warning">
-  As of now, the `field-sizing` property is relatively new and not widely
-  supported. Until support is more widespread, I would recommend leveraging a
-  `@supports` rule with fallback styles, effectively making it a [progressive
-  enhancement](https://developer.mozilla.org/en-US/docs/Glossary/Progressive_Enhancement).
+<Alert class="supports-field-sizing-content:hidden" variant="info">
+  You are using a browser that doesn't support the CSS `field-sizing` property.
+  As a result, the below example will fallback to the defaults and won't
+  automatically resize as its content changes.
 </Alert>
 
 <label class="font-semibold text-zinc-950 dark:text-zinc-50">

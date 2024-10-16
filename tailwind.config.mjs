@@ -8,6 +8,7 @@ export default {
     extend: {
       supports: {
         'field-sizing-content': 'field-sizing: content',
+        'resize-y': 'resize: vertical',
       },
     },
   },
