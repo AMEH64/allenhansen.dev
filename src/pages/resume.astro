@@ -171,9 +171,7 @@ const skillsIcons = {
       >
         Skills
       </h2>
-      <ul
-        class="flex flex-wrap gap-3 text-sm print:gap-1.5 print:divide-x print:divide-zinc-300 print:[&>li:not(:first-child)]:pl-1.5"
-      >
+      <ul class="flex flex-wrap gap-3 text-sm print:gap-0">
         {
           [...new Set(jobs.flatMap(job => job.data.skills))]
             .sort(
@@ -185,10 +183,12 @@ const skillsIcons = {
               const Icon = skillsIcons[skill as keyof typeof skillsIcons]
               invariant(Icon, `Icon for skill ${skill} could not be found.`)
               return (
-                <li>
+                <li class="group">
                   <Badge>
                     <Icon class="size-3.5 print:hidden" />
-                    {skill}
+                    <span class="before:content-[','] group-first:before:content-none">
+                      {skill}
+                    </span>
                   </Badge>
                 </li>
               )
