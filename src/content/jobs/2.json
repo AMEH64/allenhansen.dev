@@ -5,27 +5,34 @@
   "startDate": "2020-03-04",
   "endDate": "2022-11-11",
   "highlights": [
-    "Rewrote Collaboration Center's front-end, transitioning from ASP.NET Web Forms to Angular, reducing legacy code, enhancing accessibility, and improving overall UI/UX.",
-    "Developed a micro-frontend architecture to embed Collaboration Center features into other web applications, enabling seamless integrations with automatic updates.",
-    "Enhanced application security by designing and implementing an OAuth 2.0 Authorization Code Grant solution using .NET, eliminating the need to store user credentials and enabling secure third-party integrations.",
-    "Collaborated with the UI/UX design team to enhance accessibility, aligning the application with WCAG 2.1 AA by implementing features such as roving tabindex, keyboard navigation, and screen reader support.",
-    "Developed and maintained RESTful APIs in .NET and C#, improving system interoperability and supporting internal and external integrations within the mortgage industry."
+    "Co-led the front-end modernization of a legacy collaboration platform, transitioning from ASP.NET Web Forms to an Angular SPA with a .NET backend, focusing user experience, accessibility, mobile support, and cross-browser compatibility.",
+    "Co-led the design and implementation of a micro-frontend architecture, enabling seamless integration of key platform features into other web applications, enhancing user experience, and streamlining platform adoption.",
+    "Enhanced application security by designing and implementing an OAuth 2.0 solution using .NET, enabling secure third-party integrations without the need to store user credentials.",
+    "Increased platform inclusivity by collaborating with the UI/UX design team to implement WCAG 2.1 AA-compliant features."
   ],
   "skills": [
-    "Accessibility",
     "Angular",
+    "Automated Testing",
     "Azure DevOps",
+    "Cross-Browser Compatibility",
+    "Cross-Functional Collaboration",
     "Bootstrap",
-    "CSS",
     "C#",
+    "CSS",
+    "Design Systems",
+    "JavaScript",
     ".NET",
     "Figma",
     "Git",
     "HTML",
-    "JavaScript",
     "Node.js",
+    "React",
+    "Relational Databases (RDBs)",
+    "Responsive Web Design",
+    "RESTful APIs",
     "Sass",
-    "SQL Server",
-    "TypeScript"
+    "SQL",
+    "TypeScript",
+    "Web Accessibility"
   ]
 }

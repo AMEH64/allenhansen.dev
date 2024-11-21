@@ -6,8 +6,17 @@
   "endDate": "2018-11-14",
   "highlights": [
     "Administered the product release consumption process, coordinating with core product teams to integrate updates into client instances, improving reliability and security.",
-    "Revamped billing exports, improving accuracy and reliability to meet service level agreements (SLAs), reducing errors impacting client billing and employee benefits.",
-    "Developed a custom HSA match program, including a tool that enabled employees to determine company contributions based on their elections."
+    "Rewrote a legacy billing system to improve accuracy and reliability, enabling the team to consistently meet SLAs.",
+    "Developed a custom HSA match program with an integrated tool for employees to calculate company contributions."
   ],
-  "skills": ["CSS", "C#", ".NET", "HTML", "JavaScript", "SQL Server"]
+  "skills": [
+    "CSS",
+    "Cross-Functional Collaboration",
+    "C#",
+    ".NET",
+    "HTML",
+    "JavaScript",
+    "Relational Databases (RDBs)",
+    "SQL"
+  ]
 }

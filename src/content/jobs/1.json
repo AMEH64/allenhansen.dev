@@ -6,9 +6,18 @@
   "endDate": "2020-02-28",
   "highlights": [
     "Co-led the implementation for a new client, delivering a highly configurable solution tailored to the client's specific needs.",
-    "Upgraded a client's Employee Self Service (ESS) application from ASP.NET Web Forms to ASP.NET MVC, enhancing performance, user experience, and maintainability.",
-    "Integrated Multi-Factor Authentication (MFA) and Single Sign-On (SSO) using SAML 2.0 for multiple clients, enhancing application security and overall UX.",
+    "Upgraded a client's employee benefits portal from ASP.NET Web Forms to ASP.NET MVC, enhancing performance, user experience, and maintainability.",
+    "Integrated Multi-Factor Authentication (MFA) and Single Sign-On (SSO) using SAML 2.0 for multiple client's employee benefits portals, enhancing application security and overall UX.",
     "Assisted in talent acquisition, conducting interviews for college recruits to support team growth."
   ],
-  "skills": ["CSS", "C#", ".NET", "HTML", "JavaScript", "SQL Server"]
+  "skills": [
+    "CSS",
+    "Cross-Functional Collaboration",
+    "C#",
+    ".NET",
+    "HTML",
+    "JavaScript",
+    "Relational Databases (RDBs)",
+    "SQL"
+  ]
 }

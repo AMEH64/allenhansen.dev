@@ -23,33 +23,49 @@ import LinkIcon from '~/components/icons/LinkIcon.astro'
 import NodeJsIcon from '~/components/icons/NodeJsIcon.astro'
 import ReactIcon from '~/components/icons/ReactIcon.astro'
 import ResumeLagout from '~/layouts/ResumeLagout.astro'
+import RobotIcon from '~/components/icons/RobotIcon.astro'
 import SassIcon from '~/components/icons/SassIcon.astro'
 import SqlServerIcon from '~/components/icons/SqlServerIcon.astro'
 import TailwindCssIcon from '~/components/icons/TailwindCssIcon.astro'
 import TypeScriptIcon from '~/components/icons/TypeScriptIcon.astro'
+import WindowIcon from '~/components/icons/WindowIcon.astro'
+import PeopleIcon from '~/components/icons/PeopleIcon.astro'
+import PaintBrushIcon from '~/components/icons/PaintBrushIcon.astro'
+import LanguageIcon from '~/components/icons/LanguageIcon.astro'
+import DevicePhoneMobileIcon from '~/components/icons/DevicePhoneMobileIcon.astro'
+import CircleStackIcon from '~/components/icons/CircleStackIcon.astro'
+import CogSixToothIcon from '~/components/icons/CogSixToothIcon.astro'
 
 const jobs = await getCollection('jobs')
 const education = await getCollection('education')
 
 const skillsIcons = {
-  Accessibility: AccessibilityIcon,
+  'Automated Testing': RobotIcon,
   Angular: AngularIcon,
   'Azure DevOps': AzureDevOpsIcon,
   Azure: AzureIcon,
   Bootstrap: BootstrapIcon,
+  'Cross-Browser Compatibility': WindowIcon,
+  'Cross-Functional Collaboration': PeopleIcon,
   'C#': CSharpIcon,
   CSS: CssIcon,
+  'Design Systems': PaintBrushIcon,
   '.NET': DotNetIcon,
   Figma: FigmaIcon,
   Git: GitIcon,
   HTML: HtmlIcon,
+  'Internationalization (i18n)': LanguageIcon,
   JavaScript: JavaScriptIcon,
   'Node.js': NodeJsIcon,
   React: ReactIcon,
+  'Relational Databases (RDBs)': CircleStackIcon,
+  'Responsive Web Design': DevicePhoneMobileIcon,
+  'RESTful APIs': CogSixToothIcon,
   Sass: SassIcon,
-  'SQL Server': SqlServerIcon,
+  SQL: SqlServerIcon,
   'Tailwind CSS': TailwindCssIcon,
   TypeScript: TypeScriptIcon,
+  'Web Accessibility': AccessibilityIcon,
 } satisfies Record<string, Function>
 ---
 

@@ -3,25 +3,37 @@
   "company": "Kincentric, a Spencer Stuart Company",
   "location": "Remote",
   "startDate": "2022-11-28",
+  "endDate": "2024-10-31",
   "highlights": [
-    "Lead the redevelopment of the Survey Engine front end, transitioning from ASP.NET Web Forms to React, eliminating legacy code, enhancing accessibility, and improving overall UI/UX.",
-    "Contribute to the redevelopment of the Survey Builder application, transitioning from a monolithic architecture to a microservices-based architecture using .NET, improving the scalability and resiliency of the platform.",
-    "Developed a theming solution that reduced custom CSS by 84%, resulting in faster load times and an improved user experience with prebuilt themes, color contrast checks, and a live preview.",
-    "Lead accessibility initiatives, implementing WCAG 2.1 AA-compliant features, improving platform usability through enhancements such as screen reader support, keyboard navigation, adaptive themes, user preferences, and improved mobile interactions.",
-    "Advocate for modern testing practices, promoting the adoption of React Testing Library for user-centric testing."
+    "Led the front-end modernization of a legacy survey engine, transitioning from ASP.NET Web Forms to a React SPA with a .NET backend, focusing performance, user experience, accessibility, mobile support, cross-browser compatibility, and global reach through internationalization (i18n).",
+    "Supported the transition from a legacy survey builder to modern .NET microservices and React SPAs by porting and optimizing features, driving operational efficiency and accelerating client delivery.",
+    "Developed a configurable theming solution that streamlined workflows, ensured consistent and accessible themes, and improved maintainability by eliminating the need for custom CSS.",
+    "Led accessibility initiatives by implementing WCAG 2.1 AA-compliant features and fostering accessibility awareness through code reviews and mentorship, significantly enhancing platform inclusivity.",
+    "Improved front-end code reliability by transitioning from Enzyme to React Testing Library (RTL), advocating for user-centric testing."
   ],
   "skills": [
-    "Accessibility",
+    "Automated Testing",
     "Azure",
     "Azure DevOps",
+    "Cross-Browser Compatibility",
+    "Cross-Functional Collaboration",
     "C#",
+    "CSS",
+    "Design Systems",
+    "JavaScript",
     ".NET",
     "Figma",
     "Git",
+    "HTML",
+    "Internationalization (i18n)",
     "Node.js",
     "React",
-    "SQL Server",
+    "Relational Databases (RDBs)",
+    "Responsive Web Design",
+    "RESTful APIs",
+    "SQL",
     "Tailwind CSS",
-    "TypeScript"
+    "TypeScript",
+    "Web Accessibility"
   ]
 }
