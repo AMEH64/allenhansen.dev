@@ -11,18 +11,18 @@ const { class: className, ...props } = Astro.props
 <dialog
   class:list={[
     className,
-    'max-w-[calc(theme(screens.sm)-theme(spacing.4))] sm:max-w-[calc(theme(screens.sm)-theme(spacing.6))] md:max-w-[calc(theme(screens.md)-theme(spacing.6))] lg:max-w-screen-md',
+    'max-w-[calc(var(--breakpoint-sm)-calc(var(--spacing)*4))] sm:max-w-[calc(var(--breakpoint-sm)-calc(var(--spacing)*6))] md:max-w-[calc(var(--breakpoint-md)-calc(var(--spacing)*6))] lg:max-w-(--breakpoint-md)',
     'mx-auto mb-0 w-full rounded-t-xl bg-white p-8 shadow-lg sm:mb-auto sm:rounded-b-xl dark:bg-zinc-900',
-    'backdrop:bg-gray-950/25 backdrop:backdrop-blur dark:backdrop:bg-gray-950/50',
+    'backdrop:bg-gray-950/25 backdrop:backdrop-blur-sm dark:backdrop:bg-gray-950/50',
     '[&>:not([data-slot=close]):mt-6',
-    'transition-[display_opacity_overlay] duration-300 transition-allow-discrete',
-    'backdrop:transition-[display_opacity_overlay] backdrop:duration-300 backdrop:transition-allow-discrete',
+    'transition-[display_opacity_overlay] transition-discrete duration-300',
+    'backdrop:transition-[display_opacity_overlay] backdrop:transition-discrete backdrop:duration-300',
     'opacity-0 motion-safe:translate-y-3/4',
     'backdrop:opacity-0',
     'open:opacity-100 motion-safe:open:translate-y-0',
     'open:backdrop:opacity-100',
-    'open:starting:opacity-0 motion-safe:open:starting:translate-y-3/4',
-    'open:backdrop:starting:opacity-0',
+    'starting:open:opacity-0 motion-safe:starting:open:translate-y-3/4',
+    'starting:open:backdrop:opacity-0',
   ]}
   {...props}
 >

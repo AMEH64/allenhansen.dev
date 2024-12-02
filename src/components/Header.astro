@@ -7,11 +7,11 @@ import Modal from './Modal.astro'
 ---
 
 <header
-  class="sticky top-0 z-10 w-full border-b border-zinc-300/40 bg-white shadow backdrop-blur supports-[backdrop-filter]:bg-white/65 dark:border-zinc-700/40 dark:bg-zinc-900 dark:shadow-zinc-950 dark:supports-[backdrop-filter]:bg-zinc-900/65"
+  class="sticky top-0 z-10 w-full border-b border-zinc-300/40 bg-white shadow-sm backdrop-blur-sm supports-backdrop-filter:bg-white/65 dark:border-zinc-700/40 dark:bg-zinc-900 dark:shadow-zinc-950 dark:supports-backdrop-filter:bg-zinc-900/65"
   transition:animate="none"
 >
   <div
-    class="mx-auto flex h-16 max-w-screen-2xl flex-1 items-center justify-between gap-4 px-4 sm:px-6 lg:px-8"
+    class="mx-auto flex h-16 max-w-(--breakpoint-2xl) flex-1 items-center justify-between gap-4 px-4 sm:px-6 lg:px-8"
   >
     <nav class="flex items-center justify-start gap-3">
       <Button as="a" class="font-mono tracking-tight" href="/" variant="text">
@@ -35,7 +35,7 @@ import Modal from './Modal.astro'
   </div>
 </header>
 <Modal class="sm:hidden">
-  <h1 class="mb-3 block text-balance text-xl font-semibold">Menu</h1>
+  <h1 class="mb-3 block text-xl font-semibold text-balance">Menu</h1>
   <nav class="flex flex-col items-start gap-3">
     <HeaderLink href="/about">About</HeaderLink>
     <HeaderLink href="/blog">Blog</HeaderLink>
