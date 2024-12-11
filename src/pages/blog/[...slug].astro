@@ -1,7 +1,7 @@
 ---
 import { type CollectionEntry, getCollection } from 'astro:content'
-import Anchor from '~/components/mdx/Anchor.astro'
-import BlogPostLayout from '../../layouts/BlogPostLayout.astro'
+import Anchor from '~/components/mdx/anchor.astro'
+import BlogPostLayout from '../../layouts/blog-post-layout.astro'
 
 export async function getStaticPaths() {
   const posts = await getCollection(

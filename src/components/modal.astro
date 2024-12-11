@@ -1,7 +1,7 @@
 ---
 import type { HTMLAttributes } from 'astro/types'
 import Button from './Button.astro'
-import XMarkIcon from './icons/XMarkIcon.astro'
+import XMarkIcon from './icons/x-mark-icon.astro'
 
 type Props = HTMLAttributes<'dialog'>
 
@@ -15,8 +15,8 @@ const { class: className, ...props } = Astro.props
     'mx-auto mb-0 w-full rounded-t-xl bg-white p-8 shadow-lg sm:mb-auto sm:rounded-b-xl dark:bg-zinc-900',
     'backdrop:bg-gray-950/25 backdrop:backdrop-blur dark:backdrop:bg-gray-950/50',
     '[&>:not([data-slot=close]):mt-6',
-    'transition-[display_opacity_overlay] duration-300 transition-allow-discrete',
-    'backdrop:transition-[display_opacity_overlay] backdrop:duration-300 backdrop:transition-allow-discrete',
+    'transition-allow-discrete transition-[display_opacity_overlay] duration-300',
+    'backdrop:transition-allow-discrete backdrop:transition-[display_opacity_overlay] backdrop:duration-300',
     'opacity-0 motion-safe:translate-y-3/4',
     'backdrop:opacity-0',
     'open:opacity-100 motion-safe:open:translate-y-0',
