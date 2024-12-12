@@ -1,4 +1,7 @@
 ---
+import InfoIcon from './icons/info-icon.astro'
+import WarningIcon from './icons/warning-icon.astro'
+
 const variants = {
   info: 'border-s-sky-600 dark:border-s-sky-400 bg-sky-500/10',
   warning: 'border-s-yellow-600 dark:border-s-yellow-400 bg-yellow-500/10',
@@ -12,6 +15,11 @@ type Props = {
 }
 
 const { class: className, variant } = Astro.props
+
+const [title, Icon] = {
+  info: ['Information', InfoIcon],
+  warning: ['Warning', WarningIcon],
+}[variant]
 ---
 
 <div
@@ -21,5 +29,9 @@ const { class: className, variant } = Astro.props
     className,
   ]}
 >
+  <div class="flex items-center gap-2 font-semibold">
+    <Icon />
+    {title}
+  </div>
   <slot />
 </div>
