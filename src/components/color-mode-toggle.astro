@@ -1,5 +1,5 @@
 ---
-import Button from '~/components/button.astro'
+import { Button } from '~/components/button'
 import MoonIcon from './icons/moon-icon.astro'
 import SunIcon from './icons/sun-icon.astro'
 
@@ -53,7 +53,12 @@ const { class: className } = Astro.props
   })
 </script>
 
-<Button class={className} data-color-mode-toggle variant="text">
+<Button
+  className={className}
+  data-color-mode-toggle
+  type="button"
+  variant="text"
+>
   <span
     class="hidden items-center justify-center gap-2 group-data-[color-mode=dark]/document:inline-flex"
   >

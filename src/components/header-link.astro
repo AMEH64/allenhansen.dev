@@ -1,6 +1,7 @@
 ---
 import type { HTMLAttributes } from 'astro/types'
-import Button from './button.astro'
+import { Button } from './button'
+import { classNames } from '~/utils/class-names'
 
 type Props = HTMLAttributes<'a'>
 
@@ -13,11 +14,11 @@ const active = href === pathname || href === '/' + subpath?.[0]
 
 <Button
   as="a"
-  class:list={[
+  className={classNames(
     className,
     'group inline-block font-semibold',
-    'data-[active=true]:underline data-[active=true]:decoration-blue-500 data-[active=true]:underline-offset-4',
-  ]}
+    'data-[active=true]:underline data-[active=true]:decoration-blue-500 data-[active=true]:underline-offset-4'
+  )}
   data-active={active.toString()}
   href={href}
   variant="text"

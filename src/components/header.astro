@@ -1,6 +1,6 @@
 ---
 import Bars3BottomRightIcon from './icons/bars-3-bottom-right-icon.astro'
-import Button from './button.astro'
+import { Button } from '~/components/button'
 import ColorModeToggle from './color-mode-toggle.astro'
 import HeaderLink from './header-link.astro'
 import Modal from './modal.astro'
@@ -14,7 +14,12 @@ import Modal from './modal.astro'
     class="mx-auto flex h-16 max-w-screen-2xl flex-1 items-center justify-between gap-4 px-4 sm:px-6 lg:px-8"
   >
     <nav class="flex items-center justify-start gap-3">
-      <Button as="a" class="font-mono tracking-tight" href="/" variant="text">
+      <Button
+        as="a"
+        className="font-mono tracking-tight"
+        href="/"
+        variant="text"
+      >
         &lt;AllenHansen&nbsp;/&gt;
       </Button>
       <div class="hidden sm:contents">
@@ -28,7 +33,7 @@ import Modal from './modal.astro'
     </nav>
     <div class="flex items-center justify-end gap-3">
       <ColorModeToggle class="hidden sm:block" />
-      <Button class="sm:hidden" data-slot="open" variant="text">
+      <Button className="sm:hidden" data-slot="open" variant="text">
         <Bars3BottomRightIcon />
         <span class="sr-only">Open Menu</span>
       </Button>
