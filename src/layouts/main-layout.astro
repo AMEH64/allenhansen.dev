@@ -14,7 +14,12 @@ const { title, description, image } = Astro.props
 ---
 
 <!doctype html>
-<html lang="en" transition:name="root" transition:animate="slide">
+<html
+  class="group/document"
+  lang="en"
+  transition:name="root"
+  transition:animate="slide"
+>
   <head>
     <BaseHead title={title} description={description} image={image} />
   </head>
