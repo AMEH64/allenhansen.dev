@@ -4,7 +4,7 @@ import { ZodSchema } from 'zod'
 export const useLocalStorage = <T>(
   key: string,
   schema: ZodSchema<T>,
-  initialValue?: T | (() => T),
+  initialValue: T | (() => T),
 ) => {
   const getSnapshot = useCallback(() => {
     const json = localStorage.getItem(key)

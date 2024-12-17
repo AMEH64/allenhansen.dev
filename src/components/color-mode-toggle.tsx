@@ -37,14 +37,22 @@ export const ColorModeToggle = ({ className }: ColorModeToggleProps) => {
       type="button"
       variant="text"
     >
-      <SunIcon className="hidden group-data-[color-mode=dark]/document:inline-flex" />
-      <span className="hidden group-data-[color-mode=dark]/document:inline-flex sm:sr-only">
-        Light
-      </span>
-      <MoonIcon className="hidden group-data-[color-mode=light]/document:inline-flex" />
-      <span className="hidden group-data-[color-mode=light]/document:inline-flex sm:sr-only">
-        Dark
-      </span>
+      {
+        {
+          [colorModes.light]: (
+            <>
+              <MoonIcon />
+              <span className="sm:sr-only">Dark</span>
+            </>
+          ),
+          [colorModes.dark]: (
+            <>
+              <SunIcon />
+              <span className="sm:sr-only">Light</span>
+            </>
+          ),
+        }[colorMode]
+      }
     </Button>
   )
 }
