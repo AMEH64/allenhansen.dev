@@ -1,17 +1,15 @@
 import { useLayoutEffect, type ComponentProps } from 'react'
 import { Button } from './button'
-import SunIcon from './icons/sun-icon.astro'
-import MoonIcon from './icons/moon-icon.astro'
+import { SunIcon } from './icons/sun-icon'
+import { MoonIcon } from './icons/moon-icon'
 import { z } from 'astro/zod'
 import { useLocalStorage } from '~/hooks/use-local-storage'
 
-type ColorModeToggleProps = ComponentProps<typeof Button>
+type ColorModeToggleProps = Pick<ComponentProps<typeof Button>, 'className'>
 
 const colorModeSchema = z.enum(['light', 'dark'])
 
 const colorModes = colorModeSchema.Values
-
-type ColorMode = z.infer<typeof colorModeSchema>
 
 export const ColorModeToggle = ({ className }: ColorModeToggleProps) => {
   const [colorMode, setColorMode] = useLocalStorage(
@@ -39,13 +37,13 @@ export const ColorModeToggle = ({ className }: ColorModeToggleProps) => {
       type="button"
       variant="text"
     >
-      <span className="hidden items-center justify-center gap-2 group-data-[color-mode=dark]/document:inline-flex">
-        {/* <SunIcon /> */}
-        <span className="">Light</span>
+      <SunIcon className="hidden group-data-[color-mode=dark]/document:inline-flex" />
+      <span className="hidden group-data-[color-mode=dark]/document:inline-flex sm:sr-only">
+        Light
       </span>
-      <span className="hidden items-center justify-center gap-2 group-data-[color-mode=light]/document:inline-flex">
-        {/* <MoonIcon /> */}
-        <span className="">Dark</span>
+      <MoonIcon className="hidden group-data-[color-mode=light]/document:inline-flex" />
+      <span className="hidden group-data-[color-mode=light]/document:inline-flex sm:sr-only">
+        Dark
       </span>
     </Button>
   )
