@@ -1,7 +1,7 @@
 ---
 import Bars3BottomRightIcon from './icons/bars-3-bottom-right-icon.astro'
 import { Button } from '~/components/button'
-import ColorModeToggle from './color-mode-toggle.astro'
+import { ColorModeToggle } from './color-mode-toggle'
 import HeaderLink from './header-link.astro'
 import Modal from './modal.astro'
 ---
@@ -32,7 +32,7 @@ import Modal from './modal.astro'
       </div>
     </nav>
     <div class="flex items-center justify-end gap-3">
-      <ColorModeToggle class="hidden sm:block" />
+      <ColorModeToggle class="hidden sm:block" client:only />
       <Button className="sm:hidden" data-slot="open" variant="text">
         <Bars3BottomRightIcon />
         <span class="sr-only">Open Menu</span>
@@ -46,7 +46,7 @@ import Modal from './modal.astro'
     <HeaderLink href="/about">About</HeaderLink>
     <HeaderLink href="/blog">Blog</HeaderLink>
   </nav>
-  <ColorModeToggle class="mt-3" />
+  <ColorModeToggle class="mt-3" client:only />
 </Modal>
 
 <script>
