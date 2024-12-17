@@ -1,8 +1,13 @@
 :root {
-  color-scheme: light;
+  color-scheme: light dark;
+
   @media (prefers-reduced-motion: no-preference) {
     scroll-behavior: smooth;
   }
+}
+
+:root[data-color-mode='light'] {
+  color-scheme: light;
 }
 
 :root[data-color-mode='dark'] {
