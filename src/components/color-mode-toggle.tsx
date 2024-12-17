@@ -26,8 +26,12 @@ export const ColorModeToggle = ({ className }: ColorModeToggleProps) => {
   }, [colorMode])
 
   const handleColorModeToggleClick = () =>
-    setColorMode(oldColorMode =>
-      oldColorMode === colorModes.light ? colorModes.dark : colorModes.light,
+    setColorMode(
+      oldColorMode =>
+        ({
+          [colorModes.light]: colorModes.dark,
+          [colorModes.dark]: colorModes.light,
+        })[oldColorMode],
     )
 
   return (
@@ -42,17 +46,13 @@ export const ColorModeToggle = ({ className }: ColorModeToggleProps) => {
           [colorModes.light]: (
             <>
               <MoonIcon />
-              <span className="sm:sr-only">
-                Dark
-              </span>
+              <span className="sm:sr-only">Dark</span>
             </>
           ),
           [colorModes.dark]: (
             <>
               <SunIcon />
-              <span className="sm:sr-only">
-                Light
-              </span>
+              <span className="sm:sr-only">Light</span>
             </>
           ),
         }[colorMode]

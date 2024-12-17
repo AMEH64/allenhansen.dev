@@ -17,7 +17,10 @@ export const useLocalStorage = <T>(
       }
     }
 
-    return initialValue instanceof Function ? initialValue() : initialValue
+    const value =
+      initialValue instanceof Function ? initialValue() : initialValue
+    localStorage.setItem(key, JSON.stringify(value))
+    return value
   }, [key, schema, initialValue])
 
   const subscribe = useCallback(
@@ -39,7 +42,7 @@ export const useLocalStorage = <T>(
   const value = useSyncExternalStore(subscribe, getSnapshot)
 
   const setValue = useCallback(
-    (newValue: T | ((previousValue?: T) => T)) => {
+    (newValue: T | ((previousValue: T) => T)) => {
       const valueToStore =
         newValue instanceof Function ? newValue(value) : newValue
       localStorage.setItem(key, JSON.stringify(valueToStore))
