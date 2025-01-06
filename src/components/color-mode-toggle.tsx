@@ -36,6 +36,7 @@ export const ColorModeToggle = ({ className }: ColorModeToggleProps) => {
 
   return (
     <Button
+      aria-live="polite"
       className={className}
       onClick={handleColorModeToggleClick}
       type="button"
