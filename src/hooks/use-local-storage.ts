@@ -1,10 +1,10 @@
 import { useCallback, useSyncExternalStore } from 'react'
-import { ZodSchema } from 'zod'
+import { z } from 'zod'
 
-export const useLocalStorage = <T>(
+export const useLocalStorage = <TSchema extends z.ZodTypeAny>(
   key: string,
-  schema: ZodSchema<T>,
-  initialValue: T | (() => T),
+  schema: TSchema,
+  initialValue: z.infer<TSchema> | (() => z.infer<TSchema>),
 ) => {
   const getSnapshot = useCallback(() => {
     const json = localStorage.getItem(key)
@@ -42,7 +42,11 @@ export const useLocalStorage = <T>(
   const value = useSyncExternalStore(subscribe, getSnapshot)
 
   const setValue = useCallback(
-    (newValue: T | ((previousValue: T) => T)) => {
+    (
+      newValue:
+        | z.infer<TSchema>
+        | ((previousValue: z.infer<TSchema>) => z.infer<TSchema>),
+    ) => {
       const valueToStore =
         newValue instanceof Function ? newValue(value) : newValue
       localStorage.setItem(key, JSON.stringify(valueToStore))
@@ -64,5 +68,5 @@ export const useLocalStorage = <T>(
     [key, initialValue],
   )
 
-  return [value, setValue, removeValue] as const
+  return [value as z.infer<TSchema>, setValue, removeValue] as const
 }
