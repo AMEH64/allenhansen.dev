@@ -22,9 +22,9 @@ difficult for users to interact with the field.
   Example `<textarea>` with overflowing content.
   <textarea
     class:list={[
-      'block w-full px-4 py-3 resize-none max-block-size-[10lh]',
+      'block w-full px-4 py-3 resize-none [max-block-size:10lh]',
       'bg-white/5 text-zinc-950 dark:text-zinc-50 font-normal',
-      'rounded border border-zinc-300 dark:border-zinc-700',
+      'rounded-sm border border-zinc-300 dark:border-zinc-700',
       'placeholder:text-zinc-700 dark:placeholder:text-zinc-300',
       'focus-visible:outline-offset-2 focus-visible:outline-blue-600 dark:focus-visible:outline-blue-400',
     ]}
@@ -45,9 +45,9 @@ field may make the interface feel unbalanced.
   Example `<textarea>` with a large intrinsic size.
   <textarea
     class:list={[
-      'block w-full px-4 py-3 resize-none block-size-[10lh]',
+      'block w-full px-4 py-3 resize-none [block-size:10lh]',
       'bg-white/5 text-zinc-950 dark:text-zinc-50 font-normal',
-      'rounded border border-zinc-300 dark:border-zinc-700',
+      'rounded-sm border border-zinc-300 dark:border-zinc-700',
       'placeholder:text-zinc-700 dark:placeholder:text-zinc-300',
       'focus-visible:outline-offset-2 focus-visible:outline-blue-600 dark:focus-visible:outline-blue-400',
     ]}
@@ -68,7 +68,7 @@ the CSS `resize` property to `vertical`, `horizontal`, or `both`. In fact, most
 browsers default this property to `both`. However, this feature doesn't work on
 most mobile browsers.
 
-<Alert class="supports-resize-y:hidden" variant="info">
+<Alert class="supports-[resize:vertical]:hidden" variant="info">
   The browser you are currently using doesn't support the CSS `resize` property.
   As a result, the below example will not be resizable. See
   https://caniuse.com/css-resize for more details.
@@ -78,9 +78,9 @@ most mobile browsers.
   Example `<textarea>` with `resize: vertical`.
   <textarea
     class:list={[
-      'block w-full px-4 py-3 resize-y max-block-size-[10lh]',
+      'block w-full px-4 py-3 resize-y [max-block-size:10lh]',
       'bg-white/5 text-zinc-950 dark:text-zinc-50 font-normal',
-      'rounded border border-zinc-300 dark:border-zinc-700',
+      'rounded-sm border border-zinc-300 dark:border-zinc-700',
       'placeholder:text-zinc-700 dark:placeholder:text-zinc-300',
       'focus-visible:outline-offset-2 focus-visible:outline-blue-600 dark:focus-visible:outline-blue-400',
     ]}
@@ -132,7 +132,7 @@ textarea {
 }
 ```
 
-<Alert class="supports-field-sizing-content:hidden" variant="info">
+<Alert class="supports-[field-sizing:content]:hidden" variant="info">
   You are using a browser that doesn't support the CSS `field-sizing` property.
   As a result, the below example will fallback to the defaults and won't
   automatically resize as its content changes.
@@ -142,12 +142,12 @@ textarea {
   Example `<textarea>` with `field-sizing: content`.
   <textarea
     class:list={[
-      'block w-full px-4 py-3 resize-y max-block-size-[10lh]',
+      'block w-full px-4 py-3 resize-y [max-block-size:10lh]',
       'bg-white/5 text-zinc-950 dark:text-zinc-50 font-normal',
-      'rounded border border-zinc-300 dark:border-zinc-700',
+      'rounded-sm border border-zinc-300 dark:border-zinc-700',
       'placeholder:text-zinc-700 dark:placeholder:text-zinc-300',
       'focus-visible:outline-offset-2 focus-visible:outline-blue-600 dark:focus-visible:outline-blue-400',
-      'supports-field-sizing-content:resize-none supports-field-sizing-content:field-sizing-content',
+      'supports-[field-sizing:content]:resize-none supports-[field-sizing:content]:field-sizing-content',
     ]}
     placeholder="Type here..."
   >
