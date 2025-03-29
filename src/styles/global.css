@@ -1,9 +1,8 @@
 @import 'tailwindcss';
 @plugin '@tailwindcss/typography';
 
-/* @custom-variant dark (&:where([data-color-mode="dark"] *), &:not([data-color-mode])) @media(prefers-color-scheme: dark); */
-/* '@media (prefers-color-scheme: dark) { &:not([data-color-mode] *) }',
-      '&:where([data-color-mode="dark"] *)', */
+@custom-variant dark (&:where([data-color-mode=dark], [data-color-mode=dark] *));
+
 @layer base {
   :root {
     color-scheme: light dark;
