@@ -12,10 +12,10 @@ const { class: className, ...props } = Astro.props
   class:list={[
     className,
     'max-w-[calc(var(--breakpoint-sm)-(--spacing(4)))] sm:max-w-[calc(var(--breakpoint-sm)-(--spacing(6)))] md:max-w-[calc(var(--breakpoint-md)-(--spacing(6)))] lg:max-w-(--breakpoint-md)',
-    'mx-auto mb-0 w-full rounded-t-xl bg-white p-8 shadow-lg sm:mb-auto sm:rounded-b-xl dark:bg-zinc-900',
+    'mx-auto mb-0 w-full rounded-t-xl bg-white p-8 shadow-lg [inset-block-start:auto] sm:mb-auto sm:rounded-b-xl dark:bg-zinc-900',
     'backdrop:bg-gray-950/25 backdrop:backdrop-blur-sm dark:backdrop:bg-gray-950/50',
     '[&>:not([data-slot=close]):mt-6',
-    'transition-allow-discrete transition-[display_opacity_overlay] duration-300',
+    'transition-[display_opacity_overlay] transition-discrete duration-300',
     'backdrop:transition-[display_opacity_overlay] backdrop:transition-discrete backdrop:duration-300',
     'opacity-0 motion-safe:translate-y-3/4',
     'backdrop:opacity-0',
