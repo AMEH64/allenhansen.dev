@@ -1,5 +1,6 @@
 ---
 import { SITE_TITLE } from '~/consts'
+import BaseHead from '~/components/base-head.astro'
 
 type Props = {
   class?: string
@@ -11,33 +12,10 @@ const { class: className } = Astro.props
 <!doctype html>
 <html lang="en">
   <head>
-    <meta charset="UTF-8" />
-    <meta
-      name="description"
-      content="Software Developer with over 7 years of experience specializing in building web apps and microservices. Passionate about leveraging web standards to create accessible and intuitive user experiences that perform at scale."
+    <BaseHead
+      title={`Resume | ${SITE_TITLE}`}
+      description="Software Developer with over 7 years of experience specializing in building web apps and microservices. Passionate about leveraging web standards to create accessible and intuitive user experiences that perform at scale."
     />
-    <meta name="viewport" content="width=device-width" />
-    <link
-      rel="apple-touch-icon"
-      sizes="180x180"
-      href="/favicons/apple-touch-icon.png"
-    />
-    <link
-      rel="icon"
-      type="image/png"
-      sizes="32x32"
-      href="/favicons/favicon-32x32.png"
-    />
-    <link
-      rel="icon"
-      type="image/png"
-      sizes="16x16"
-      href="/favicons/favicon-16x16.png"
-    />
-    <link rel="shortcut icon" , href="/favicon.ico" />
-    <link rel="manifest" href="/site.webmanifest" />
-    <meta name="generator" content={Astro.generator} />
-    <title>Resume | {SITE_TITLE}</title>
   </head>
   <body class={className}>
     <slot />

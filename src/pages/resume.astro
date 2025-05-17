@@ -28,7 +28,7 @@ import NodeJsIcon from '~/components/icons/node-js-icon.astro'
 import PaintBrushIcon from '~/components/icons/paint-brush-icon.astro'
 import PeopleIcon from '~/components/icons/people-icon.astro'
 import ReactIcon from '~/components/icons/react-icon.astro'
-import ResumeLagout from '~/layouts/resume-layout.astro'
+import ResumeLayout from '~/layouts/resume-layout.astro'
 import RobotIcon from '~/components/icons/robot-icon.astro'
 import SassIcon from '~/components/icons/sass-icon.astro'
 import SqlServerIcon from '~/components/icons/sql-server-icon.astro'
@@ -69,16 +69,16 @@ const skillsIcons = {
 } satisfies Record<string, Function>
 ---
 
-<ResumeLagout
+<ResumeLayout
   class="grid min-h-svh place-content-center space-y-10 bg-white p-12 text-zinc-950 dark:bg-zinc-900 dark:text-zinc-50 print:space-y-4 print:bg-white print:p-0 print:text-zinc-950"
 >
   <header class="max-w-prose">
     <h1
-      class="text-balance text-3xl font-bold text-blue-600 dark:text-blue-400 print:text-blue-600"
+      class="text-3xl font-bold text-balance text-blue-600 dark:text-blue-400 print:text-blue-600"
     >
       Allen Hansen
     </h1>
-    <h2 class="mb-6 text-balance text-xl print:mb-3">
+    <h2 class="mb-6 text-xl text-balance print:mb-3">
       Senior Full-Stack Software Developer
     </h2>
     <p class="mb-6 text-pretty print:mb-3 print:text-sm">
@@ -252,7 +252,7 @@ const skillsIcons = {
       }
     </section>
   </main>
-</ResumeLagout>
+</ResumeLayout>
 
 <style>
   @media print {
