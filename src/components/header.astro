@@ -31,9 +31,11 @@ import Modal from './modal.astro'
         <HeaderLink href="/blog">Blog</HeaderLink>
       </div>
     </nav>
-    <div class="flex items-center justify-end gap-3">
-      <ColorModeToggle className="hidden sm:block" client:only />
-      <Button className="sm:hidden" data-slot="open" variant="text">
+    <div class="hidden items-center justify-end gap-3 sm:flex">
+      <ColorModeToggle client:only />
+    </div>
+    <div class="flex items-center justify-end gap-3 sm:hidden">
+      <Button data-slot="open" variant="text">
         <Bars3BottomRightIcon />
         <span class="sr-only">Open Menu</span>
       </Button>
@@ -41,7 +43,7 @@ import Modal from './modal.astro'
   </div>
 </header>
 <Modal class="sm:hidden">
-  <h1 class="mb-3 block text-balance text-xl font-semibold">Menu</h1>
+  <h1 class="mb-3 block text-xl font-semibold text-balance">Menu</h1>
   <nav class="flex flex-col items-start gap-3">
     <HeaderLink href="/about">About</HeaderLink>
     <HeaderLink href="/blog">Blog</HeaderLink>

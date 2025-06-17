@@ -5,7 +5,7 @@ import { MoonIcon } from './icons/moon-icon'
 import { z } from 'zod'
 import { useLocalStorage } from '~/hooks/use-local-storage'
 
-type ColorModeToggleProps = Pick<ComponentProps<typeof Button>, 'className'>
+type ColorModeToggleProps = { className?: string }
 
 const ColorModeSchema = z.enum(['light', 'dark'])
 
@@ -24,17 +24,15 @@ export const ColorModeToggle = ({ className }: ColorModeToggleProps) => {
   }, [colorMode])
 
   const handleColorModeToggleClick = () =>
-    setColorMode(
-      oldColorMode =>
-        oldColorMode === ColorModeSchema.Values.light
-          ? ColorModeSchema.Values.dark
-          : ColorModeSchema.Values.light,
+    setColorMode(oldColorMode =>
+      oldColorMode === ColorModeSchema.Values.light
+        ? ColorModeSchema.Values.dark
+        : ColorModeSchema.Values.light,
     )
 
   return (
     <Button
       aria-live="polite"
-      className={className}
       onClick={handleColorModeToggleClick}
       type="button"
       variant="text"
