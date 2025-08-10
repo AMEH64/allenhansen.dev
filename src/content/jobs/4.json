@@ -1,0 +1,33 @@
+{
+  "position": "Senior Software Engineer",
+  "company": "Schneider Electric Sustainability Business",
+  "location": "Remote",
+  "startDate": "2025-01-06",
+  "highlights": ["...", "...", "..."],
+  "skills": [
+    "Python",
+    "Automated Testing",
+    "Azure",
+    "Jira",
+    "Cross-Functional Collaboration",
+    "C#",
+    "CSS",
+    "FastAPI",
+    "JavaScript",
+    "Model Context Protocol (MCP)",
+    "OpenAPI",
+    ".NET",
+    "Figma",
+    "Git",
+    "HTML",
+    "Node.js",
+    "React",
+    "Relational Databases (RDBs)",
+    "Responsive Web Design",
+    "RESTful APIs",
+    "SQL",
+    "Tailwind CSS",
+    "TypeScript",
+    "Web Accessibility"
+  ]
+}
