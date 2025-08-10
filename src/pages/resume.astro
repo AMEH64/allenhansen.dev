@@ -28,13 +28,18 @@ import NodeJsIcon from '~/components/icons/node-js-icon.astro'
 import PaintBrushIcon from '~/components/icons/paint-brush-icon.astro'
 import PeopleIcon from '~/components/icons/people-icon.astro'
 import ReactIcon from '~/components/icons/react-icon.astro'
-import ResumeLayout from '~/layouts/resume-layout.astro'
 import RobotIcon from '~/components/icons/robot-icon.astro'
 import SassIcon from '~/components/icons/sass-icon.astro'
 import SqlServerIcon from '~/components/icons/sql-server-icon.astro'
 import TailwindCssIcon from '~/components/icons/tailwind-css-icon.astro'
 import TypeScriptIcon from '~/components/icons/type-script-icon.astro'
 import WindowIcon from '~/components/icons/window-icon.astro'
+import PythonIcon from '~/components/icons/python-icon.astro'
+import JiraIcon from '~/components/icons/jira-icon.astro'
+import FastapiIcon from '~/components/icons/fastapi-icon.astro'
+import McpIcon from '~/components/icons/mcp-icon.astro'
+import OpenapiIcon from '~/components/icons/openapi-icon.astro'
+import FullWidthLayout from '~/layouts/full-width-layout.astro'
 
 const jobs = await getCollection('jobs')
 const education = await getCollection('education')
@@ -51,12 +56,17 @@ const skillsIcons = {
   CSS: CssIcon,
   'Design Systems': PaintBrushIcon,
   '.NET': DotNetIcon,
+  FastAPI: FastapiIcon,
   Figma: FigmaIcon,
   Git: GitIcon,
   HTML: HtmlIcon,
   'Internationalization (i18n)': LanguageIcon,
   JavaScript: JavaScriptIcon,
+  Jira: JiraIcon,
+  'Model Context Protocol (MCP)': McpIcon,
   'Node.js': NodeJsIcon,
+  OpenAPI: OpenapiIcon,
+  Python: PythonIcon,
   React: ReactIcon,
   'Relational Databases (RDBs)': CircleStackIcon,
   'Responsive Web Design': DevicePhoneMobileIcon,
@@ -69,23 +79,22 @@ const skillsIcons = {
 } satisfies Record<string, Function>
 ---
 
-<ResumeLayout
+<FullWidthLayout
   class="grid min-h-svh place-content-center space-y-10 bg-white p-12 text-zinc-950 dark:bg-zinc-900 dark:text-zinc-50 print:space-y-4 print:bg-white print:p-0 print:text-zinc-950"
 >
   <header class="max-w-prose">
     <h1
-      class="text-3xl font-bold text-balance text-blue-600 dark:text-blue-400 print:text-blue-600"
+      class="text-3xl font-bold text-balance text-emerald-600 dark:text-emerald-400 print:text-emerald-600"
     >
       Allen Hansen
     </h1>
     <h2 class="mb-6 text-xl text-balance print:mb-3">
-      Senior Full-Stack Software Developer
+      Senior Full-Stack Software Engineer
     </h2>
     <p class="mb-6 text-pretty print:mb-3 print:text-sm">
-      Software Developer with over 7 years of experience specializing in
-      building web apps and microservices. Passionate about leveraging web
-      standards to create accessible and intuitive user experiences that perform
-      at scale.
+      Software Engineer with over 7 years of experience specializing in building
+      web apps and microservices. Passionate about leveraging web standards to
+      create accessible and intuitive user experiences that perform at scale.
     </p>
     <ul
       class="flex flex-wrap gap-3 text-sm print:gap-1.5 print:divide-x print:divide-zinc-400 print:[&>li:not(:first-child)]:pl-1.5"
@@ -140,7 +149,7 @@ const skillsIcons = {
     <section aria-labelledby="experience" class="space-y-10 print:space-y-4">
       <h2
         id="experience"
-        class="mb-8 text-xl font-semibold text-blue-600 dark:text-blue-400 print:mb-4 print:text-blue-600"
+        class="mb-8 text-xl font-semibold text-emerald-600 dark:text-emerald-400 print:mb-4 print:text-emerald-600"
       >
         Experience
       </h2>
@@ -183,7 +192,7 @@ const skillsIcons = {
     <section aria-labelledby="skills" class="space-y-4 print:space-y-2">
       <h2
         id="skills"
-        class="mb-8 text-xl font-semibold text-blue-600 dark:text-blue-400 print:mb-4 print:text-blue-600"
+        class="mb-8 text-xl font-semibold text-emerald-600 dark:text-emerald-400 print:mb-4 print:text-emerald-600"
       >
         Skills
       </h2>
@@ -215,7 +224,7 @@ const skillsIcons = {
     <section aria-labelledby="education">
       <h2
         id="education"
-        class="mb-8 text-xl font-semibold text-blue-600 dark:text-blue-400 print:mb-4 print:text-blue-600"
+        class="mb-8 text-xl font-semibold text-emerald-600 dark:text-emerald-400 print:mb-4 print:text-emerald-600"
       >
         Education
       </h2>
@@ -252,7 +261,7 @@ const skillsIcons = {
       }
     </section>
   </main>
-</ResumeLayout>
+</FullWidthLayout>
 
 <style>
   @media print {
