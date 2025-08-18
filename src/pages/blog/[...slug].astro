@@ -6,7 +6,7 @@ import BlogPostLayout from '../../layouts/blog-post-layout.astro'
 export async function getStaticPaths() {
   const posts = await getCollection(
     'blog',
-    p => !p.data.draft || import.meta.env.DEV
+    p => !p.data.draft || import.meta.env.DEV,
   )
   return posts.map(post => ({
     params: { slug: post.slug },

@@ -84,7 +84,7 @@ const skillsIcons = {
 >
   <header class="max-w-prose">
     <h1
-      class="text-3xl font-bold text-balance text-emerald-600 dark:text-emerald-400 print:text-emerald-600"
+      class="text-primary-600 dark:text-primary-400 print:text-primary-600 text-3xl font-bold text-balance"
     >
       Allen Hansen
     </h1>
@@ -149,7 +149,7 @@ const skillsIcons = {
     <section aria-labelledby="experience" class="space-y-10 print:space-y-4">
       <h2
         id="experience"
-        class="mb-8 text-xl font-semibold text-emerald-600 dark:text-emerald-400 print:mb-4 print:text-emerald-600"
+        class="text-primary-600 dark:text-primary-400 print:text-primary-600 mb-8 text-xl font-semibold print:mb-4"
       >
         Experience
       </h2>
@@ -192,7 +192,7 @@ const skillsIcons = {
     <section aria-labelledby="skills" class="space-y-4 print:space-y-2">
       <h2
         id="skills"
-        class="mb-8 text-xl font-semibold text-emerald-600 dark:text-emerald-400 print:mb-4 print:text-emerald-600"
+        class="text-primary-600 dark:text-primary-400 print:text-primary-600 mb-8 text-xl font-semibold print:mb-4"
       >
         Skills
       </h2>
@@ -202,7 +202,7 @@ const skillsIcons = {
             .sort(
               (a, b) =>
                 Object.keys(skillsIcons).indexOf(a) -
-                Object.keys(skillsIcons).indexOf(b)
+                Object.keys(skillsIcons).indexOf(b),
             )
             .map(skill => {
               const Icon = skillsIcons[skill as keyof typeof skillsIcons]
@@ -224,7 +224,7 @@ const skillsIcons = {
     <section aria-labelledby="education">
       <h2
         id="education"
-        class="mb-8 text-xl font-semibold text-emerald-600 dark:text-emerald-400 print:mb-4 print:text-emerald-600"
+        class="text-primary-600 dark:text-primary-400 print:text-primary-600 mb-8 text-xl font-semibold print:mb-4"
       >
         Education
       </h2>

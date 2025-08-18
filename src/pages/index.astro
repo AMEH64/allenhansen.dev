@@ -5,92 +5,104 @@ import { Button } from '~/components/button'
 import Header from '~/components/header.astro'
 import Footer from '~/components/footer.astro'
 import { Image } from 'astro:assets'
+
+import portraitImage from '~/assets/images/allen-cover-portrait.webp'
+import landscapeImage from '~/assets/images/allen-cover-landscape.webp'
 ---
 
 <FullWidthLayout title={SITE_TITLE} description={SITE_DESCRIPTION}>
   <Header />
-  <div class="w-full bg-white dark:bg-zinc-900">
-    <div class="relative">
-      <div class="mx-auto max-w-7xl">
-        <div class="relative z-10 xl:min-h-svh xl:w-full xl:max-w-2xl">
-          <svg
-            viewBox="0 0 100 100"
-            preserveAspectRatio="none"
-            aria-hidden="true"
-            class="absolute inset-y-0 right-8 hidden h-full w-80 translate-x-1/2 transform fill-white xl:block dark:fill-zinc-900"
-          >
-            <polygon points="0,0 90,0 50,100 0,100"></polygon>
-          </svg>
-
-          <div
-            class="relative flex items-center px-6 py-32 sm:py-40 xl:px-8 xl:py-56 xl:pr-0"
-          >
-            <div class="mx-auto w-full max-w-2xl xl:mx-0 xl:max-w-prose">
-              <!-- Learn more CTA - commented out for now -->
-              <!-- <div class="hidden sm:mb-10 sm:flex">
-                <div
-                  class="relative rounded-full px-3 py-1 text-sm/6 text-zinc-500 dark:text-zinc-400 ring-1 ring-zinc-900/10 dark:ring-zinc-700/50 hover:ring-zinc-900/20 dark:hover:ring-zinc-700/70"
-                >
-                  Full-stack software engineer building modern web applications.
-                  <a
-                    href="/about"
-                    class="font-semibold whitespace-nowrap text-blue-600 dark:text-blue-400"
-                  >
-                    <span aria-hidden="true" class="absolute inset-0"></span>Learn more <span aria-hidden="true">&rarr;</span>
-                  </a>
-                </div>
-              </div> -->
+  <div class="bg-white dark:bg-zinc-900">
+    <div
+      class="relative isolate overflow-hidden bg-linear-to-b from-zinc-100/20 dark:from-zinc-950/10"
+    >
+      <div
+        class="mx-auto max-w-7xl pt-10 pb-24 sm:pb-32 lg:grid lg:grid-cols-2 lg:items-center lg:gap-x-8 lg:px-8 lg:py-40"
+      >
+        <div class="px-6 lg:px-0 lg:pt-0">
+          <div class="mx-auto max-w-2xl">
+            <div class="max-w-lg">
               <h1
-                class="text-5xl font-bold tracking-tight text-pretty text-zinc-900 sm:text-7xl dark:text-zinc-50"
+                class="mt-10 text-5xl font-semibold tracking-tight text-pretty text-zinc-900 sm:text-7xl dark:text-white"
               >
                 Allen Hansen
               </h1>
-              <!-- <p
-                class="mt-6 max-w-lg text-base leading-7 text-zinc-600 dark:text-zinc-400"
+              <p
+                class="mt-8 text-lg font-normal text-pretty text-zinc-500 sm:text-xl/8 dark:text-zinc-400"
               >
-                I enjoy building software and solving problems through code.
-              </p> -->
-              <div class="mt-10 flex items-center gap-x-4">
-                <Button as="a" href="/about" variant="primary" client:load>
+                I love building software and solving complex problems through
+                elegant code. Full-stack engineer passionate about creating
+                modern web applications that make a difference.
+              </p>
+              <div class="mt-10 flex items-center gap-x-6">
+                <Button variant="badge" as="a" href="/about">
                   Learn more
                 </Button>
-                <Button as="a" href="/blog" variant="text" client:load>
-                  Read blog →
-                </Button>
+                <a
+                  href="/blog"
+                  class="text-sm/6 font-semibold text-zinc-900 dark:text-white"
+                  >Read blog <span aria-hidden="true">→</span></a
+                >
               </div>
             </div>
           </div>
         </div>
+        <div
+          class="mt-20 px-6 sm:mt-24 md:mx-auto md:max-w-2xl lg:mx-0 lg:mt-0 lg:w-screen lg:px-0"
+        >
+          <div
+            aria-hidden="true"
+            class="absolute inset-y-0 right-1/2 -z-10 -mr-10 w-[200%] skew-x-[-30deg] bg-white shadow-xl ring-1 shadow-zinc-600/10 ring-zinc-50 md:-mr-20 lg:-mr-36 dark:bg-zinc-800/30 dark:shadow-zinc-400/10 dark:ring-white/5"
+          >
+          </div>
+          <div class="mx-auto max-w-2xl md:mx-0 md:max-w-none">
+            <!-- Portrait image for very small devices and XL+ two-column -->
+            <!-- <Image
+              src={portraitImage}
+              alt="Allen Hansen"
+              width={1200}
+              height={1600}
+              class="aspect-3/4 object-cover sm:hidden xl:block xl:aspect-square xl:size-full xl:rounded-3xl"
+              loading="eager"
+              format="webp"
+            /> -->
+            <!-- Landscape image for small to large devices -->
+            <!-- <Image
+              src={landscapeImage}
+              alt="Allen Hansen"
+              width={1600}
+              height={900}
+              class="hidden aspect-video object-cover sm:block sm:rounded-3xl xl:hidden"
+              loading="eager"
+              format="webp"
+            /> -->
+
+            <!-- Portrait image for very small devices and XL+ two-column -->
+            <Image
+              src={portraitImage}
+              alt="Allen Hansen"
+              width={1200}
+              height={1600}
+              class="aspect-3/4 rounded-3xl object-cover sm:hidden xl:block xl:aspect-square xl:size-full"
+              loading="eager"
+              format="webp"
+            />
+            <!-- Landscape image for small to large devices -->
+            <Image
+              src={landscapeImage}
+              alt="Allen Hansen"
+              width={1600}
+              height={900}
+              class="hidden aspect-video rounded-3xl object-cover sm:block xl:hidden"
+              loading="eager"
+              format="webp"
+            />
+          </div>
+        </div>
       </div>
       <div
-        class="relative bg-gray-50 xl:absolute xl:inset-y-0 xl:right-0 xl:w-1/2 dark:bg-zinc-800"
+        class="absolute inset-x-0 bottom-0 -z-10 h-24 bg-linear-to-t from-white sm:h-32 dark:from-zinc-900"
       >
-        <!-- Portrait image for very small devices and XL+ two-column -->
-        <Image
-          src="https://3btsl78yt5bejpit.public.blob.vercel-storage.com/allen-cover-portait-rbu7lrpm4HUkfXyVLeBTASfFCQbi2Q.jpg"
-          alt="Allen Hansen"
-          width={1200}
-          height={1600}
-          class="aspect-3/4 object-cover sm:hidden xl:block xl:aspect-auto xl:size-full"
-          loading="eager"
-          format="webp"
-        />
-        <!-- Landscape image for small to large devices -->
-        <Image
-          src="https://3btsl78yt5bejpit.public.blob.vercel-storage.com/allen-cover-landscape-VZYrL1JIzwv2WGFGX9iAY3LISLKsJ0.jpg"
-          alt="Allen Hansen"
-          width={1600}
-          height={900}
-          class="hidden aspect-video object-cover sm:block xl:hidden"
-          loading="eager"
-          format="webp"
-        />
-        <!-- Glassy overlay for color balance -->
-        <div
-          class="absolute inset-0 bg-gradient-to-br from-emerald-500/8 via-transparent to-zinc-900/15 dark:from-emerald-400/10 dark:via-zinc-800/30 dark:to-zinc-900/40"
-          aria-hidden="true"
-        >
-        </div>
       </div>
     </div>
   </div>
