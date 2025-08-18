@@ -41,12 +41,12 @@ const { title, description, pubDate, updatedDate, image, slug } = Astro.props
           }
         </time>
       </p>
-      <h1 class="text-balance text-4xl font-bold tracking-tight sm:text-5xl">
+      <h1 class="text-4xl font-bold tracking-tight text-balance sm:text-5xl">
         {title}
       </h1>
     </header>
     <div
-      class="prose mt-8 dark:prose-invert prose-pre:max-w-[90vw] sm:prose-pre:max-w-none"
+      class="prose dark:prose-invert prose-pre:max-w-[90vw] sm:prose-pre:max-w-none mt-8"
     >
       <slot />
     </div>

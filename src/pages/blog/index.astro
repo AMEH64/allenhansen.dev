@@ -20,11 +20,11 @@ const posts = (
   <div class="flex w-full flex-col items-center justify-center">
     <header class="w-full max-w-prose self-start">
       <h1
-        class="text-balance text-4xl font-bold tracking-tight text-zinc-800 sm:text-5xl dark:text-zinc-100"
+        class="text-4xl font-bold tracking-tight text-balance text-zinc-800 sm:text-5xl dark:text-zinc-100"
       >
         Notes from a full-stack developer.
       </h1>
-      <p class="mt-6 text-pretty text-base text-zinc-600 dark:text-zinc-400">
+      <p class="mt-6 text-base text-pretty text-zinc-600 dark:text-zinc-400">
         All of my thoughts on programming, life, and more, collected in reverse
         chronological order.
       </p>
@@ -45,7 +45,7 @@ const posts = (
                 class="absolute inset-0 h-full w-full rounded-2xl bg-gray-50 object-cover"
                 transition:name={post.slug}
               />
-              <div class="absolute inset-0 rounded-2xl ring-1 ring-inset ring-gray-900/10" />
+              <div class="absolute inset-0 rounded-2xl ring-1 ring-gray-900/10 ring-inset" />
             </div>
             <div>
               <div class="flex items-center gap-x-3 text-xs">
@@ -62,7 +62,7 @@ const posts = (
                 </time>
               </div>
               <div class="group relative max-w-xl">
-                <h3 class="mt-3 text-lg font-semibold leading-6 text-gray-900 group-hover:text-gray-600 dark:text-gray-100 dark:group-hover:text-gray-400">
+                <h3 class="mt-3 text-lg leading-6 font-semibold text-gray-900 group-hover:text-gray-600 dark:text-gray-100 dark:group-hover:text-gray-400">
                   <a href={`/blog/${post.slug}`}>
                     <span class="absolute inset-0" />
                     {post.data.title}
