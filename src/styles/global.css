@@ -8,7 +8,7 @@
   --font-sans: Geist, system-ui, sans-serif;
   --font-mono: Geist Mono, ui-monospace, monospace;
 
-  /* --color-primary-50: color-mix(
+  --color-primary-50: color-mix(
     in oklch,
     var(--color-slate-50) 80%,
     var(--color-teal-50) 20%
@@ -62,18 +62,7 @@
     in oklch,
     var(--color-slate-950) 5%,
     var(--color-cyan-950) 95%
-  ); */
-  --color-primary-50: var(--color-emerald-50);
-  --color-primary-100: var(--color-emerald-100);
-  --color-primary-200: var(--color-emerald-200);
-  --color-primary-300: var(--color-emerald-300);
-  --color-primary-400: var(--color-emerald-400);
-  --color-primary-500: var(--color-emerald-500);
-  --color-primary-600: var(--color-emerald-600);
-  --color-primary-700: var(--color-emerald-700);
-  --color-primary-800: var(--color-emerald-800);
-  --color-primary-900: var(--color-emerald-900);
-  --color-primary-950: var(--color-emerald-950);
+  );
 }
 
 @layer base {
