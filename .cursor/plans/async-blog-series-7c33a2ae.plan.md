@@ -1,4 +1,5 @@
 <!-- 7c33a2ae-d00f-4d2b-a0a7-8335d53dba37 4c56494b-0691-48c2-83a6-d83041edbae2 -->
+
 # Async/Await Deep Dive Blog Series
 
 ## Immediate Deliverable: Intro Post
@@ -9,10 +10,14 @@ Create: `src/content/blog/async-event-loops-collision/index.mdx`
 
 Tell the story of the production issue as a teaser for the series:
 
-- Opening: The exception - "event loop is closed" when accessing a global connection pool
-- The investigation: Tracing back to llama_index's `AsyncStreamingResponse.__str__`
-- The discovery: Multiple event loops being created (reference the code from llama_index)
-- The "aha" moment: Understanding why `asyncio_run` spawns new threads with new event loops
+- Opening: The exception - "event loop is closed" when accessing a global
+  connection pool
+- The investigation: Tracing back to llama_index's
+  `AsyncStreamingResponse.__str__`
+- The discovery: Multiple event loops being created (reference the code from
+  llama_index)
+- The "aha" moment: Understanding why `asyncio_run` spawns new threads with new
+  event loops
 - The teaser: Questions this raised about async internals across languages
 
 Include:
@@ -20,7 +25,8 @@ Include:
 - Code snippets from llama_index showing the problematic pattern
 - A simple Mermaid diagram showing the multiple event loop scenario
 - Forward references to the detailed posts to come
-- Link to the resources provided (devblogs.microsoft.com, Lydia Hallie's visual guide, etc.)
+- Link to the resources provided (devblogs.microsoft.com, Lydia Hallie's visual
+  guide, etc.)
 
 **Research for Post 1:**
 
@@ -30,13 +36,15 @@ Include:
 
 ## Follow-Up Series Outline
 
-These posts will be created one at a time after intro approval, ordered by concept flow:
+These posts will be created one at a time after intro approval, ordered by
+concept flow:
 
 ---
 
 ### Post 2: "Async Coordination Mechanisms: Event Loops, Task Schedulers, and State Machines"
 
-**Purpose**: Establish foundational concepts that all three languages use (but in different ways)
+**Purpose**: Establish foundational concepts that all three languages use (but
+in different ways)
 
 **Topics**:
 
@@ -54,10 +62,13 @@ These posts will be created one at a time after intro approval, ordered by conce
 
 **Research Steps**:
 
-- JavaScript: MDN docs on event loop, microtasks vs macrotasks, Node.js event loop phases
+- JavaScript: MDN docs on event loop, microtasks vs macrotasks, Node.js event
+  loop phases
 - Python: `asyncio` event loop documentation, event loop policies
-- C#: SynchronizationContext docs, TaskScheduler types, thread pool documentation
-- Cross-reference: "Comparison of async await syntax in .NET, Python and JavaScript"
+- C#: SynchronizationContext docs, TaskScheduler types, thread pool
+  documentation
+- Cross-reference: "Comparison of async await syntax in .NET, Python and
+  JavaScript"
 - Visual inspiration: Lydia Hallie's event loop visualization
 
 ---
@@ -74,12 +85,15 @@ These posts will be created one at a time after intro approval, ordered by conce
 - JavaScript: Worker threads, SharedArrayBuffer
 - When to use each approach
 
-**Coverage**: Foundational understanding of threading models before diving into language specifics
+**Coverage**: Foundational understanding of threading models before diving into
+language specifics
 
 **Research Steps**:
 
-- C#: Task Parallel Library documentation, ThreadPool class, concurrent collections
-- Python: `concurrent.futures` documentation, GIL implications, `multiprocessing` module
+- C#: Task Parallel Library documentation, ThreadPool class, concurrent
+  collections
+- Python: `concurrent.futures` documentation, GIL implications,
+  `multiprocessing` module
 - JavaScript: Worker threads documentation, transferable objects, Atomics
 - Performance comparisons and benchmarks
 
@@ -92,7 +106,8 @@ These posts will be created one at a time after intro approval, ordered by conce
 - Deep dive into the llama_index issue from Post 1
 - How asyncio event loop works internally
 - Selector vs Proactor event loops (Windows vs Unix)
-- `asyncio.get_event_loop()` vs `asyncio.get_running_loop()` vs `asyncio.new_event_loop()`
+- `asyncio.get_event_loop()` vs `asyncio.get_running_loop()` vs
+  `asyncio.new_event_loop()`
 - When and why multiple event loops get created
 - Why stringifying async responses causes problems
 - `nest_asyncio` and why it exists (patching the event loop)
@@ -202,7 +217,8 @@ These posts will be created one at a time after intro approval, ordered by conce
 
 **Research Steps**:
 
-- C#: Stephen Cleary's articles on async deadlocks, SynchronizationContext behavior
+- C#: Stephen Cleary's articles on async deadlocks, SynchronizationContext
+  behavior
 - Python: asyncio debug mode, loop.set_debug(), aiodebug library
 - JavaScript: Chrome DevTools async stack traces, unhandled rejection tracking
 - Common deadlock patterns across all languages
@@ -220,7 +236,8 @@ These posts will be created one at a time after intro approval, ordered by conce
 2. Configure in `astro.config.mjs` under mdx integrations
 3. Test with simple diagram in the intro post
 
-**Alternative**: Use `<Mermaid>` React component if remark plugin doesn't work well
+**Alternative**: Use `<Mermaid>` React component if remark plugin doesn't work
+well
 
 ### Code Comparison Strategy
 
@@ -236,7 +253,8 @@ These posts will be created one at a time after intro approval, ordered by conce
 
 ### Cross-Referencing
 
-- Use relative paths between posts: `[Event Loop Fundamentals](/blog/async-event-loops-fundamentals)`
+- Use relative paths between posts:
+  `[Event Loop Fundamentals](/blog/async-event-loops-fundamentals)`
 - Consider creating a landing page for the series
 - Add "Part X of Y" in frontmatter or intro
 
@@ -261,9 +279,11 @@ Additional authoritative sources:
 
 ### To-dos
 
-- [ ] Research and test Mermaid integration options for Astro MDX (remark-mermaidjs vs rehype-mermaid vs React component)
+- [ ] Research and test Mermaid integration options for Astro MDX
+      (remark-mermaidjs vs rehype-mermaid vs React component)
 - [ ] Install and configure chosen Mermaid solution in astro.config.mjs
-- [ ] Deep dive into llama_index source code and research nested event loop patterns
+- [ ] Deep dive into llama_index source code and research nested event loop
+      patterns
 - [ ] Write Post 1 with production story, code examples, and Mermaid diagram
 - [ ] Create or find hero image for intro post about event loops collision
 - [ ] Test that intro post builds correctly and Mermaid renders properly

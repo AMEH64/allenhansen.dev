@@ -14,11 +14,21 @@ const { title, description, image = '/blog-placeholder-1.jpg' } = Astro.props
 ---
 
 <script is:inline>
-  document.documentElement.dataset.colorMode =
+  const colorMode =
     JSON.parse(localStorage.getItem('color-mode')) ??
     (window.matchMedia('(prefers-color-scheme: dark)').matches
       ? 'dark'
       : 'light')
+
+  document.documentElement.dataset.colorMode = colorMode
+
+  // Update media attribute of mermaid-dark sources
+  // https://dteather.com/blogs/astro-uml-diagrams/
+  document
+    .querySelectorAll("picture > source[id^='mermaid-dark-']")
+    .forEach(el =>
+      el.setAttribute('media', colorMode === 'dark' ? 'all' : 'none'),
+    )
 </script>
 
 <!-- No-JS fallback -->

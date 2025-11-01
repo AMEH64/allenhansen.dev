@@ -21,6 +21,17 @@ export const ColorModeToggle = ({ className }: ColorModeToggleProps) => {
 
   useLayoutEffect(() => {
     document.documentElement.dataset.colorMode = colorMode
+
+    // Update media attribute of mermaid-dark sources
+    // https://dteather.com/blogs/astro-uml-diagrams/
+    document
+      .querySelectorAll("picture > source[id^='mermaid-dark-']")
+      .forEach(el =>
+        el.setAttribute(
+          'media',
+          colorMode === ColorModeSchema.Values.dark ? 'all' : 'none',
+        ),
+      )
   }, [colorMode])
 
   const handleColorModeToggleClick = () =>
