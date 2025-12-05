@@ -4,31 +4,33 @@ import { Button } from '~/components/button'
 import { ColorModeToggle } from './color-mode-toggle'
 import HeaderLink from './header-link.astro'
 import Modal from './modal.astro'
+
+const { pathname } = Astro.url
+const subpath = pathname.match(/[^\/]+/g)
+const currentPath = pathname === '/' ? '/' : '/' + subpath?.[0]
 ---
 
 <header
-  class="sticky top-0 z-50 w-full border-b border-zinc-300/40 bg-white shadow-sm backdrop-blur-sm supports-backdrop-filter:bg-white/65 dark:border-zinc-700/40 dark:bg-zinc-900 dark:shadow-zinc-950 dark:supports-backdrop-filter:bg-zinc-900/65"
+  class="fixed bottom-0 z-50 w-full border-t border-zinc-300/40 bg-white shadow-sm backdrop-blur-sm supports-backdrop-filter:bg-white/65 sm:sticky sm:top-0 sm:border-t-0 sm:border-b dark:border-zinc-700/40 dark:bg-zinc-900 dark:shadow-zinc-950 dark:supports-backdrop-filter:bg-zinc-900/65"
   transition:animate="none"
 >
   <div
     class="mx-auto flex h-16 max-w-(--breakpoint-2xl) flex-1 items-center justify-between gap-4 px-4 sm:px-6 lg:px-8"
   >
     <nav class="flex items-center justify-start gap-3">
-      <Button
-        as="a"
-        className="font-mono text-sm tracking-tight"
-        href="/"
-        variant="text"
+      <span
+        class="px-3 py-2 font-mono text-sm font-semibold tracking-tight text-zinc-900 sm:hidden dark:text-white"
       >
-        &lt;AllenHansen&nbsp;/&gt;
-      </Button>
+        {currentPath}
+      </span>
       <div class="hidden sm:contents">
+        <HeaderLink href="/" aria-label="Home">/</HeaderLink>
         <div
           class="inline-block h-6 w-0.5 rounded-full bg-zinc-300 dark:bg-zinc-700"
         >
         </div>
-        <HeaderLink href="/about">About</HeaderLink>
-        <HeaderLink href="/blog">Blog</HeaderLink>
+        <HeaderLink href="/about" aria-label="About">/about</HeaderLink>
+        <HeaderLink href="/blog" aria-label="Blog">/blog</HeaderLink>
       </div>
     </nav>
     <div class="hidden items-center justify-end gap-3 sm:flex">
@@ -45,8 +47,9 @@ import Modal from './modal.astro'
 <Modal class="sm:hidden">
   <h1 class="mb-3 block text-xl font-semibold text-balance">Menu</h1>
   <nav class="flex flex-col items-start gap-3">
-    <HeaderLink href="/about">About</HeaderLink>
-    <HeaderLink href="/blog">Blog</HeaderLink>
+    <HeaderLink href="/" aria-label="Home">/</HeaderLink>
+    <HeaderLink href="/about" aria-label="About">/about</HeaderLink>
+    <HeaderLink href="/blog" aria-label="Blog">/blog</HeaderLink>
   </nav>
   <ColorModeToggle className="mt-3" client:only />
 </Modal>
