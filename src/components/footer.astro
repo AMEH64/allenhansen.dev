@@ -1,83 +1,22 @@
 ---
-import { Button } from './button'
-import GitHubIcon from './icons/git-hub-icon.astro'
-import LinkedInIcon from './icons/linked-in-icon.astro'
-import RssIcon from './icons/rss-icon.astro'
-import { FEATURES } from '~/consts'
+import { links } from '~/site.config'
+
+type Props = { current?: string }
+const { current } = Astro.props
 ---
 
-<footer
-  class="mt-auto w-full border-t border-(--surface-border) px-4 py-6 sm:px-6 lg:px-8"
-  transition:animate="none"
->
-  <div class="mx-auto flex w-full max-w-3xl flex-col gap-6">
-    <div
-      class="flex flex-col items-center gap-4 sm:flex-row sm:justify-between"
+<footer class="site-foot">
+  <p>
+    © {new Date().getFullYear()} Allen Hansen. Set in Anybody and Atkinson Hyperlegible.
+    One spot ink: ultramarine.
+  </p>
+  <nav aria-label="Elsewhere">
+    <a href="/notes/rss.xml">RSS</a>
+    <a href={links.github}>GitHub</a>
+    <a href={links.linkedin}>LinkedIn</a>
+    <a href="/resume/" aria-current={current === 'resume' ? 'page' : undefined}
+      >Résumé</a
     >
-      <nav class="flex flex-wrap justify-center gap-x-6 gap-y-2 sm:justify-start">
-        <a
-          href="/"
-          class="font-mono text-sm text-zinc-500 transition-colors hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-zinc-100"
-          >/</a
-        >
-        {FEATURES.about && (
-          <a
-            href="/about"
-            class="font-mono text-sm text-zinc-500 transition-colors hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-zinc-100"
-            >/about</a
-          >
-        )}
-        <a
-          href="/blog"
-          class="font-mono text-sm text-zinc-500 transition-colors hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-zinc-100"
-          >/blog</a
-        >
-        {FEATURES.now && (
-          <a
-            href="/now"
-            class="font-mono text-sm text-zinc-500 transition-colors hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-zinc-100"
-            >/now</a
-          >
-        )}
-      </nav>
-
-      <div class="flex items-center gap-1">
-        <Button
-          aria-label="Follow on GitHub"
-          as="a"
-          href="https://github.com/AMEH64"
-          target="_blank"
-          rel="noopener noreferrer"
-          variant="text"
-        >
-          <GitHubIcon />
-          <span class="sr-only">GitHub</span>
-        </Button>
-        <Button
-          aria-label="Follow on LinkedIn"
-          as="a"
-          href="https://www.linkedin.com/in/allen-hansen"
-          target="_blank"
-          rel="noopener noreferrer"
-          variant="text"
-        >
-          <LinkedInIcon />
-          <span class="sr-only">LinkedIn</span>
-        </Button>
-        <Button
-          aria-label="Subscribe to RSS feed"
-          as="a"
-          href="/blog/rss.xml"
-          variant="text"
-        >
-          <RssIcon />
-          <span class="sr-only">RSS Feed</span>
-        </Button>
-      </div>
-    </div>
-
-    <p class="text-center text-sm text-zinc-500 sm:text-left dark:text-zinc-400">
-      &copy; {new Date().getFullYear()} Allen Hansen. All rights reserved.
-    </p>
-  </div>
+    <a href={`mailto:${links.email}`}>Email</a>
+  </nav>
 </footer>

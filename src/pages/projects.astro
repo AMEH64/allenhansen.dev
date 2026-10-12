@@ -1,0 +1,25 @@
+---
+import { SITE_TITLE } from '~/consts'
+import PageTitle from '~/components/page-title.astro'
+import ProjectCard from '~/components/project-card.astro'
+import MainLayout from '~/layouts/main-layout.astro'
+import { getProjects } from '~/lib/projects'
+import { meta } from '~/site.config'
+
+const projects = await getProjects()
+---
+
+<MainLayout
+  title={`Projects · ${SITE_TITLE}`}
+  description={meta.projects}
+  ogImage="/og/projects.png"
+  current="projects"
+>
+  <PageTitle
+    title="Projects"
+    lead="Small things I build to learn. Each one lives on its own subdomain with its own look, and the status is honest: projects pause, and some end."
+  />
+  <div class="pgrid">
+    {projects.map(project => <ProjectCard project={project} />)}
+  </div>
+</MainLayout>

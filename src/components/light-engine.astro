@@ -1,0 +1,194 @@
+<script>
+  // The lamp. Writes CSS custom properties; all drawing is in CSS, so the page is complete without JS.
+  //   .glow           --lx --ly (viewport px)
+  //   .paper-layers   --px --py (page px), plus an opacity per pre-lit layer
+  //   [data-lit]      --sx --sy (unit vector from the lamp, scaled by proximity)
+  // Fine pointer: the lamp follows it. Touch: it sweeps down the page as you scroll, and a tap
+  // places it. Reduced motion: it rests at a fixed angle and only taps move it.
+  // Never writes to :root, which would restyle the whole document.
+  const REST = { x: 0.12, y: 0.06 }
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)')
+  const coarse = matchMedia('(hover: none), (pointer: coarse)')
+  const nav = navigator as Navigator & {
+    deviceMemory?: number
+    connection?: { saveData?: boolean }
+  }
+  const lowPower =
+    (nav.hardwareConcurrency || 8) <= 4 ||
+    (nav.deviceMemory || 8) < 4 ||
+    !!nav.connection?.saveData
+
+  let lit: HTMLElement[] = []
+  let centers: { x: number; y: number }[] = []
+  const visible = new Set<number>()
+  let glow: HTMLElement | null = null
+  let paper: HTMLElement | null = null
+  let layers: HTMLElement[] = []
+  let lastWeights = ''
+  let cur = { x: innerWidth * REST.x, y: innerHeight * REST.y }
+  let target = { ...cur }
+  let mode: 'rest' | 'pointer' | 'scroll' = 'rest'
+  let running = false
+  let holdUntil = 0
+  let lastWrite = { x: -1, y: -1 }
+
+  function measure() {
+    centers = lit.map(el => {
+      const r = el.getBoundingClientRect()
+      // Large type shades from its top-left region, so it reads as a raking light, not a flat glow.
+      const w = Math.min(r.width, 640)
+      const h = Math.min(r.height, 260)
+      return { x: r.left + scrollX + w / 2, y: r.top + scrollY + h / 2 }
+    })
+  }
+
+  function write(x: number, y: number) {
+    if (Math.abs(x - lastWrite.x) < 0.4 && Math.abs(y - lastWrite.y) < 0.4)
+      return
+    lastWrite = { x, y }
+    const lx = `${x.toFixed(1)}px`
+    const ly = `${y.toFixed(1)}px`
+    glow?.style.setProperty('--lx', lx)
+    glow?.style.setProperty('--ly', ly)
+    const px = x + scrollX
+    const py = y + scrollY
+    if (paper) {
+      paper.style.setProperty('--px', `${px.toFixed(0)}px`)
+      paper.style.setProperty('--py', `${py.toFixed(0)}px`)
+    }
+    if (layers.length) {
+      // Weight each pre-lit layer by how far the lamp sits toward that side of the viewport.
+      const ux = Math.max(
+        -1,
+        Math.min(1, (x - innerWidth / 2) / (innerWidth / 2)),
+      )
+      const uy = Math.max(
+        -1,
+        Math.min(1, (y - innerHeight / 2) / (innerHeight / 2)),
+      )
+      const weights = [-uy, ux, uy, -ux].map(v =>
+        (Math.max(0, v) * 0.95).toFixed(2),
+      )
+      const key = weights.join()
+      if (key !== lastWeights) {
+        lastWeights = key
+        layers.forEach((el, i) => (el.style.opacity = weights[i]))
+      }
+    }
+    for (const i of visible) {
+      const c = centers[i]
+      if (!c) continue
+      const dx = c.x - px
+      const dy = c.y - py
+      const d = Math.hypot(dx, dy) || 1
+      const k = Math.min(1.8, Math.max(0.35, 560 / d))
+      const s = lit[i].style
+      s.setProperty('--sx', ((dx / d) * k).toFixed(3))
+      s.setProperty('--sy', ((dy / d) * k).toFixed(3))
+    }
+  }
+
+  function frame() {
+    if (document.hidden) {
+      running = false
+      return
+    }
+    if (mode === 'scroll' && performance.now() > holdUntil) {
+      const p = scrollY / Math.max(1, document.body.scrollHeight - innerHeight)
+      target = {
+        x: innerWidth * (0.25 + 0.5 * p),
+        y: innerHeight * (0.15 + 0.25 * Math.sin(p * Math.PI)),
+      }
+    }
+    const ease = reduce.matches ? 1 : 0.14
+    cur.x += (target.x - cur.x) * ease
+    cur.y += (target.y - cur.y) * ease
+    write(cur.x, cur.y)
+    if (Math.abs(target.x - cur.x) < 0.3 && Math.abs(target.y - cur.y) < 0.3) {
+      running = false
+      return
+    }
+    requestAnimationFrame(frame)
+  }
+
+  function kick() {
+    lastWrite = { x: -1, y: -1 }
+    if (!running) {
+      running = true
+      requestAnimationFrame(frame)
+    }
+  }
+
+  function init() {
+    if (matchMedia('(forced-colors: active)').matches) return
+    lit = [...document.querySelectorAll<HTMLElement>('[data-lit]')]
+    glow = document.querySelector('.glow')
+    paper = document.querySelector('.paper-layers')
+    if (paper && !lowPower) {
+      layers = ['t', 'r', 'b', 'l']
+        .map(d => paper!.querySelector<HTMLElement>(`[data-dir=${d}]`))
+        .filter((el): el is HTMLElement => !!el)
+    }
+    const io = new IntersectionObserver(
+      entries => {
+        for (const e of entries) {
+          const i = lit.indexOf(e.target as HTMLElement)
+          if (e.isIntersecting) visible.add(i)
+          else visible.delete(i)
+        }
+        kick()
+      },
+      { rootMargin: '200px' },
+    )
+    lit.forEach(el => io.observe(el))
+    measure()
+    new ResizeObserver(() => {
+      measure()
+      kick()
+    }).observe(document.body)
+    addEventListener(
+      'scroll',
+      () => {
+        if (mode === 'scroll') kick()
+        else {
+          lastWrite = { x: -1, y: -1 }
+          write(cur.x, cur.y)
+        }
+      },
+      { passive: true },
+    )
+    document.addEventListener('visibilitychange', () => {
+      if (!document.hidden) kick()
+    })
+    document.addEventListener('color-mode-change', kick)
+
+    if (!coarse.matches) {
+      mode = 'pointer'
+      addEventListener(
+        'pointermove',
+        e => {
+          if (e.pointerType !== 'mouse' && e.pointerType !== 'pen') return
+          target = { x: e.clientX, y: e.clientY }
+          kick()
+        },
+        { passive: true },
+      )
+      write(cur.x, cur.y)
+    } else {
+      mode = reduce.matches ? 'rest' : 'scroll'
+      kick()
+    }
+    addEventListener(
+      'pointerdown',
+      e => {
+        if (e.pointerType === 'mouse') return
+        target = { x: e.clientX, y: e.clientY }
+        holdUntil = performance.now() + 5000
+        kick()
+      },
+      { passive: true },
+    )
+  }
+
+  init()
+</script>

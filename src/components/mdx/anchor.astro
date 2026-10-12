@@ -3,7 +3,13 @@ import type { HTMLAttributes } from 'astro/types'
 
 type Props = HTMLAttributes<'a'>
 
-const { target = '_blank', rel = 'noopener noreferrer', ...props } = Astro.props
+const { href, ...props } = Astro.props
+const external = typeof href === 'string' && /^https?:\/\//.test(href)
 ---
 
-<a target={target} rel={rel} {...props}><slot /></a>
+<a
+  href={href}
+  target={external ? '_blank' : undefined}
+  rel={external ? 'noopener noreferrer' : undefined}
+  {...props}><slot /></a
+>

@@ -1,0 +1,129 @@
+---
+import { render } from 'astro:content'
+import { SITE_TITLE } from '~/consts'
+import ChangeLog from '~/components/change-log.astro'
+import Correction from '~/components/correction.astro'
+import Freshness from '~/components/freshness.astro'
+import Anchor from '~/components/mdx/anchor.astro'
+import MainLayout from '~/layouts/main-layout.astro'
+import { formatDate } from '~/lib/dates'
+import {
+  freshness,
+  getNotes,
+  noteLog,
+  readingMinutes,
+  type Note,
+} from '~/lib/notes'
+
+export async function getStaticPaths() {
+  const notes = await getNotes()
+  return notes.map((note, i) => ({
+    params: { slug: note.id },
+    props: { note, newer: notes[i - 1], older: notes[i + 1] },
+  }))
+}
+
+type Props = { note: Note; newer?: Note; older?: Note }
+
+const { note, newer, older } = Astro.props
+const { data } = note
+const { Content, headings } = await render(note)
+const log = noteLog(data)
+const f = freshness(data)
+const corrections = log.filter(e => e.kind === 'corrected').length
+const url = new URL(`/notes/${note.id}/`, Astro.site).href
+const toc = headings.filter(h => h.depth === 2)
+---
+
+<MainLayout
+  title={`${data.title} · ${SITE_TITLE}`}
+  description={data.description}
+  ogImage={`/og/notes/${note.id}.png`}
+  type="article"
+  publishedTime={data.pubDate}
+  modifiedTime={log[0].date}
+  current="notes"
+>
+  <a class="crumb" href="/notes/">← Notes</a>
+  <header class="note-head">
+    <h1 class="relief" data-lit>{data.title}</h1>
+    <div class="note-meta">
+      <span>
+        <time datetime={data.pubDate}>{formatDate(data.pubDate)}</time>
+      </span>
+      <span>{readingMinutes(note.body)} min read</span>
+      <Freshness state={f.state} label={f.label} />
+    </div>
+  </header>
+  <div class="note-grid">
+    <article class="prose">
+      <Content components={{ a: Anchor, Correction }} />
+      <ChangeLog
+        log={log}
+        title={data.title}
+        url={url}
+        lastChecked={f.checked}
+      />
+    </article>
+    <aside class="margin" aria-label="About this note">
+      <section>
+        <div class="status-block">
+          <span class="big"
+            ><Freshness state={f.state} />
+            {
+              f.state === 'updated'
+                ? `Updated ${formatDate(f.checked, 'short')}`
+                : f.label
+            }</span
+          >
+          {
+            data.timeless
+              ? `Written ${formatDate(data.pubDate)}. It's a story, so it isn't re-checked.`
+              : `Last checked ${formatDate(f.checked)}. First published ${formatDate(data.pubDate)}.`
+          }
+          {
+            corrections > 0 &&
+              ` ${corrections === 1 ? 'One correction is' : `${corrections} corrections are`} shown in the text.`
+          }
+          <a href="#changes">Change log</a>
+        </div>
+      </section>
+      {
+        toc.length > 0 && (
+          <nav class="toc" aria-labelledby="toc-h">
+            <h2 id="toc-h">On this page</h2>
+            <ol>
+              {toc.map(h => (
+                <li>
+                  <a href={`#${h.slug}`}>{h.text}</a>
+                </li>
+              ))}
+              <li>
+                <a href="#changes">Change log</a>
+              </li>
+            </ol>
+          </nav>
+        )
+      }
+    </aside>
+  </div>
+  {
+    (older || newer) && (
+      <nav class="pn" aria-label="More notes">
+        <span class="rule" />
+        {older && (
+          <a href={`/notes/${older.id}/`}>
+            <small>← Older</small>
+            {older.data.title}
+          </a>
+        )}
+        {newer && (
+          <a class="next" href={`/notes/${newer.id}/`}>
+            <small>Newer →</small>
+            {newer.data.title}
+          </a>
+        )}
+      </nav>
+    )
+  }
+</MainLayout>

@@ -2,16 +2,9 @@
 import InfoIcon from './icons/info-icon.astro'
 import WarningIcon from './icons/warning-icon.astro'
 
-const variants = {
-  info: 'border-s-sky-600 dark:border-s-sky-400 bg-sky-500/10',
-  warning: 'border-s-yellow-600 dark:border-s-yellow-400 bg-yellow-500/10',
-} as const
-
-type Variant = keyof typeof variants
-
 type Props = {
   class?: string
-  variant: Variant
+  variant: 'info' | 'warning'
 }
 
 const { class: className, variant } = Astro.props
@@ -22,16 +15,7 @@ const [title, Icon] = {
 }[variant]
 ---
 
-<div
-  class:list={[
-    'dark:prose-invert rounded-md border border-zinc-200 border-s-4 shadow-sm px-4 py-3 forced-colors:outline dark:border-zinc-700 [&>:first-child]:mt-0 [&>:last-child]:mb-0',
-    variants[variant],
-    className,
-  ]}
->
-  <div class="flex items-center gap-2 font-semibold">
-    <Icon />
-    {title}
-  </div>
+<aside class:list={['callout', variant, className]}>
+  <p class="callout-title"><Icon />{title}</p>
   <slot />
-</div>
+</aside>

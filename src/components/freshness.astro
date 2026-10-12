@@ -1,0 +1,8 @@
+---
+import type { FreshnessState } from '~/lib/notes'
+
+type Props = { state: FreshnessState; label?: string }
+const { state, label } = Astro.props
+---
+
+<span class={`mark m-${state}`}><i aria-hidden="true"></i>{label}</span>

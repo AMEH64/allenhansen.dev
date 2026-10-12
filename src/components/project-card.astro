@@ -1,0 +1,38 @@
+---
+import type { CollectionEntry } from 'astro:content'
+import { formatDate } from '~/lib/dates'
+import { statusLabel, displayUrl } from '~/lib/projects'
+
+type Props = { project: CollectionEntry<'projects'> }
+const { name, url, tagline, status, started, stack, mark } =
+  Astro.props.project.data
+const Tag = url ? 'a' : 'div'
+---
+
+<Tag class={`pcard ${status}`} href={url} data-lit>
+  <div class="top">
+    <span class="pm" aria-hidden="true">{mark}</span>
+    <span class={`st st-${status}`}>{statusLabel[status]}</span>
+  </div>
+  <h2>{name}</h2>
+  <p>{tagline}</p>
+  <span class="url">
+    {
+      url ? (
+        <>
+          {displayUrl(url)} <span aria-hidden="true">↗</span>
+        </>
+      ) : (
+        'Gets an address when it ships'
+      )
+    }
+  </span>
+  {
+    (started || stack.length > 0) && (
+      <div class="meta">
+        {started && <span>Since {formatDate(`${started}-01`, 'month')}</span>}
+        {stack.length > 0 && <span>{stack.join(' · ')}</span>}
+      </div>
+    )
+  }
+</Tag>

@@ -1,111 +1,78 @@
 ---
 import { SITE_TITLE } from '~/consts'
+import PageTitle from '~/components/page-title.astro'
 import MainLayout from '~/layouts/main-layout.astro'
-
-const lastUpdated = 'May 2026'
+import { meta, now } from '~/site.config'
 ---
 
 <MainLayout
-  title={`Now | ${SITE_TITLE}`}
-  description="What Allen Hansen is working on and thinking about right now."
+  title={`Now · ${SITE_TITLE}`}
+  description={meta.now}
+  ogImage="/og/now.png"
+  current="now"
 >
-  <div class="mx-auto w-full max-w-prose">
-    <header class="mb-10">
-      <h1
-        class="text-4xl font-bold tracking-tight text-zinc-900 sm:text-5xl dark:text-white"
-      >
-        Now
-      </h1>
-      <p class="mt-3 text-sm text-zinc-500 dark:text-zinc-400">
-        What I'd tell a friend I hadn't seen in a year. Last updated {
-          lastUpdated
-        }.
-      </p>
-    </header>
-
-    <div class="flex flex-col gap-10">
-      <section>
-        <h2
-          class="mb-4 text-xs font-semibold uppercase tracking-widest text-primary-600 dark:text-primary-400"
-        >
-          Working on
-        </h2>
-        <div class="prose dark:prose-invert">
-          <ul>
-            <li>Building and shipping features on a production web application at my day job</li>
-            <li>This site — ongoing improvements to design and content</li>
-          </ul>
-        </div>
-      </section>
-
-      <section>
-        <h2
-          class="mb-4 text-xs font-semibold uppercase tracking-widest text-primary-600 dark:text-primary-400"
-        >
-          Learning
-        </h2>
-        <div class="prose dark:prose-invert">
-          <ul>
-            <li>Astro 6 — new APIs, fonts, and content layer improvements</li>
-            <li>Modern CSS — OKLCH color spaces, container queries, and cascade layers</li>
-          </ul>
-        </div>
-      </section>
-
-      <section>
-        <h2
-          class="mb-4 text-xs font-semibold uppercase tracking-widest text-primary-600 dark:text-primary-400"
-        >
-          Reading &amp; watching
-        </h2>
-        <div class="prose dark:prose-invert">
-          <ul>
-            <li><em>A Philosophy of Software Design</em> — John Ousterhout</li>
-            <li>Conference talks on TypeScript compiler internals and performance</li>
-          </ul>
-        </div>
-      </section>
-
-      <section>
-        <h2
-          class="mb-4 text-xs font-semibold uppercase tracking-widest text-primary-600 dark:text-primary-400"
-        >
-          Side projects
-        </h2>
-        <div class="prose dark:prose-invert">
-          <ul>
-            <li>This site — the design, content, and tooling are all ongoing work</li>
-          </ul>
-        </div>
-      </section>
-
-      <section>
-        <h2
-          class="mb-4 text-xs font-semibold uppercase tracking-widest text-primary-600 dark:text-primary-400"
-        >
-          Location
-        </h2>
-        <div class="prose dark:prose-invert">
-          <p>Eastern US</p>
-        </div>
-      </section>
-    </div>
-
-    <div class="mt-12 border-t border-(--surface-border) pt-8">
-      <p class="text-sm text-zinc-500 dark:text-zinc-400">
-        Inspired by the <a
-          href="https://nownownow.com/about"
-          target="_blank"
-          rel="noopener noreferrer"
-          class="font-medium text-primary-600 underline underline-offset-2 hover:text-primary-500 dark:text-primary-400"
-          >/now movement</a
-        >. Want to know more about me?
-        <a
-          href="/about"
-          class="font-medium text-primary-600 underline underline-offset-2 hover:text-primary-500 dark:text-primary-400"
-          >See the about page →</a
-        >
-      </p>
-    </div>
+  <PageTitle
+    title="Now"
+    lead={`What I’d tell a friend I hadn’t seen in a year. Last updated ${now.updated}.`}
+  />
+  <div class="now-grid">
+    <section aria-labelledby="now-work">
+      <span class="rule"></span>
+      <h2 id="now-work">Working on</h2>
+      <div class="prose">
+        <ul>
+          <li>
+            Building and shipping features on a production web application at my
+            day job
+          </li>
+          <li>
+            This site: rebuilt as a letterpress proof sheet, with notes that say
+            when I last checked them
+          </li>
+        </ul>
+      </div>
+    </section>
+    <section aria-labelledby="now-learning">
+      <span class="rule"></span>
+      <h2 id="now-learning">Learning</h2>
+      <div class="prose">
+        <ul>
+          <li>Mandarin, drilling HSK 3 in Verso</li>
+          <li>
+            <span lang="haw">ʻŌlelo Hawaiʻi</span>, through hula vocabulary
+          </li>
+          <li>Python, FastAPI, and the Model Context Protocol</li>
+        </ul>
+      </div>
+    </section>
+    <section aria-labelledby="now-reading">
+      <span class="rule"></span>
+      <h2 id="now-reading">Reading &amp; watching</h2>
+      <div class="prose">
+        <ul>
+          <li><em>A Philosophy of Software Design</em>, John Ousterhout</li>
+          <li>
+            Conference talks on TypeScript compiler internals and performance
+          </li>
+        </ul>
+      </div>
+    </section>
+    <section aria-labelledby="now-side">
+      <span class="rule"></span>
+      <h2 id="now-side">Side projects</h2>
+      <div class="prose">
+        <ul>
+          <li>
+            <a href="https://verso.allenhansen.dev">Verso</a>: flash cards for
+            Chinese and <span lang="haw">ʻŌlelo Hawaiʻi</span>
+          </li>
+          <li>This site: the design, content, and tooling are ongoing work</li>
+        </ul>
+      </div>
+    </section>
   </div>
+  <p class="now-foot">
+    Inspired by the <a href="https://nownownow.com/about">/now movement</a>.
+    Want to know more? <a href="/about/">See the about page →</a>
+  </p>
 </MainLayout>

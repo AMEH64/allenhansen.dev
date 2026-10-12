@@ -1,0 +1,16 @@
+---
+// An inline correction, for real mistakes only. Each needs a matching `corrected` entry in
+// the note's log. <del>/<ins> aren't reliably announced, so the hidden text says what changed.
+import { formatDate } from '~/lib/dates'
+
+type Props = { was: string; now: string; date: string }
+const { was, now, date } = Astro.props
+---
+
+<span class="fix"
+  ><span class="vh">Correction. It used to say: </span><del>{was}</del>
+  <span class="vh">It now says: </span><ins>{now}</ins>
+  <small class="corr"
+    >Corrected <time datetime={date}>{formatDate(date)}</time></small
+  ></span
+>

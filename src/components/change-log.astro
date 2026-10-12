@@ -1,0 +1,35 @@
+---
+import { formatDate } from '~/lib/dates'
+import { reportUrl, type LogEntry } from '~/lib/notes'
+
+type Props = {
+  log: LogEntry[]
+  title: string
+  url: string
+  lastChecked: string
+}
+const { log, title, url, lastChecked } = Astro.props
+---
+
+<section class="changes" id="changes" aria-labelledby="changes-h">
+  <h2 id="changes-h">Change log</h2>
+  <ol>
+    {
+      log.map(entry => (
+        <li class={`chg chg-${entry.kind}`}>
+          <time datetime={entry.date}>{formatDate(entry.date)}</time>
+          <span>{entry.text}</span>
+        </li>
+      ))
+    }
+  </ol>
+  <p class="report">
+    <a href={reportUrl(title, url, lastChecked)}
+      >Spot something wrong or outdated?</a
+    >
+    <span
+      >Opens a GitHub issue with this note’s title, address, and last-checked
+      date filled in.</span
+    >
+  </p>
+</section>

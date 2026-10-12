@@ -1,106 +1,29 @@
 ---
-import Bars3BottomRightIcon from './icons/bars-3-bottom-right-icon.astro'
-import { Button } from '~/components/button'
-import { ColorModeToggle } from './color-mode-toggle'
-import HeaderLink from './header-link.astro'
-import Modal from './modal.astro'
-import { FEATURES } from '~/consts'
+import ThemeToggle from './theme-toggle.astro'
 
-const { pathname } = Astro.url
-const subpath = pathname.match(/[^\/]+/g)
-const currentPath = pathname === '/' ? '/' : '/' + subpath?.[0]
+type Props = { current?: string }
+const { current } = Astro.props
+
+const items = [
+  ['notes', 'Notes', '/notes/'],
+  ['projects', 'Projects', '/projects/'],
+  ['about', 'About', '/about/'],
+  ['now', 'Now', '/now/'],
+] as const
 ---
 
-<header
-  class="sticky top-0 z-50 w-full border-b"
-  transition:animate="none"
->
-  <div
-    class="mx-auto flex h-14 max-w-(--breakpoint-2xl) flex-1 items-center justify-between gap-4 px-4 sm:px-6 lg:px-8"
-  >
-    <nav class="flex items-center gap-3">
-      <span
-        class="font-mono text-sm font-semibold tracking-tight text-zinc-900 sm:hidden dark:text-white"
-      >
-        {currentPath}
-      </span>
-      <div class="hidden sm:flex sm:items-center sm:gap-3">
-        <HeaderLink href="/" aria-label="Home">/</HeaderLink>
-        <div
-          class="inline-block h-5 w-px rounded-full bg-zinc-300 dark:bg-zinc-700"
-        ></div>
-        {FEATURES.about && <HeaderLink href="/about" aria-label="About">/about</HeaderLink>}
-        <HeaderLink href="/blog" aria-label="Blog">/blog</HeaderLink>
-        {FEATURES.now && <HeaderLink href="/now" aria-label="Now">/now</HeaderLink>}
-      </div>
-    </nav>
-    <div class="flex items-center gap-1">
-      <div class="hidden sm:block">
-        <ColorModeToggle client:only />
-      </div>
-      <button
-        class="sm:hidden inline-flex items-center justify-center rounded-md p-2 text-zinc-600 transition-colors hover:bg-zinc-500/10 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-zinc-100"
-        data-slot="open"
-        aria-label="Open menu"
-        type="button"
-      >
-        <Bars3BottomRightIcon class="size-5" />
-      </button>
-    </div>
-  </div>
-</header>
-<Modal>
-  <h1 class="mb-3 block text-xl font-semibold text-balance">Menu</h1>
-  <nav class="flex flex-col items-start gap-3">
-    <HeaderLink href="/" aria-label="Home">/</HeaderLink>
-    {FEATURES.about && <HeaderLink href="/about" aria-label="About">/about</HeaderLink>}
-    <HeaderLink href="/blog" aria-label="Blog">/blog</HeaderLink>
-    {FEATURES.now && <HeaderLink href="/now" aria-label="Now">/now</HeaderLink>}
-  </nav>
-  <ColorModeToggle className="mt-3" client:only />
-</Modal>
-
-<style>
-  header {
-    transition:
-      background-color 200ms ease,
-      border-color 200ms ease,
-      box-shadow 200ms ease;
-  }
-
-  header:not(.header--scrolled) {
-    background-color: transparent;
-    -webkit-backdrop-filter: none;
-    backdrop-filter: none;
-    border-color: transparent;
-    box-shadow: none;
-  }
-
-  header.header--scrolled {
-    background-color: var(--glass-bg);
-    -webkit-backdrop-filter: blur(12px);
-    backdrop-filter: blur(12px);
-    border-color: var(--surface-border);
-    box-shadow: var(--shadow-sm);
-  }
-</style>
-
-<script>
-  document.addEventListener('astro:page-load', () => {
-    const dialog = document.querySelector('dialog')
-    document.querySelector('button[data-slot=open]')?.addEventListener('click', () => {
-      dialog?.showModal()
-    })
-
-    const header = document.querySelector('header')
-    const sentinel = document.getElementById('scroll-sentinel')
-    if (header && sentinel) {
-      new IntersectionObserver(
-        ([entry]) => {
-          header.classList.toggle('header--scrolled', !entry.isIntersecting)
-        },
-        { threshold: 0 },
-      ).observe(sentinel)
+<header class="site">
+  <a class="logo" href="/">
+    <span class="logo-mark" aria-hidden="true"></span><span>Allen Hansen</span>
+  </a>
+  <nav aria-label="Primary">
+    {
+      items.map(([key, label, href]) => (
+        <a href={href} aria-current={current === key ? 'page' : undefined}>
+          {label}
+        </a>
+      ))
     }
-  })
-</script>
+  </nav>
+  <ThemeToggle />
+</header>

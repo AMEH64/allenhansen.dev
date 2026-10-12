@@ -1,0 +1,14 @@
+---
+// A page title printed as an inked impression. The visible type is decoration
+// (aria-hidden); a visually hidden h1 carries the text.
+type Props = { title: string; lead?: string; slug?: string }
+const { title, lead, slug = title.toLowerCase() } = Astro.props
+---
+
+<header class="phead">
+  <p class="slug-line">allenhansen.dev / {slug}</p>
+  <div class="emboss ptitle" data-lit aria-hidden="true">{title}</div>
+  <h1 class="vh">{title}</h1>
+  {lead && <p class="lead">{lead}</p>}
+  <slot />
+</header>

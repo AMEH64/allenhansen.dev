@@ -1,0 +1,24 @@
+---
+import { SITE_TITLE } from '~/consts'
+import PageTitle from '~/components/page-title.astro'
+import MainLayout from '~/layouts/main-layout.astro'
+import { meta } from '~/site.config'
+---
+
+<MainLayout
+  title={`Not found · ${SITE_TITLE}`}
+  description={meta.notFound}
+  ogImage="/og/index.png"
+>
+  <PageTitle
+    title="Misprint"
+    slug="404"
+    lead="This page doesn’t exist, or it moved. Notes used to live under /blog and now live under /notes."
+  />
+  <ul class="contact" style="margin:0 0 60px">
+    <li><a href="/">Home</a></li>
+    <li><a href="/notes/">Notes</a></li>
+    <li><a href="/projects/">Projects</a></li>
+    <li><a href="/about/">About</a></li>
+  </ul>
+</MainLayout>

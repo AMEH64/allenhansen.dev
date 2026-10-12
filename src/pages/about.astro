@@ -1,77 +1,85 @@
 ---
-import { SITE_TITLE, FEATURES } from '~/consts'
+import { SITE_TITLE } from '~/consts'
+import PageTitle from '~/components/page-title.astro'
+import PhotoRotator from '~/components/photo-rotator.astro'
 import MainLayout from '~/layouts/main-layout.astro'
-import { Button } from '~/components/button'
-import GitHubIcon from '~/components/icons/git-hub-icon.astro'
-import LinkedInIcon from '~/components/icons/linked-in-icon.astro'
+import { links, meta, yearsInWords } from '~/site.config'
 ---
 
 <MainLayout
-  title={`About | ${SITE_TITLE}`}
-  description="A bit about Allen Hansen — full stack developer based in the US."
+  title={`About · ${SITE_TITLE}`}
+  description={meta.about}
+  ogImage="/og/about.png"
+  current="about"
 >
-  <div class="mx-auto w-full max-w-prose">
-    <header class="mb-10">
-      <h1
-        class="text-4xl font-bold tracking-tight text-zinc-900 sm:text-5xl dark:text-white"
-      >
-        Allen Hansen
-      </h1>
-    </header>
-
-    <div class="prose dark:prose-invert">
+  <PageTitle title="About" />
+  <div class="about">
+    <div class="prose">
+      <p class="lede">I’m Allen Hansen, a senior full-stack engineer.</p>
       <p>
-        I'm a full stack developer with a focus on building web applications
-        that are fast, accessible, and maintainable. I care about the craft of
-        software — the kind of details that don't show up in a feature list but
-        make a real difference to the people using what you build.
+        For {yearsInWords} years I’ve made web apps faster, more accessible, and easier
+        to change: Web Forms to React and Angular, WCAG 2.1 AA, theming and design
+        systems. Lately it’s Python, FastAPI, and AI tooling.
       </p>
       <p>
-        By day I work on product software, primarily in TypeScript and React.
-        Outside of that I tinker with side projects, contribute to open source
-        when I can, and occasionally write about things I've learned or found
-        interesting.
+        Outside work I’m learning Mandarin and <span lang="haw"
+          >ʻŌlelo Hawaiʻi</span
+        >, the second through hula. That’s how <a
+          href="https://verso.allenhansen.dev">Verso</a
+        > happened: I wanted better flash cards.
       </p>
       <p>
-        I'm based in the eastern US.
+        This site is where I write down what I learn. Notes are short and dated,
+        and I re-check them; when one turns out wrong, I correct it in the open.
       </p>
+      <ul class="contact" aria-label="Contact and elsewhere">
+        <li><a href={`mailto:${links.email}`}>{links.email}</a></li>
+        <li><a href={links.github}>GitHub</a></li>
+        <li><a href={links.linkedin}>LinkedIn</a></li>
+        <li><a href="/notes/rss.xml">RSS</a></li>
+        <li><a href="/resume/">Résumé</a></li>
+      </ul>
     </div>
-
-    <div class="mt-8 flex flex-wrap items-center gap-3">
-      <Button
-        as="a"
-        href="https://github.com/AMEH64"
-        target="_blank"
-        rel="noopener noreferrer"
-        variant="outline"
-      >
-        <GitHubIcon />
-        GitHub
-      </Button>
-      <Button
-        as="a"
-        href="https://www.linkedin.com/in/allen-hansen"
-        target="_blank"
-        rel="noopener noreferrer"
-        variant="outline"
-      >
-        <LinkedInIcon />
-        LinkedIn
-      </Button>
+    <div class="about-side">
+      <PhotoRotator />
+      <section class="glance" aria-labelledby="glance-h">
+        <h2 id="glance-h">At a glance</h2>
+        <dl>
+          <div><dt>Role</dt><dd>Senior full-stack engineer</dd></div>
+          <div>
+            <dt>Now</dt><dd>Schneider Electric Sustainability Business</dd>
+          </div>
+          <div><dt>Since</dt><dd>2017, from Web Forms to React</dd></div>
+          <div><dt>Lately</dt><dd>Python, FastAPI, MCP</dd></div>
+          <div>
+            <dt>More</dt><dd><a href="/resume/">The full résumé →</a></dd>
+          </div>
+        </dl>
+      </section>
     </div>
-
-    {FEATURES.now && (
-      <div class="mt-10 border-t border-(--surface-border) pt-8">
-        <p class="text-sm text-zinc-500 dark:text-zinc-400">
-          Curious what I'm up to right now?
-          <a
-            href="/now"
-            class="font-medium text-primary-600 underline underline-offset-2 hover:text-primary-500 dark:text-primary-400"
-          >
-            See my now page →
-          </a>
-        </p>
-      </div>
-    )}
   </div>
+  <section class="colophon" aria-label="Colophon">
+    <span class="rule"></span>
+    <div>
+      <h2>The press</h2>
+      <p>
+        Headings are printed blind into the stock. A lamp rakes across them; on
+        phones it follows your scroll.
+      </p>
+    </div>
+    <div>
+      <h2>Readable first</h2>
+      <p>
+        Body type is Atkinson Hyperlegible, designed for low vision. Reduced
+        motion parks the lamp.
+      </p>
+    </div>
+    <div>
+      <h2>Notes stay honest</h2>
+      <p>
+        Every note says when I last checked it, with a dated change log at the
+        foot. Real mistakes are struck through and corrected in the text.
+      </p>
+    </div>
+  </section>
 </MainLayout>
