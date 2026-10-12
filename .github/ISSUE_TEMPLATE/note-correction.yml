@@ -1,0 +1,52 @@
+name: Note correction
+description: Something in a note is wrong or out of date.
+title: 'Note: '
+labels: ['note-correction']
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for checking my work. Tell me what's off and, if you can, where you saw the right answer.
+        I'll fix it, add a dated line to the note's change log, and show real mistakes struck through in the text.
+  - type: input
+    id: note-title
+    attributes:
+      label: Note
+      description: Filled in when you use the link on the note.
+    validations:
+      required: true
+  - type: input
+    id: note-url
+    attributes:
+      label: Address
+      placeholder: https://www.allenhansen.dev/notes/…
+    validations:
+      required: true
+  - type: input
+    id: last-checked
+    attributes:
+      label: Last checked
+      description: The note's last-checked date, filled in from the page.
+  - type: dropdown
+    id: kind
+    attributes:
+      label: What's wrong?
+      options:
+        - It was a mistake when it was written
+        - It's out of date now
+        - A link or example is broken
+        - Something else
+    validations:
+      required: true
+  - type: textarea
+    id: details
+    attributes:
+      label: What should it say?
+      description: Quote the part that's off and say what's right.
+    validations:
+      required: true
+  - type: input
+    id: source
+    attributes:
+      label: Source (optional)
+      description: A spec, docs page, or test case that shows it.
