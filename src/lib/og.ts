@@ -159,6 +159,7 @@ export async function renderOg({
     }
   }
   const titleTop = 186
+  const descGap = pressed ? 28 : 40
   layers.push({ input: titleShadow.data, top: titleTop + 2, left: X + 2 })
   layers.push({ input: titleImg.data, top: titleTop, left: X })
 
@@ -171,7 +172,7 @@ export async function renderOg({
       muted,
       900,
     )
-    const maxHeight = Math.max(0, 548 - (titleTop + titleImg.height + 28))
+    const maxHeight = Math.max(0, 548 - (titleTop + titleImg.height + descGap))
     while (desc.height > maxHeight && words.length > 4) {
       words = words.slice(0, -1)
       desc = await text(
@@ -185,7 +186,7 @@ export async function renderOg({
     if (desc.height <= maxHeight) {
       layers.push({
         input: desc.data,
-        top: titleTop + titleImg.height + 28,
+        top: titleTop + titleImg.height + descGap,
         left: X,
       })
     }
