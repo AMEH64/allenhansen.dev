@@ -1,0 +1,10 @@
+{
+  "name": "Verso",
+  "url": "https://verso.allenhansen.dev",
+  "tagline": "Flash cards for Chinese (HSK 1–6) and ʻŌlelo Hawaiʻi. The other side of the card.",
+  "status": "active",
+  "started": "2026-10",
+  "stack": ["Astro", "Cloudflare Workers"],
+  "mark": "V",
+  "order": 1
+}

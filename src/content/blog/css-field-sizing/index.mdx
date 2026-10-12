@@ -18,15 +18,15 @@ sizes with variable content.
 When a form field's content exceeds its fixed size, the overflow can make it
 difficult for users to interact with the field.
 
-<label class="font-semibold text-zinc-950 dark:text-zinc-50">
+<label class="block font-semibold text-text">
   Example `<textarea>` with overflowing content.
   <textarea
     class:list={[
       'block w-full px-4 py-3 resize-none [max-block-size:10lh]',
-      'bg-white/5 text-zinc-950 dark:text-zinc-50 font-normal',
-      'rounded-sm border border-zinc-300 dark:border-zinc-700',
-      'placeholder:text-zinc-700 dark:placeholder:text-zinc-300',
-      'focus-visible:outline-offset-2 focus-visible:outline-blue-600 dark:focus-visible:outline-blue-400',
+      'bg-surface text-text font-normal',
+      'rounded-xs border border-muted',
+      'placeholder:text-muted',
+      'focus-visible:outline-offset-2 focus-visible:outline-brand',
     ]}
     placeholder="Type here..."
   >
@@ -41,15 +41,15 @@ cillum dolore eu fugiat nulla pariatur.`}
 Conversely, when the content is significantly smaller than the fixed size, the
 field may make the interface feel unbalanced.
 
-<label class="font-semibold text-zinc-950 dark:text-zinc-50">
+<label class="block font-semibold text-text">
   Example `<textarea>` with a large intrinsic size.
   <textarea
     class:list={[
       'block w-full px-4 py-3 resize-none [block-size:10lh]',
-      'bg-white/5 text-zinc-950 dark:text-zinc-50 font-normal',
-      'rounded-sm border border-zinc-300 dark:border-zinc-700',
-      'placeholder:text-zinc-700 dark:placeholder:text-zinc-300',
-      'focus-visible:outline-offset-2 focus-visible:outline-blue-600 dark:focus-visible:outline-blue-400',
+      'bg-surface text-text font-normal',
+      'rounded-xs border border-muted',
+      'placeholder:text-muted',
+      'focus-visible:outline-offset-2 focus-visible:outline-brand',
     ]}
     placeholder="Type here..."
   >
@@ -74,15 +74,15 @@ most mobile browsers.
   https://caniuse.com/css-resize for more details.
 </Alert>
 
-<label class="font-semibold text-zinc-950 dark:text-zinc-50">
+<label class="block font-semibold text-text">
   Example `<textarea>` with `resize: vertical`.
   <textarea
     class:list={[
       'block w-full px-4 py-3 resize-y [max-block-size:10lh]',
-      'bg-white/5 text-zinc-950 dark:text-zinc-50 font-normal',
-      'rounded-sm border border-zinc-300 dark:border-zinc-700',
-      'placeholder:text-zinc-700 dark:placeholder:text-zinc-300',
-      'focus-visible:outline-offset-2 focus-visible:outline-blue-600 dark:focus-visible:outline-blue-400',
+      'bg-surface text-text font-normal',
+      'rounded-xs border border-muted',
+      'placeholder:text-muted',
+      'focus-visible:outline-offset-2 focus-visible:outline-brand',
     ]}
     placeholder="Type here..."
   >
@@ -138,15 +138,15 @@ textarea {
   automatically resize as its content changes.
 </Alert>
 
-<label class="font-semibold text-zinc-950 dark:text-zinc-50">
+<label class="block font-semibold text-text">
   Example `<textarea>` with `field-sizing: content`.
   <textarea
     class:list={[
       'block w-full px-4 py-3 resize-y [max-block-size:10lh]',
-      'bg-white/5 text-zinc-950 dark:text-zinc-50 font-normal',
-      'rounded-sm border border-zinc-300 dark:border-zinc-700',
-      'placeholder:text-zinc-700 dark:placeholder:text-zinc-300',
-      'focus-visible:outline-offset-2 focus-visible:outline-blue-600 dark:focus-visible:outline-blue-400',
+      'bg-surface text-text font-normal',
+      'rounded-xs border border-muted',
+      'placeholder:text-muted',
+      'focus-visible:outline-offset-2 focus-visible:outline-brand',
       'supports-[field-sizing:content]:resize-none supports-[field-sizing:content]:field-sizing-content',
     ]}
     placeholder="Type here..."

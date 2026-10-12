@@ -1,0 +1,10 @@
+{
+  "name": "md-notes",
+  "url": "https://md-notes-ameh.vercel.app",
+  "tagline": "A storage-agnostic markdown notes app. Resting, not retired.",
+  "status": "paused",
+  "started": "2026-02",
+  "stack": ["Next.js", "Vercel"],
+  "mark": "M↓",
+  "order": 2
+}

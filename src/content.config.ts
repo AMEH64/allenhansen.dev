@@ -12,7 +12,42 @@ const blog = defineCollection({
       pubDate: z.iso.date(),
       updatedDate: z.iso.date().optional(),
       image: image(),
+      // Stories and other notes that can't go stale: they read "Written {Mon YYYY}" and
+      // are never "Due for a re-check".
+      timeless: z.boolean().optional().default(false),
+      // The change log at the foot of the note, newest first. When it's empty, it's
+      // derived from pubDate and updatedDate.
+      log: z
+        .array(
+          z.object({
+            date: z.iso.date(),
+            kind: z.enum([
+              'published',
+              'checked',
+              'updated',
+              'corrected',
+              'tweak',
+            ]),
+            text: z.string().min(1),
+          }),
+        )
+        .optional()
+        .default([]),
     }),
+})
+
+const projects = defineCollection({
+  loader: glob({ pattern: '**/*.json', base: './src/content/projects' }),
+  schema: z.object({
+    name: z.string().min(1),
+    url: z.url().optional(),
+    tagline: z.string().min(1),
+    status: z.enum(['active', 'paused', 'tinkering', 'idea', 'archived']),
+    started: z.string().optional(),
+    stack: z.string().array().default([]),
+    mark: z.string().min(1),
+    order: z.number(),
+  }),
 })
 
 const jobsCollection = defineCollection({
@@ -41,6 +76,7 @@ const educationCollection = defineCollection({
 
 export const collections = {
   blog,
+  projects,
   jobs: jobsCollection,
   education: educationCollection,
 }
