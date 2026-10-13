@@ -1277,6 +1277,62 @@
     color: var(--muted);
   }
 
+  /* about, variant d: editorial plates with the same low ink tint and square corners */
+  .plate {
+    margin: 0;
+  }
+  .plate-portrait {
+    max-width: 260px;
+  }
+  .plate-wide {
+    margin: 24px 0 64px;
+  }
+  .plate-photo {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+    background: var(--press);
+    box-shadow: 0 0 0 1px var(--rule);
+  }
+  .plate-photo img {
+    display: block;
+    width: 100%;
+    height: auto;
+    filter: grayscale(1) contrast(1.06);
+  }
+  .plate-portrait .plate-photo img {
+    aspect-ratio: 4 / 5;
+    object-fit: cover;
+  }
+  .plate-wide .plate-photo img {
+    aspect-ratio: 12 / 5;
+    object-fit: cover;
+  }
+  .plate-photo::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: var(--tint);
+    mix-blend-mode: color;
+    opacity: 0.26;
+    pointer-events: none;
+  }
+  .plate figcaption {
+    margin-top: 12px;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    letter-spacing: 0.04em;
+    color: var(--muted);
+  }
+  .plate figcaption span {
+    color: var(--brand);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+  .about-side > .plate + .glance {
+    margin-top: 36px;
+  }
+
   /* lab: the photo stack variants side by side, for review only */
   .lab-grid {
     display: grid;
@@ -1303,6 +1359,22 @@
   }
   .lab-variant .pile {
     max-width: 300px;
+  }
+  .lab-d {
+    padding-bottom: 60px;
+  }
+  .lab-d > p {
+    min-height: 0;
+    max-width: 640px;
+  }
+  .lab-d-plates {
+    display: grid;
+    grid-template-columns: 200px minmax(0, 1fr);
+    gap: 40px;
+    align-items: start;
+  }
+  .lab-d-plates .plate-wide {
+    margin: 0;
   }
 
   /* now */
@@ -1693,8 +1765,20 @@
     .lab-grid {
       grid-template-columns: minmax(0, 1fr);
     }
+    .about .plate-portrait {
+      max-width: 240px;
+    }
+    .plate-wide .plate-photo img {
+      aspect-ratio: 3 / 2;
+    }
+    .plate-wide {
+      margin: 8px 0 44px;
+    }
     .lab-variant > p {
       min-height: 0;
+    }
+    .lab-d-plates {
+      grid-template-columns: minmax(0, 1fr);
     }
     .about .lede {
       font-size: 22px !important;
@@ -1743,6 +1827,7 @@
     .glow,
     .paper-layers,
     .pile-photo::after,
+    .plate-photo::after,
     .pile-b .pile-card::before {
       display: none;
     }

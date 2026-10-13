@@ -1,0 +1,35 @@
+---
+// An editorial plate: one black-and-white photo with the ink laid over at low strength, square
+// corners, and a mono caption line ("Plate I · …"). No JS. Captions never name a place.
+import type { ImageMetadata } from 'astro'
+import { Image } from 'astro:assets'
+
+type Props = {
+  src: ImageMetadata
+  alt: string
+  plate: string
+  caption: string
+  /** portrait sits beside the About opener; wide runs the full width between sections. */
+  shape: 'portrait' | 'wide'
+}
+const { src, alt, plate, caption, shape } = Astro.props
+const wide = shape === 'wide'
+---
+
+<figure class={`plate plate-${shape}`}>
+  <div class="plate-photo">
+    <Image
+      src={src}
+      alt={alt}
+      widths={wide ? [720, 1280, 1920, 2400] : [280, 480, 720]}
+      sizes={wide
+        ? '(max-width: 760px) calc(100vw - 40px), 1180px'
+        : '(max-width: 760px) 240px, 260px'}
+      format="webp"
+      quality={72}
+      loading={wide ? 'lazy' : 'eager'}
+      decoding="async"
+    />
+  </div>
+  <figcaption><span>Plate {plate}</span> · {caption}</figcaption>
+</figure>

@@ -1,9 +1,17 @@
 ---
+// The About page. `photos` picks the look: the Boba stack (variants a to c) beside the
+// opener, or two editorial plates (d): a portrait beside the opener and Boba full width.
 import { SITE_TITLE } from '~/consts'
 import PageTitle from '~/components/page-title.astro'
+import PhotoPlate from '~/components/photo-plate.astro'
 import PhotoStack from '~/components/photo-stack.astro'
 import MainLayout from '~/layouts/main-layout.astro'
 import { links, meta, yearsInWords } from '~/site.config'
+import portrait from '~/assets/images/allen/allen-portrait.jpg'
+import bobaWide from '~/assets/images/boba/boba-wide.jpg'
+
+type Props = { photos?: 'a' | 'b' | 'c' | 'd'; noindex?: boolean }
+const { photos = 'a', noindex = false } = Astro.props
 ---
 
 <MainLayout
@@ -11,6 +19,7 @@ import { links, meta, yearsInWords } from '~/site.config'
   description={meta.about}
   ogImage="/og/about.png"
   current="about"
+  noindex={noindex}
 >
   <PageTitle title="About" />
   <div class="about">
@@ -41,7 +50,19 @@ import { links, meta, yearsInWords } from '~/site.config'
       </ul>
     </div>
     <div class="about-side">
-      <PhotoStack variant="a" />
+      {
+        photos === 'd' ? (
+          <PhotoPlate
+            src={portrait}
+            alt="Allen smiling in glasses and a light linen shirt, with trees softly out of focus behind him."
+            plate="I"
+            caption="Allen Hansen"
+            shape="portrait"
+          />
+        ) : (
+          <PhotoStack variant={photos} />
+        )
+      }
       <section class="glance" aria-labelledby="glance-h">
         <h2 id="glance-h">At a glance</h2>
         <dl>
@@ -58,6 +79,17 @@ import { links, meta, yearsInWords } from '~/site.config'
       </section>
     </div>
   </div>
+  {
+    photos === 'd' && (
+      <PhotoPlate
+        src={bobaWide}
+        alt="Allen sits in the grass with an arm around Boba, a black dog with a white chest and a collar, and smiles down at him."
+        plate="II"
+        caption="Boba and me"
+        shape="wide"
+      />
+    )
+  }
   <section class="colophon" aria-label="Colophon">
     <span class="rule"></span>
     <div>

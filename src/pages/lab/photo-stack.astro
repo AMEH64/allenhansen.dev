@@ -3,8 +3,11 @@
 // sitemap; delete it (and the unused variants) once one is chosen.
 import { SITE_TITLE } from '~/consts'
 import PageTitle from '~/components/page-title.astro'
+import PhotoPlate from '~/components/photo-plate.astro'
 import PhotoStack from '~/components/photo-stack.astro'
 import MainLayout from '~/layouts/main-layout.astro'
+import portrait from '~/assets/images/allen/allen-portrait.jpg'
+import bobaWide from '~/assets/images/boba/boba-wide.jpg'
 
 const variants = [
   {
@@ -27,13 +30,13 @@ const variants = [
 
 <MainLayout
   title={`Photo stack variants · ${SITE_TITLE}`}
-  description="Three looks for the About page photos, side by side."
+  description="Four looks for the About page photos, side by side."
   noindex
 >
   <PageTitle
     title="Photo stack"
     slug="lab / photo-stack"
-    lead="Three looks for the About photos. They all work the same way: drag or swipe the top print away, click or tap it, or use the arrow keys."
+    lead="Four looks for the About photos. A to C are stacks that work the same way: drag or swipe the top print away, click or tap it, or use the arrow keys. D is two still plates."
   />
   <div class="lab-grid">
     {
@@ -48,4 +51,29 @@ const variants = [
       ))
     }
   </div>
+  <section class="lab-variant lab-d" aria-labelledby="lab-d">
+    <h2 id="lab-d"><span>D</span> Two editorial plates</h2>
+    <p>
+      No stack and no JS: a modest portrait beside the About opener, and Boba
+      full width between the About sections. <a href="/lab/about-plates/"
+        >See D in place on the About page →</a
+      >
+    </p>
+    <div class="lab-d-plates">
+      <PhotoPlate
+        src={portrait}
+        alt="Allen smiling in glasses and a light linen shirt, with trees softly out of focus behind him."
+        plate="I"
+        caption="Allen Hansen"
+        shape="portrait"
+      />
+      <PhotoPlate
+        src={bobaWide}
+        alt="Allen sits in the grass with an arm around Boba, a black dog with a white chest and a collar, and smiles down at him."
+        plate="II"
+        caption="Boba and me"
+        shape="wide"
+      />
+    </div>
+  </section>
 </MainLayout>
