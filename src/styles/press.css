@@ -786,6 +786,9 @@
     font-size: 16px;
     line-height: 1.6;
   }
+  .prose .superseded {
+    margin: 0 0 1.6em;
+  }
   .callout.warning {
     border-left-style: double;
     border-left-width: 5px;

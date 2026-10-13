@@ -102,6 +102,19 @@ Each entry links to the note file's history on GitHub
 the diff and you don't need a commit hash when you write the entry. To link one
 entry straight to its commit, add `commit: <sha>` to it.
 
+When a newer note replaces an older approach, leave the old note as it was, set
+`supersededBy` to the newer note's slug, and log it. The old note then opens
+with "There's a newer way to do this → <newer note's title>". The build fails if
+the slug isn't a note.
+
+```yaml
+supersededBy: css-field-sizing
+log:
+  - date: 2026-10-13
+    kind: updated
+    text: 'Updated: field-sizing replaces this approach'
+```
+
 The "Spot something wrong or outdated?" link opens
 `.github/ISSUE_TEMPLATE/note-correction.yml`. That template adds the
 `note-correction` label, which has to exist in the GitHub repository.

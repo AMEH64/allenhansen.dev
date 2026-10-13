@@ -1,4 +1,4 @@
-import { defineCollection } from 'astro:content'
+import { defineCollection, reference } from 'astro:content'
 import { glob } from 'astro/loaders'
 import { z } from 'astro/zod'
 
@@ -27,6 +27,8 @@ const blog = defineCollection({
       updatedDate: z.iso.date().optional(),
       image: image().optional(),
       draft: z.boolean().optional().default(false),
+      // The slug of a newer note that replaces this one; the note page fails the build if it's missing.
+      supersededBy: reference('blog').optional(),
       // The change log at the foot of the note, newest first. When it's empty, it's
       // derived from date and updatedDate.
       log: z

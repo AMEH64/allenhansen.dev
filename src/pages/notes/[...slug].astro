@@ -1,5 +1,5 @@
 ---
-import { render } from 'astro:content'
+import { getEntry, render } from 'astro:content'
 import { SITE_TITLE } from '~/consts'
 import ChangeLog from '~/components/change-log.astro'
 import CodeCopy from '~/components/code-copy.astro'
@@ -32,6 +32,19 @@ const log = noteLog(data)
 const f = freshness(data)
 const url = new URL(`/notes/${note.id}/`, Astro.site).href
 const toc = headings.filter(h => h.depth === 2)
+const replacement = data.supersededBy
+  ? await getEntry(data.supersededBy)
+  : undefined
+// reference() only warns about a missing entry, so fail the build here instead.
+if (data.supersededBy && !replacement) {
+  throw new Error(
+    `${note.id}: supersededBy "${data.supersededBy.id}" isn't a note.`,
+  )
+}
+const newerWay =
+  replacement && (!replacement.data.draft || import.meta.env.DEV)
+    ? replacement
+    : undefined
 ---
 
 <MainLayout
@@ -62,6 +75,14 @@ const toc = headings.filter(h => h.depth === 2)
   </header>
   <div class="note-grid">
     <article class="prose">
+      {
+        newerWay && (
+          <p class="callout superseded">
+            There’s a newer way to do this →{' '}
+            <a href={`/notes/${newerWay.id}/`}>{newerWay.data.title}</a>
+          </p>
+        )
+      }
       <Content components={{ a: Anchor }} />
       <ChangeLog
         log={log}
