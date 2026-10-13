@@ -4,6 +4,7 @@ import { SITE_TITLE } from '~/consts'
 import ChangeLog from '~/components/change-log.astro'
 import CodeCopy from '~/components/code-copy.astro'
 import Anchor from '~/components/mdx/anchor.astro'
+import PostTags from '~/components/post-tags.astro'
 import MainLayout from '~/layouts/main-layout.astro'
 import { formatDate } from '~/lib/dates'
 import {
@@ -83,6 +84,7 @@ const newerWay =
       }
       <span>{readingMinutes(note.body)} min read</span>
     </div>
+    <PostTags tags={data.tags} />
   </header>
   <div class="note-grid">
     <article class="prose">

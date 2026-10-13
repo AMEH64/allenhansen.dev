@@ -3,7 +3,8 @@ import { SITE_TITLE } from '~/consts'
 import PostRow from '~/components/post-row.astro'
 import PageTitle from '~/components/page-title.astro'
 import MainLayout from '~/layouts/main-layout.astro'
-import { getPosts, type Post } from '~/lib/posts'
+import BlogFilter from '~/components/blog-filter.astro'
+import { BLOG, getPosts, typePath, typePlural, type Post } from '~/lib/posts'
 import { meta } from '~/site.config'
 
 const notes = await getPosts()
@@ -25,17 +26,43 @@ const years = Object.entries(
     title="Blog"
     lead="Things I’ve learned, written down so I don’t forget them."
   />
-  {
-    years.map(([year, list]) => (
-      <section class="year" aria-labelledby={`y${year}`}>
-        <h2 id={`y${year}`}>{year}</h2>
-        <ul class="rows">
-          {list.map(note => (
-            <PostRow note={note} />
-          ))}
-        </ul>
-      </section>
-    ))
-  }
+  <div class="blog-list" data-filter>
+    <nav class="filters" aria-label="Filter posts">
+      <ul class="pills">
+        <li><a href={BLOG} data-filter-type="" aria-current="true">All</a></li>
+        {
+          (['note', 'story'] as const).map(type => (
+            <li>
+              <a href={typePath(type)} data-filter-type={type}>
+                {typePlural[type]}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+      <p class="filter-status">
+        <span data-filter-count aria-live="polite"
+          >{notes.length} {notes.length === 1 ? 'post' : 'posts'}</span
+        >
+        <a href={BLOG} data-filter-clear hidden>Clear filters</a>
+      </p>
+    </nav>
+    {
+      years.map(([year, list]) => (
+        <section class="year" aria-labelledby={`y${year}`} data-year>
+          <h2 id={`y${year}`}>{year}</h2>
+          <ul class="rows">
+            {list.map(note => (
+              <PostRow note={note} />
+            ))}
+          </ul>
+        </section>
+      ))
+    }
+    <p class="filter-empty" data-filter-empty hidden>
+      No posts match these filters. <a href={BLOG}>Clear filters</a>
+    </p>
+    <BlogFilter />
+  </div>
   <div style="height:40px"></div>
 </MainLayout>

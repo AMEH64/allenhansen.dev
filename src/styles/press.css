@@ -291,6 +291,91 @@
     margin-top: 7px;
   }
 
+  /* topic tags: small mono links that filter the blog list */
+  .tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px 10px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    letter-spacing: 0.02em;
+  }
+  .note-head .tags {
+    margin-top: 14px;
+  }
+  .tags a {
+    color: var(--muted);
+    text-decoration: none;
+  }
+  .tags a::before {
+    content: '#';
+    color: var(--brand);
+  }
+  .tags a:hover,
+  .tags a[aria-current] {
+    color: var(--text);
+    text-decoration: underline;
+    text-decoration-color: var(--brand);
+  }
+
+  /* blog filters: the URL holds the state; these are plain links */
+  [data-filter] [hidden] {
+    display: none !important;
+  }
+  .filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px 24px;
+    align-items: center;
+    margin-top: 6px;
+  }
+  .pills {
+    display: flex;
+    gap: 6px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .pills a {
+    display: inline-block;
+    padding: 5px 12px;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--muted);
+    text-decoration: none;
+    border: 1px solid var(--rule);
+    border-radius: 2px;
+  }
+  .pills a:hover {
+    color: var(--text);
+    border-color: var(--muted);
+  }
+  .pills a[aria-current] {
+    color: var(--brand);
+    border-color: var(--brand);
+    background: var(--brand-wash);
+  }
+  .filter-status {
+    display: flex;
+    gap: 14px;
+    margin: 0;
+    font-size: 13.5px;
+    color: var(--muted);
+  }
+  .filter-status a {
+    font-family: var(--font-mono);
+    font-size: 12.5px;
+  }
+  .filter-empty {
+    padding: 40px 0 20px;
+    color: var(--muted);
+  }
+
   /* home */
   .hero {
     position: relative;

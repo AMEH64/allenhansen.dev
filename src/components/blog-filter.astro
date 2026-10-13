@@ -1,0 +1,76 @@
+---
+// Filters the blog list from the URL (?type=story&tag=css) so filtered views are shareable
+// links. Without JS every post shows and the filter links still navigate. It runs inline,
+// right after the list, so a filtered view is settled before first paint.
+---
+
+<script is:inline>
+  ;(() => {
+    const root = document.querySelector('[data-filter]')
+    if (!root) return
+    const posts = [...root.querySelectorAll('[data-post]')]
+    const years = [...root.querySelectorAll('[data-year]')]
+    const typeLinks = [...root.querySelectorAll('[data-filter-type]')]
+    const tagLinks = [...root.querySelectorAll('[data-filter-tag]')]
+    const count = root.querySelector('[data-filter-count]')
+    const clear = root.querySelector('[data-filter-clear]')
+    const empty = root.querySelector('[data-filter-empty]')
+    const n = k => `${k} post${k === 1 ? '' : 's'}`
+    const url = (type, tag) => {
+      const q = new URLSearchParams()
+      if (type) q.set('type', type)
+      if (tag) q.set('tag', tag)
+      const s = q.toString()
+      return location.pathname + (s ? `?${s}` : '')
+    }
+    const mark = (a, on) =>
+      on
+        ? a.setAttribute('aria-current', 'true')
+        : a.removeAttribute('aria-current')
+    const apply = () => {
+      const q = new URLSearchParams(location.search)
+      const type = q.get('type') || ''
+      const tag = q.get('tag') || ''
+      let shown = 0
+      for (const li of posts) {
+        const ok =
+          (!type || li.dataset.type === type) &&
+          (!tag || li.dataset.tags.split(' ').includes(tag))
+        li.hidden = !ok
+        if (ok) shown++
+      }
+      for (const y of years)
+        y.hidden = !y.querySelector('[data-post]:not([hidden])')
+      let label = ''
+      for (const a of typeLinks) {
+        const t = a.dataset.filterType
+        a.href = url(t, tag)
+        mark(a, t === type)
+        if (t && t === type) label = a.textContent.trim()
+      }
+      for (const a of tagLinks) {
+        const t = a.dataset.filterTag
+        a.href = url(type, t === tag ? '' : t)
+        mark(a, t === tag)
+      }
+      const filtered = Boolean(type || tag)
+      count.textContent = filtered
+        ? `${shown} of ${n(posts.length)}${label ? ` · ${label}` : ''}${tag ? ` · tagged ${tag}` : ''}`
+        : n(posts.length)
+      clear.hidden = !filtered
+      empty.hidden = shown > 0
+    }
+    root.addEventListener('click', e => {
+      const a = e.target.closest(
+        '[data-filter-type], [data-filter-tag], [data-filter-clear], [data-filter-empty] a',
+      )
+      if (!a || e.button || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey)
+        return
+      e.preventDefault()
+      if (a.href !== location.href) history.pushState(null, '', a.href)
+      apply()
+    })
+    addEventListener('popstate', apply)
+    apply()
+  })()
+</script>

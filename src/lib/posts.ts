@@ -7,6 +7,11 @@ export type Post = CollectionEntry<'blog'>
 export const BLOG = '/blog/'
 export const postPath = (id: string) => `${BLOG}${id}/`
 export const rssPath = `${BLOG}rss.xml`
+/** Filtered list views. Without JS they show every post; the filter script on the list applies them. */
+export const tagPath = (tag: string) =>
+  `${BLOG}?${new URLSearchParams({ tag })}`
+export const typePath = (type: Post['data']['type']) =>
+  `${BLOG}?${new URLSearchParams({ type })}`
 export type LogEntry = Post['data']['log'][number]
 
 /** Published notes, newest first. Drafts only show in `astro dev`. */
@@ -24,6 +29,7 @@ export function postLog(data: Post['data']): LogEntry[] {
 }
 
 export const typeLabel = { note: 'Note', story: 'Story' } as const
+export const typePlural = { note: 'Notes', story: 'Stories' } as const
 
 /** A prefilled issue from .github/ISSUE_TEMPLATE/note-correction.yml. No `labels=`: GitHub 404s it for visitors who can't apply labels. */
 export function reportUrl(title: string, url: string) {
