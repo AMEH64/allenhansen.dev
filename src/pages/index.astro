@@ -2,7 +2,7 @@
 import { SITE_TITLE } from '~/consts'
 import NoteRow from '~/components/note-row.astro'
 import MainLayout from '~/layouts/main-layout.astro'
-import { getNotes } from '~/lib/notes'
+import { BLOG, getNotes } from '~/lib/notes'
 import { displayUrl, getProjects, statusLabel } from '~/lib/projects'
 import { meta, now } from '~/site.config'
 
@@ -17,7 +17,7 @@ const projects = (await getProjects()).slice(0, 3)
       aria-hidden="true"></span><span class="crop bl" aria-hidden="true"
     ></span><span class="crop br" aria-hidden="true"></span>
     <p class="slug-line">
-      Notes &amp; projects · Full-stack engineering · Impression No.&nbsp;47
+      Blog &amp; projects · Full-stack engineering · Impression No.&nbsp;47
     </p>
     <h1 class="vh" id="hero-h">Allen Hansen</h1>
     <div class="emboss hero-name" data-lit aria-hidden="true">
@@ -38,7 +38,7 @@ const projects = (await getProjects()).slice(0, 3)
   <div class="home-cols">
     <section aria-labelledby="h-lately">
       <h2 class="sec-h" id="h-lately">
-        Lately <a href="/notes/">All {notes.length} notes →</a>
+        Lately <a href={BLOG}>All {notes.length} posts →</a>
       </h2>
       <span class="rule"></span>
       <ul class="rows">

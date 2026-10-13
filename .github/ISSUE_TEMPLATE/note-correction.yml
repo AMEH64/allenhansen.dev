@@ -19,7 +19,7 @@ body:
     id: note-url
     attributes:
       label: Address
-      placeholder: https://www.allenhansen.dev/notes/…
+      placeholder: https://www.allenhansen.dev/blog/…
     validations:
       required: true
   - type: dropdown

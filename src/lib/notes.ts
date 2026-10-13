@@ -2,6 +2,11 @@ import { getCollection, type CollectionEntry } from 'astro:content'
 import { notesConfig } from '~/site.config'
 
 export type Note = CollectionEntry<'blog'>
+
+/** The section's base path. The pages live in src/pages/blog/, so a rename moves that folder too. */
+export const BLOG = '/blog/'
+export const postPath = (id: string) => `${BLOG}${id}/`
+export const rssPath = `${BLOG}rss.xml`
 export type LogEntry = Note['data']['log'][number]
 
 /** Published notes, newest first. Drafts only show in `astro dev`. */

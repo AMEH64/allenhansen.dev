@@ -1,8 +1,10 @@
 import type { APIRoute, GetStaticPaths } from 'astro'
 import { formatDate } from '~/lib/dates'
-import { getNotes } from '~/lib/notes'
+import { BLOG, getNotes } from '~/lib/notes'
 import { renderOg, type OgOptions } from '~/lib/og'
 import { meta } from '~/site.config'
+
+const section = BLOG.slice(1, -1)
 
 export const getStaticPaths = (async () => {
   const pages: { path: string; og: OgOptions }[] = [
@@ -10,18 +12,18 @@ export const getStaticPaths = (async () => {
       path: 'index',
       og: {
         title: 'Allen Hansen',
-        eyebrow: 'Notes & projects · Full-stack engineering',
+        eyebrow: 'Blog & projects · Full-stack engineering',
         description:
           'Full-stack engineer. I write down what I learn, and I build small things that each get their own address.',
         pressed: true,
       },
     },
     {
-      path: 'notes',
+      path: section,
       og: {
-        title: 'Notes',
-        eyebrow: 'allenhansen.dev / notes',
-        description: meta.notes,
+        title: 'Blog',
+        eyebrow: `allenhansen.dev / ${section}`,
+        description: meta.blog,
         pressed: true,
       },
     },
@@ -64,10 +66,10 @@ export const getStaticPaths = (async () => {
   ]
   for (const note of await getNotes()) {
     pages.push({
-      path: `notes/${note.id}`,
+      path: `${section}/${note.id}`,
       og: {
         title: note.data.title,
-        eyebrow: 'allenhansen.dev / notes',
+        eyebrow: `allenhansen.dev / ${section}`,
         description: note.data.summary,
         footnote: note.data.updatedDate
           ? `Updated ${formatDate(note.data.updatedDate)}`

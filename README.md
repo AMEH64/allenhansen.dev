@@ -1,6 +1,6 @@
 # allenhansen.dev
 
-Allen Hansen's site: notes, projects, an about page, a now page, and a résumé.
+Allen Hansen's site: a blog, projects, an about page, a now page, and a résumé.
 Built with [Astro](https://astro.build), MDX, and Tailwind CSS 4, deployed on
 Vercel.
 
@@ -27,7 +27,7 @@ Run these from the project root:
 src/
 ├── assets/fonts/        Self-hosted, subset variable fonts (OFL). og/ holds TTF copies for OG images.
 ├── components/          Header, footer, Lights switch, change log, …
-├── content/blog/        Notes (MDX). The folder keeps its old name so GitCMS keeps working.
+├── content/blog/        Blog posts (MDX): notes and stories.
 ├── content/projects/    One JSON file per project card.
 ├── lib/                 Palette parsing, OG image renderer, icons, note helpers.
 ├── pages/               Routes. og/, favicon*, site.webmanifest, and robots.txt are generated.
@@ -38,11 +38,12 @@ src/
     └── press.css        The Letterpress components.
 ```
 
-## Notes
+## Blog
 
-Notes are MDX files in `src/content/blog/<slug>/index.mdx`, served at
-`/notes/<slug>/`. Old `/blog/*` URLs redirect to `/notes/*`. Posts with
-`draft: true` only show up in `pnpm dev`.
+Posts are MDX files in `src/content/blog/<slug>/index.mdx`, served at
+`/blog/<slug>/`. Links to the section come from `BLOG` in `src/lib/notes.ts`; if
+the section is ever renamed, change it there and move `src/pages/blog/`. Posts
+with `draft: true` only show up in `pnpm dev`.
 
 The content schema in `src/content.config.ts` fails the build unless these are
 set:

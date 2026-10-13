@@ -1,4 +1,5 @@
 ---
+import { rssPath } from '~/lib/notes'
 import { links } from '~/site.config'
 
 type Props = { current?: string }
@@ -11,7 +12,7 @@ const { current } = Astro.props
     One spot ink: ultramarine.
   </p>
   <nav aria-label="Elsewhere">
-    <a href="/notes/rss.xml">RSS</a>
+    <a href={rssPath}>RSS</a>
     <a href={links.github}>GitHub</a>
     <a href={links.linkedin}>LinkedIn</a>
     <a href="/resume/" aria-current={current === 'resume' ? 'page' : undefined}

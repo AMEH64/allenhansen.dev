@@ -1,13 +1,14 @@
 ---
 import { Font } from 'astro:assets'
 import { SITE_TITLE } from '~/consts'
+import { rssPath } from '~/lib/notes'
 import { palette } from '~/lib/palette'
 import '../styles/global.css'
 
 type Props = {
   title: string
   description: string
-  /** Path of the page's OG image, e.g. /og/notes.png */
+  /** Path of the page's OG image, e.g. /og/blog.png */
   ogImage?: string
   type?: 'website' | 'article'
   publishedTime?: string
@@ -71,8 +72,8 @@ const imageURL = new URL(ogImage, Astro.site)
 <link
   rel="alternate"
   type="application/rss+xml"
-  title={`${SITE_TITLE}: Notes`}
-  href={new URL('/notes/rss.xml', Astro.site)}
+  title={`${SITE_TITLE}: Blog`}
+  href={new URL(rssPath, Astro.site)}
 />
 <link rel="sitemap" href="/sitemap-index.xml" />
 <meta name="generator" content={Astro.generator} />

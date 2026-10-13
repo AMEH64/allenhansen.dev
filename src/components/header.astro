@@ -1,11 +1,12 @@
 ---
+import { BLOG } from '~/lib/notes'
 import ThemeToggle from './theme-toggle.astro'
 
 type Props = { current?: string }
 const { current } = Astro.props
 
 const items = [
-  ['notes', 'Notes', '/notes/'],
+  ['blog', 'Blog', BLOG],
   ['projects', 'Projects', '/projects/'],
   ['about', 'About', '/about/'],
   ['now', 'Now', '/now/'],

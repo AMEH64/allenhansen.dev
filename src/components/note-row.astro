@@ -1,10 +1,10 @@
 ---
 import { formatDate } from '~/lib/dates'
-import { kindLabel, type Note } from '~/lib/notes'
+import { kindLabel, postPath, type Note } from '~/lib/notes'
 
 type Props = { note: Note }
 const { note } = Astro.props
-const href = `/notes/${note.id}/`
+const href = postPath(note.id)
 ---
 
 <li>

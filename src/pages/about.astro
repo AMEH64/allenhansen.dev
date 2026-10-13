@@ -4,6 +4,7 @@ import { SITE_TITLE } from '~/consts'
 import PageTitle from '~/components/page-title.astro'
 import PhotoPlate from '~/components/photo-plate.astro'
 import MainLayout from '~/layouts/main-layout.astro'
+import { rssPath } from '~/lib/notes'
 import { links, meta, yearsInWords } from '~/site.config'
 import portrait from '~/assets/images/allen/allen-portrait.jpg'
 import bobaWide from '~/assets/images/boba/boba-wide.jpg'
@@ -32,14 +33,14 @@ import bobaWide from '~/assets/images/boba/boba-wide.jpg'
         > happened: I wanted better flash cards.
       </p>
       <p>
-        This site is where I write down what I learn. Notes are short and dated;
+        This site is where I write down what I learn. Posts are short and dated;
         when one turns out wrong, I correct it in the open.
       </p>
       <ul class="contact" aria-label="Contact and elsewhere">
         <li><a href={`mailto:${links.email}`}>{links.email}</a></li>
         <li><a href={links.github}>GitHub</a></li>
         <li><a href={links.linkedin}>LinkedIn</a></li>
-        <li><a href="/notes/rss.xml">RSS</a></li>
+        <li><a href={rssPath}>RSS</a></li>
         <li><a href="/resume/">Résumé</a></li>
       </ul>
     </div>
@@ -88,7 +89,7 @@ import bobaWide from '~/assets/images/boba/boba-wide.jpg'
       </p>
     </div>
     <div>
-      <h2>Notes stay honest</h2>
+      <h2>Posts stay honest</h2>
       <p>
         Every post shows when it was published and last updated. When something
         changes, I rewrite it in place and add a dated line to the change log,

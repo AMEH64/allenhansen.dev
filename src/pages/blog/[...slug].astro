@@ -7,9 +7,11 @@ import Anchor from '~/components/mdx/anchor.astro'
 import MainLayout from '~/layouts/main-layout.astro'
 import { formatDate } from '~/lib/dates'
 import {
+  BLOG,
   getNotes,
   kindLabel,
   noteLog,
+  postPath,
   readingMinutes,
   reportUrl,
   type Note,
@@ -29,7 +31,7 @@ const { note, newer, older } = Astro.props
 const { data } = note
 const { Content, headings } = await render(note)
 const log = noteLog(data)
-const url = new URL(`/notes/${note.id}/`, Astro.site).href
+const url = new URL(postPath(note.id), Astro.site).href
 const toc = headings.filter(h => h.depth === 2)
 const replacement = data.supersededBy
   ? await getEntry(data.supersededBy)
@@ -49,13 +51,13 @@ const newerWay =
 <MainLayout
   title={`${data.title} · ${SITE_TITLE}`}
   description={data.summary}
-  ogImage={`/og/notes/${note.id}.png`}
+  ogImage={`/og${BLOG}${note.id}.png`}
   type="article"
   publishedTime={data.date}
   modifiedTime={data.updatedDate ?? data.date}
-  current="notes"
+  current="blog"
 >
-  <a class="crumb" href="/notes/">← Notes</a>
+  <a class="crumb" href={BLOG}>← Blog</a>
   <header class="note-head">
     <h1 class="relief" data-lit>{data.title}</h1>
     <div class="note-meta">
@@ -88,7 +90,7 @@ const newerWay =
         newerWay && (
           <p class="callout superseded">
             There’s a newer way to do this →{' '}
-            <a href={`/notes/${newerWay.id}/`}>{newerWay.data.title}</a>
+            <a href={postPath(newerWay.id)}>{newerWay.data.title}</a>
           </p>
         )
       }
@@ -125,16 +127,16 @@ const newerWay =
   </div>
   {
     (older || newer) && (
-      <nav class="pn" aria-label="More notes">
+      <nav class="pn" aria-label="More posts">
         <span class="rule" />
         {older && (
-          <a href={`/notes/${older.id}/`}>
+          <a href={postPath(older.id)}>
             <small>← Older</small>
             {older.data.title}
           </a>
         )}
         {newer && (
-          <a class="next" href={`/notes/${newer.id}/`}>
+          <a class="next" href={postPath(newer.id)}>
             <small>Newer →</small>
             {newer.data.title}
           </a>

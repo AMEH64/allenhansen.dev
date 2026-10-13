@@ -5,7 +5,6 @@ import sitemap from '@astrojs/sitemap'
 import vercel from '@astrojs/vercel'
 import tailwindcss from '@tailwindcss/vite'
 import rehypeMermaid from 'rehype-mermaid'
-import redirectTrailingSlashes from './integrations/redirect-trailing-slashes.mjs'
 
 const fontDir = './src/assets/fonts'
 
@@ -13,11 +12,7 @@ const fontDir = './src/assets/fonts'
 export default defineConfig({
   // The apex redirects to www, so canonical, sitemap, and OG URLs use www.
   site: 'https://www.allenhansen.dev',
-  integrations: [mdx(), sitemap(), redirectTrailingSlashes()],
-  redirects: {
-    '/blog': '/notes',
-    '/blog/[...slug]': '/notes/[...slug]',
-  },
+  integrations: [mdx(), sitemap()],
   markdown: {
     syntaxHighlight: {
       type: 'shiki',
