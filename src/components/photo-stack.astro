@@ -25,8 +25,9 @@ const photos = [
     alt: 'Allen and Boba sit side by side on a stone wall in a park, both facing the camera.',
   },
 ]
-type Props = { variant?: 'a' | 'b' | 'c'; id?: string }
-const { variant = 'a', id = 'pile' } = Astro.props
+// `label` names the region when several stacks share a page; it defaults to the caption.
+type Props = { variant?: 'a' | 'b' | 'c'; id?: string; label?: string }
+const { variant = 'a', id = 'pile', label } = Astro.props
 const strip = variant !== 'c'
 const sizes = '(max-width: 760px) 248px, 288px'
 // Prints deeper than this sit hidden under the last visible one.
@@ -64,7 +65,12 @@ const roman = (n: number) => {
 }
 ---
 
-<section class={`pile pile-${variant}`} data-pile aria-labelledby={`${id}-cap`}>
+<section
+  class={`pile pile-${variant}`}
+  data-pile
+  aria-labelledby={label ? undefined : `${id}-cap`}
+  aria-label={label}
+>
   <figure class="pile-fig">
     <div class="pile-stack" data-pile-stack data-visible={VISIBLE}>
       {

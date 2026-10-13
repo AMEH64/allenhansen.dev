@@ -46,7 +46,11 @@ const variants = [
             <span>{v.key.toUpperCase()}</span> {v.name}
           </h2>
           <p>{v.note}</p>
-          <PhotoStack variant={v.key} id={`pile-${v.key}`} />
+          <PhotoStack
+            variant={v.key}
+            id={`pile-${v.key}`}
+            label={`Variant ${v.key.toUpperCase()}: Boba and me`}
+          />
         </section>
       ))
     }
