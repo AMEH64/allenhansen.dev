@@ -1098,186 +1098,7 @@
     color: var(--muted);
   }
 
-  /* about: Boba and me, a pile of prints with the ink laid over at low strength */
-  .pile,
-  .pile-fig {
-    margin: 0;
-  }
-  .pile-stack {
-    display: grid;
-    margin: 10px 12px 26px;
-    touch-action: pan-y;
-    user-select: none;
-    -webkit-user-select: none;
-  }
-  .pile-card {
-    grid-area: 1 / 1;
-    position: relative;
-    transition: transform 0.23s cubic-bezier(0.2, 0.7, 0.2, 1);
-  }
-  .pile-photo {
-    position: relative;
-    isolation: isolate;
-    overflow: hidden;
-    background: var(--press);
-  }
-  .pile-photo img {
-    display: block;
-    width: 100%;
-    height: auto;
-    aspect-ratio: 4 / 5;
-    object-fit: cover;
-    filter: grayscale(1) contrast(1.06);
-    pointer-events: none;
-  }
-  .pile-photo::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: var(--tint);
-    mix-blend-mode: color;
-    opacity: 0.26;
-    pointer-events: none;
-  }
-  .pile-card[data-pos='0'] {
-    z-index: 4;
-    transform: rotate(-1.5deg);
-  }
-  .pile-card[data-pos='1'] {
-    z-index: 3;
-    transform: translate(9px, 5px) rotate(3.5deg);
-  }
-  .pile-card[data-pos='2'] {
-    z-index: 2;
-    transform: translate(-8px, 9px) rotate(-5deg);
-  }
-  .pile-card[data-pos='3'],
-  .pile-card[data-pos='far'] {
-    z-index: 1;
-    transform: translate(3px, 12px) rotate(1.5deg);
-  }
-  .pile-card[data-pos='far'] {
-    z-index: 0;
-    visibility: hidden;
-  }
-  .pile-card[data-pos='lift'] {
-    z-index: 10;
-  }
-  /* a, b: square polaroids on ink-washed stock, the bottom strip deeper and captioned */
-  .pile-a .pile-card,
-  .pile-b .pile-card {
-    padding: 9px 9px 0;
-    background: light-dark(
-      color-mix(in srgb, var(--brand) 5%, var(--surface)),
-      color-mix(in srgb, var(--brand) 14%, var(--surface))
-    );
-    box-shadow:
-      inset 0 0 0 1px var(--rule),
-      0 1px 2px var(--groove-sh),
-      0 18px 32px -16px var(--sh);
-  }
-  .pile-strip {
-    display: block;
-    padding: 9px 2px 13px;
-    font-family: var(--font-mono);
-    font-size: 12px;
-    line-height: 1.2;
-    letter-spacing: 0.04em;
-    color: var(--text);
-  }
-  /* b: a glossy edge and sheen on the top print only; no blur */
-  .pile-b .pile-card::before {
-    --sheen: light-dark(rgb(255 255 255 / 0.5), rgb(226 230 255 / 0.2));
-    --sheen-edge: light-dark(rgb(255 255 255 / 0.95), rgb(226 230 255 / 0.42));
-    content: '';
-    position: absolute;
-    inset: 0;
-    z-index: 1;
-    pointer-events: none;
-    background: linear-gradient(
-      128deg,
-      var(--sheen) 0%,
-      transparent 38%,
-      transparent 74%,
-      color-mix(in srgb, var(--sheen) 40%, transparent) 100%
-    );
-    box-shadow:
-      inset 0 1px 0 var(--sheen-edge),
-      inset 1px 0 0 color-mix(in srgb, var(--sheen-edge) 60%, transparent),
-      inset 0 0 0 1px color-mix(in srgb, var(--sheen-edge) 30%, transparent);
-    opacity: 0;
-    transition: opacity 0.3s;
-  }
-  .pile-b .pile-card[data-pos='0']::before,
-  .pile-b .pile-card[data-pos='lift']::before {
-    opacity: 1;
-  }
-  /* c: borderless square prints, closest to the iMessage pile */
-  .pile-c .pile-card {
-    box-shadow:
-      0 0 0 1px var(--rule),
-      0 18px 32px -16px var(--sh);
-  }
-  .pile-card.is-dragging {
-    transition: none;
-  }
-  .pile.is-live .pile-stack {
-    cursor: grab;
-  }
-  .pile.is-grabbing .pile-stack {
-    cursor: grabbing;
-  }
-  .pile-stack:focus-visible {
-    outline-offset: 10px;
-  }
-  .pile figcaption {
-    display: flex;
-    justify-content: space-between;
-    gap: 12px;
-    align-items: baseline;
-    font-size: 13px;
-    line-height: 1.5;
-  }
-  .pile-count {
-    font-family: var(--font-mono);
-    font-size: 11.5px;
-    color: var(--brand);
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    font-variant-numeric: tabular-nums;
-  }
-  .pile-ctrl {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    margin-top: 10px;
-  }
-  .pile-ctrl[hidden] {
-    display: none;
-  }
-  .pile-ctrl button {
-    font-family: var(--font-mono);
-    font-size: 12px;
-    line-height: 1;
-    color: var(--text);
-    background: none;
-    border: 1px solid var(--muted);
-    border-radius: 2px;
-    min-width: 34px;
-    min-height: 34px;
-    cursor: pointer;
-  }
-  .pile-ctrl button:hover {
-    color: var(--brand);
-    border-color: var(--brand);
-  }
-  .pile-hint {
-    margin-left: 6px;
-    font-size: 12px;
-    color: var(--muted);
-  }
-
-  /* about, variant d: editorial plates with the same low ink tint and square corners */
+  /* about: editorial plates, black-and-white with the ink laid over at low strength */
   .plate {
     margin: 0;
   }
@@ -1331,50 +1152,6 @@
   }
   .about-side > .plate + .glance {
     margin-top: 36px;
-  }
-
-  /* lab: the photo stack variants side by side, for review only */
-  .lab-grid {
-    display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 48px;
-    padding-bottom: 60px;
-  }
-  .lab-variant h2 {
-    font-size: 15px;
-    font-weight: 600;
-    margin: 0;
-  }
-  .lab-variant h2 span {
-    font-family: var(--font-mono);
-    color: var(--brand);
-    margin-right: 6px;
-  }
-  .lab-variant > p {
-    font-size: 14px;
-    line-height: 1.5;
-    color: var(--muted);
-    margin: 6px 0 18px;
-    min-height: 4.5em;
-  }
-  .lab-variant .pile {
-    max-width: 300px;
-  }
-  .lab-d {
-    padding-bottom: 60px;
-  }
-  .lab-d > p {
-    min-height: 0;
-    max-width: 640px;
-  }
-  .lab-d-plates {
-    display: grid;
-    grid-template-columns: 200px minmax(0, 1fr);
-    gap: 40px;
-    align-items: start;
-  }
-  .lab-d-plates .plate-wide {
-    margin: 0;
   }
 
   /* now */
@@ -1758,13 +1535,6 @@
     .pm {
       font-size: 48px;
     }
-    .about .pile,
-    .lab-variant .pile {
-      max-width: 272px;
-    }
-    .lab-grid {
-      grid-template-columns: minmax(0, 1fr);
-    }
     .about .plate-portrait {
       max-width: 240px;
     }
@@ -1773,12 +1543,6 @@
     }
     .plate-wide {
       margin: 8px 0 44px;
-    }
-    .lab-variant > p {
-      min-height: 0;
-    }
-    .lab-d-plates {
-      grid-template-columns: minmax(0, 1fr);
     }
     .about .lede {
       font-size: 22px !important;
@@ -1826,9 +1590,7 @@
     }
     .glow,
     .paper-layers,
-    .pile-photo::after,
-    .plate-photo::after,
-    .pile-b .pile-card::before {
+    .plate-photo::after {
       display: none;
     }
     .toggle .sw {
@@ -1853,7 +1615,6 @@
     .glow,
     .paper-layers,
     .toggle,
-    .pile-ctrl,
     .code-block .copy,
     .report,
     .skip {
