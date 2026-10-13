@@ -1082,50 +1082,95 @@
     color: var(--muted);
   }
 
-  /* about: the Boba rotator, black-and-white with the ink at low strength */
-  .rotator,
-  .rot-fig {
+  /* about: Boba and me, a pile of prints with the ink laid over at low strength */
+  .pile,
+  .pile-fig {
     margin: 0;
   }
-  .rot-frame {
+  .pile-stack {
     position: relative;
     aspect-ratio: 4/5;
-    overflow: hidden;
-    isolation: isolate;
-    background: var(--press);
+    margin: 10px 12px 26px;
+    touch-action: pan-y;
+    user-select: none;
+    -webkit-user-select: none;
   }
-  .rot-slide {
+  .pile-card {
     position: absolute;
     inset: 0;
+    padding: 6px;
+    background: var(--surface);
+    border-radius: 3px;
+    box-shadow:
+      inset 0 0 0 1px var(--rule),
+      0 1px 1px var(--groove-sh),
+      0 16px 30px -18px var(--sh);
+    isolation: isolate;
+    transition: transform 0.23s cubic-bezier(0.2, 0.7, 0.2, 1);
+  }
+  .pile-card img {
+    display: block;
     width: 100%;
     height: 100%;
     object-fit: cover;
-    opacity: 0;
-    transition: opacity 1.2s ease;
+    border-radius: 1px;
     filter: grayscale(1) contrast(1.06);
+    pointer-events: none;
   }
-  .rot-slide.is-current {
-    opacity: 1;
-  }
-  .rot-frame::after {
+  .pile-card::after {
     content: '';
     position: absolute;
-    inset: 0;
+    inset: 6px;
     background: var(--tint);
     mix-blend-mode: color;
     opacity: 0.26;
     pointer-events: none;
   }
-  .rotator figcaption {
+  .pile-card[data-pos='0'] {
+    z-index: 4;
+    transform: rotate(-1.5deg);
+  }
+  .pile-card[data-pos='1'] {
+    z-index: 3;
+    transform: translate(9px, 5px) rotate(3.5deg);
+  }
+  .pile-card[data-pos='2'] {
+    z-index: 2;
+    transform: translate(-8px, 9px) rotate(-5deg);
+  }
+  .pile-card[data-pos='3'],
+  .pile-card[data-pos='far'] {
+    z-index: 1;
+    transform: translate(3px, 12px) rotate(1.5deg);
+  }
+  .pile-card[data-pos='far'] {
+    z-index: 0;
+    visibility: hidden;
+  }
+  .pile-card[data-pos='lift'] {
+    z-index: 10;
+  }
+  .pile-card.is-dragging {
+    transition: none;
+  }
+  .pile.is-live .pile-stack {
+    cursor: grab;
+  }
+  .pile.is-grabbing .pile-stack {
+    cursor: grabbing;
+  }
+  .pile-stack:focus-visible {
+    outline-offset: 10px;
+  }
+  .pile figcaption {
     display: flex;
     justify-content: space-between;
     gap: 12px;
     align-items: baseline;
     font-size: 13px;
-    margin-top: 16px;
     line-height: 1.5;
   }
-  .rot-count {
+  .pile-count {
     font-family: var(--font-mono);
     font-size: 11.5px;
     color: var(--brand);
@@ -1133,15 +1178,16 @@
     text-transform: uppercase;
     font-variant-numeric: tabular-nums;
   }
-  .rot-ctrl {
+  .pile-ctrl {
     display: flex;
+    align-items: center;
     gap: 8px;
     margin-top: 10px;
   }
-  .rot-ctrl[hidden] {
+  .pile-ctrl[hidden] {
     display: none;
   }
-  .rot-ctrl button {
+  .pile-ctrl button {
     font-family: var(--font-mono);
     font-size: 12px;
     line-height: 1;
@@ -1151,21 +1197,16 @@
     border-radius: 2px;
     min-width: 34px;
     min-height: 34px;
-    padding: 0 12px;
     cursor: pointer;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 6px;
   }
-  .rot-ctrl .rot-toggle {
-    min-width: 7.2em;
-    border-color: var(--brand);
+  .pile-ctrl button:hover {
     color: var(--brand);
+    border-color: var(--brand);
   }
-  .rot-ctrl .ico {
-    font-size: 10px;
-    letter-spacing: -1px;
+  .pile-hint {
+    margin-left: 6px;
+    font-size: 12px;
+    color: var(--muted);
   }
 
   /* now */
@@ -1549,8 +1590,8 @@
     .pm {
       font-size: 48px;
     }
-    .about .rotator {
-      max-width: 260px;
+    .about .pile {
+      max-width: 272px;
     }
     .about .lede {
       font-size: 22px !important;
@@ -1598,7 +1639,7 @@
     }
     .glow,
     .paper-layers,
-    .rot-frame::after {
+    .pile-card::after {
       display: none;
     }
     .toggle .sw {
@@ -1623,7 +1664,8 @@
     .glow,
     .paper-layers,
     .toggle,
-    .rot-ctrl,
+    .pile-ctrl,
+    .code-block .copy,
     .report,
     .skip {
       display: none !important;

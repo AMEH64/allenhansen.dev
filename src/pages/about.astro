@@ -1,7 +1,7 @@
 ---
 import { SITE_TITLE } from '~/consts'
 import PageTitle from '~/components/page-title.astro'
-import PhotoRotator from '~/components/photo-rotator.astro'
+import PhotoStack from '~/components/photo-stack.astro'
 import MainLayout from '~/layouts/main-layout.astro'
 import { links, meta, yearsInWords } from '~/site.config'
 ---
@@ -41,7 +41,7 @@ import { links, meta, yearsInWords } from '~/site.config'
       </ul>
     </div>
     <div class="about-side">
-      <PhotoRotator />
+      <PhotoStack />
       <section class="glance" aria-labelledby="glance-h">
         <h2 id="glance-h">At a glance</h2>
         <dl>
