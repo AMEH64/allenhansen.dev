@@ -1,0 +1,51 @@
+---
+// A review page for picking the About photo look. Not linked, not indexed, and not in the
+// sitemap; delete it (and the unused variants) once one is chosen.
+import { SITE_TITLE } from '~/consts'
+import PageTitle from '~/components/page-title.astro'
+import PhotoStack from '~/components/photo-stack.astro'
+import MainLayout from '~/layouts/main-layout.astro'
+
+const variants = [
+  {
+    key: 'a',
+    name: 'Tinted polaroids',
+    note: 'Square prints on ink-washed stock, a deeper bottom strip with the caption in mono, a soft drop shadow.',
+  },
+  {
+    key: 'b',
+    name: 'Polaroids with a glass sheen',
+    note: 'The same prints, with a glossy edge and a soft highlight on the top one. No blur.',
+  },
+  {
+    key: 'c',
+    name: 'Plain square prints',
+    note: 'Borderless tinted photos with square corners, closest to the iMessage pile.',
+  },
+] as const
+---
+
+<MainLayout
+  title={`Photo stack variants · ${SITE_TITLE}`}
+  description="Three looks for the About page photos, side by side."
+  noindex
+>
+  <PageTitle
+    title="Photo stack"
+    slug="lab / photo-stack"
+    lead="Three looks for the About photos. They all work the same way: drag or swipe the top print away, click or tap it, or use the arrow keys."
+  />
+  <div class="lab-grid">
+    {
+      variants.map(v => (
+        <section class="lab-variant" aria-labelledby={`lab-${v.key}`}>
+          <h2 id={`lab-${v.key}`}>
+            <span>{v.key.toUpperCase()}</span> {v.name}
+          </h2>
+          <p>{v.note}</p>
+          <PhotoStack variant={v.key} id={`pile-${v.key}`} />
+        </section>
+      ))
+    }
+  </div>
+</MainLayout>

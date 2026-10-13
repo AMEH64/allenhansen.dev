@@ -2,7 +2,10 @@
 // Boba and me: a pile of black-and-white prints with the brand ink laid over at low strength.
 // Drag or swipe the top print away and it tucks in at the back; click, tap, or press ←/→ to
 // cycle. Nothing moves on its own. Without JS the pile is a still picture and the controls
-// stay hidden. To add a photo, put it in src/assets/images/boba/ and add it to `photos`.
+// stay hidden. Only the top photo loads with the page; the rest, which only peek out from
+// underneath, load once the page has (or on the first interaction). To add a photo, put it in src/assets/images/boba/ and add it to `photos`.
+// Looks, all with the same interaction: a = tinted polaroids, b = polaroids with a glass
+// sheen on the top print, c = plain square prints. `id` keeps ids unique when several render.
 import { getImage } from 'astro:assets'
 import boba1 from '~/assets/images/boba/boba-1.jpg'
 import boba2 from '~/assets/images/boba/boba-2.jpg'
@@ -22,6 +25,9 @@ const photos = [
     alt: 'Allen and Boba sit side by side on a stone wall in a park, both facing the camera.',
   },
 ]
+type Props = { variant?: 'a' | 'b' | 'c'; id?: string }
+const { variant = 'a', id = 'pile' } = Astro.props
+const strip = variant !== 'c'
 const sizes = '(max-width: 760px) 248px, 288px'
 // Prints deeper than this sit hidden under the last visible one.
 const VISIBLE = 4
@@ -58,7 +64,7 @@ const roman = (n: number) => {
 }
 ---
 
-<section class="pile" data-pile aria-labelledby="pile-cap">
+<section class={`pile pile-${variant}`} data-pile aria-labelledby={`${id}-cap`}>
   <figure class="pile-fig">
     <div class="pile-stack" data-pile-stack data-visible={VISIBLE}>
       {
@@ -68,23 +74,42 @@ const roman = (n: number) => {
             data-pos={i < VISIBLE ? i : 'far'}
             aria-hidden={i > 0 ? 'true' : undefined}
           >
-            <img
-              src={img.url}
-              srcset={img.srcset}
-              sizes={sizes}
-              width="640"
-              height="800"
-              alt={img.alt}
-              loading={i === 0 ? 'eager' : 'lazy'}
-              decoding="async"
-              draggable="false"
-            />
+            <div class="pile-photo">
+              {i === 0 ? (
+                <img
+                  src={img.url}
+                  srcset={img.srcset}
+                  sizes={sizes}
+                  width="640"
+                  height="800"
+                  alt={img.alt}
+                  decoding="async"
+                  draggable="false"
+                />
+              ) : (
+                <img
+                  data-src={img.url}
+                  data-srcset={img.srcset}
+                  sizes={sizes}
+                  width="640"
+                  height="800"
+                  alt={img.alt}
+                  decoding="async"
+                  draggable="false"
+                />
+              )}
+            </div>
+            {strip && (
+              <span class="pile-strip" aria-hidden="true">
+                Boba and me
+              </span>
+            )}
           </div>
         ))
       }
     </div>
     <figcaption>
-      <span id="pile-cap">Boba and me</span>
+      <span id={`${id}-cap`} class:list={[strip && 'vh']}>Boba and me</span>
       <span class="pile-count" aria-hidden="true"
         >Plate I of {roman(images.length)}</span
       >
@@ -97,7 +122,7 @@ const roman = (n: number) => {
     <button type="button" data-pile-next aria-label="Next photo"
       ><span aria-hidden="true">→</span></button
     >
-    <span class="pile-hint" id="pile-hint"
+    <span class="pile-hint" id={`${id}-hint`}
       >Drag, tap, or use the arrow keys</span
     >
   </div>
@@ -140,13 +165,25 @@ const roman = (n: number) => {
     let order = cards.map((_, i) => i)
     let busy = false
 
+    const loadRest = () =>
+      stack.querySelectorAll<HTMLImageElement>('img[data-src]').forEach(img => {
+        img.srcset = img.dataset.srcset ?? ''
+        img.src = img.dataset.src!
+        delete img.dataset.src
+        delete img.dataset.srcset
+      })
+    if (document.readyState === 'complete') loadRest()
+    else addEventListener('load', loadRest, { once: true })
+    stack.addEventListener('pointerdown', loadRest, { once: true })
+    root.addEventListener('focusin', loadRest, { once: true })
+
     root.querySelector<HTMLElement>('[data-pile-ctrl]')!.hidden = false
     root.classList.add('is-live')
     stack.tabIndex = 0
     stack.setAttribute('role', 'group')
     stack.setAttribute('aria-roledescription', 'photo stack')
     stack.setAttribute('aria-label', 'Photos of Boba and me')
-    stack.setAttribute('aria-describedby', 'pile-hint')
+    stack.setAttribute('aria-describedby', root.querySelector('.pile-hint')!.id)
 
     const layout = (skip?: HTMLElement) => {
       order.forEach((card, pos) => {

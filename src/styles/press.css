@@ -1136,31 +1136,29 @@
     -webkit-user-select: none;
   }
   .pile-card {
-    position: absolute;
-    inset: 0;
-    padding: 6px;
-    background: var(--surface);
-    border-radius: 3px;
-    box-shadow:
-      inset 0 0 0 1px var(--rule),
-      0 1px 1px var(--groove-sh),
-      0 16px 30px -18px var(--sh);
-    isolation: isolate;
+    grid-area: 1 / 1;
+    position: relative;
     transition: transform 0.23s cubic-bezier(0.2, 0.7, 0.2, 1);
   }
-  .pile-card img {
+  .pile-photo {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+    background: var(--press);
+  }
+  .pile-photo img {
     display: block;
     width: 100%;
-    height: 100%;
+    height: auto;
+    aspect-ratio: 4 / 5;
     object-fit: cover;
-    border-radius: 1px;
     filter: grayscale(1) contrast(1.06);
     pointer-events: none;
   }
-  .pile-card::after {
+  .pile-photo::after {
     content: '';
     position: absolute;
-    inset: 6px;
+    inset: 0;
     background: var(--tint);
     mix-blend-mode: color;
     opacity: 0.26;
@@ -1189,6 +1187,59 @@
   }
   .pile-card[data-pos='lift'] {
     z-index: 10;
+  }
+  /* a, b: square polaroids on ink-washed stock, the bottom strip deeper and captioned */
+  .pile-a .pile-card,
+  .pile-b .pile-card {
+    padding: 9px 9px 0;
+    background: light-dark(
+      color-mix(in srgb, var(--brand) 5%, var(--surface)),
+      color-mix(in srgb, var(--brand) 14%, var(--surface))
+    );
+    box-shadow:
+      inset 0 0 0 1px var(--rule),
+      0 1px 2px var(--groove-sh),
+      0 18px 32px -16px var(--sh);
+  }
+  .pile-strip {
+    display: block;
+    padding: 9px 2px 13px;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    line-height: 1.2;
+    letter-spacing: 0.04em;
+    color: var(--text);
+  }
+  /* b: a glossy edge and sheen on the top print only; no blur */
+  .pile-b .pile-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+    background: linear-gradient(
+      128deg,
+      color-mix(in srgb, var(--hi) 46%, transparent) 0%,
+      transparent 34%,
+      transparent 72%,
+      color-mix(in srgb, var(--hi) 14%, transparent) 100%
+    );
+    box-shadow:
+      inset 0 1px 0 color-mix(in srgb, var(--hi) 80%, transparent),
+      inset 1px 0 0 color-mix(in srgb, var(--hi) 40%, transparent),
+      inset 0 0 0 1px color-mix(in srgb, var(--hi) 22%, transparent);
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+  .pile-b .pile-card[data-pos='0']::before,
+  .pile-b .pile-card[data-pos='lift']::before {
+    opacity: 1;
+  }
+  /* c: borderless square prints, closest to the iMessage pile */
+  .pile-c .pile-card {
+    box-shadow:
+      0 0 0 1px var(--rule),
+      0 18px 32px -16px var(--sh);
   }
   .pile-card.is-dragging {
     transition: none;
@@ -1247,6 +1298,34 @@
     margin-left: 6px;
     font-size: 12px;
     color: var(--muted);
+  }
+
+  /* lab: the photo stack variants side by side, for review only */
+  .lab-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 48px;
+    padding-bottom: 60px;
+  }
+  .lab-variant h2 {
+    font-size: 15px;
+    font-weight: 600;
+    margin: 0;
+  }
+  .lab-variant h2 span {
+    font-family: var(--font-mono);
+    color: var(--brand);
+    margin-right: 6px;
+  }
+  .lab-variant > p {
+    font-size: 14px;
+    line-height: 1.5;
+    color: var(--muted);
+    margin: 6px 0 18px;
+    min-height: 4.5em;
+  }
+  .lab-variant .pile {
+    max-width: 300px;
   }
 
   /* now */
@@ -1630,8 +1709,15 @@
     .pm {
       font-size: 48px;
     }
-    .about .pile {
+    .about .pile,
+    .lab-variant .pile {
       max-width: 272px;
+    }
+    .lab-grid {
+      grid-template-columns: minmax(0, 1fr);
+    }
+    .lab-variant > p {
+      min-height: 0;
     }
     .about .lede {
       font-size: 22px !important;
@@ -1679,7 +1765,8 @@
     }
     .glow,
     .paper-layers,
-    .pile-card::after {
+    .pile-photo::after,
+    .pile-b .pile-card::before {
       display: none;
     }
     .toggle .sw {
