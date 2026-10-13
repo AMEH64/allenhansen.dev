@@ -3,7 +3,6 @@ import { render } from 'astro:content'
 import { SITE_TITLE } from '~/consts'
 import ChangeLog from '~/components/change-log.astro'
 import CodeCopy from '~/components/code-copy.astro'
-import Correction from '~/components/correction.astro'
 import Freshness from '~/components/freshness.astro'
 import Anchor from '~/components/mdx/anchor.astro'
 import MainLayout from '~/layouts/main-layout.astro'
@@ -31,7 +30,6 @@ const { data } = note
 const { Content, headings } = await render(note)
 const log = noteLog(data)
 const f = freshness(data)
-const corrections = log.filter(e => e.kind === 'corrected').length
 const url = new URL(`/notes/${note.id}/`, Astro.site).href
 const toc = headings.filter(h => h.depth === 2)
 ---
@@ -64,7 +62,7 @@ const toc = headings.filter(h => h.depth === 2)
   </header>
   <div class="note-grid">
     <article class="prose">
-      <Content components={{ a: Anchor, Correction }} />
+      <Content components={{ a: Anchor }} />
       <ChangeLog
         log={log}
         title={data.title}
@@ -80,13 +78,6 @@ const toc = headings.filter(h => h.depth === 2)
             <h2 id="status-h" class="big">
               <Freshness state={f.state} label={f.label} href="#changes" />
             </h2>
-            {corrections > 0 && (
-              <p>
-                {corrections === 1
-                  ? 'One correction is marked in the text.'
-                  : `${corrections} corrections are marked in the text.`}
-              </p>
-            )}
           </section>
         )
       }

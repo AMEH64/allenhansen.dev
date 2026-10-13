@@ -809,24 +809,7 @@
     height: 16px;
   }
 
-  /* note history: inline corrections (real mistakes only), a dated change log, and a report link */
-  .fix del {
-    color: var(--muted);
-    text-decoration: line-through 1.5px var(--brand);
-  }
-  .fix ins {
-    text-decoration: none;
-    background: linear-gradient(transparent 62%, var(--brand-wash) 62%);
-  }
-  .fix .corr {
-    font-family: var(--font-mono);
-    font-size: 10.5px;
-    color: var(--brand);
-    text-transform: uppercase;
-    letter-spacing: 0.09em;
-    white-space: nowrap;
-    margin-left: 0.3em;
-  }
+  /* note history: a dated change log and a report link */
   .changes {
     margin-top: 3.2em;
     position: relative;

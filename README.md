@@ -85,14 +85,16 @@ Without a `log`, the change log is built from `date` and `updatedDate`. A note
 reads "some details may be out of date" once its last check is older than
 `notesConfig.recheckMonths` (12) in `src/site.config.ts`.
 
-For a real mistake, strike it inline and add a matching `corrected` entry to the
-log. Plain text goes in props; text with code or links goes in slots:
+When something in a note changes, rewrite the text in place so it reads cleanly,
+with nothing struck through, and add a dated entry to the top of the `log` that
+says what changed. Use `updated` when the world moved on and `corrected` when
+the note was wrong:
 
-<!-- prettier-ignore -->
-```mdx
-<Correction was="…" now="…" date="2026-10-12" />
-
-Keep it inline: <Correction date="2026-10-12"><span slot="was">The old `text`.</span>The new `text`.</Correction>
+```yaml
+log:
+  - date: 2026-10-13
+    kind: updated
+    text: 'Updated: field-sizing is now Baseline 2026'
 ```
 
 The "Spot something wrong or outdated?" link opens
