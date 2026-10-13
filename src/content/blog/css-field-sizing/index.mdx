@@ -4,7 +4,19 @@ description:
   'Discover how the new CSS `field-sizing` property enables form fields to
   automatically adjust their size based on their content—no JavaScript required.'
 pubDate: '2024-10-15'
+updatedDate: '2026-10-13'
 image: './css-field-sizing.png'
+log:
+  - date: '2026-10-13'
+    kind: corrected
+    text:
+      'Corrected the browser-support callout: field-sizing is now Baseline 2026
+      (Chrome and Edge 123+, Safari 26.2+, Firefox 152+, about 87% of users
+      globally per caniuse). The @supports fallback is now optional advice for
+      older browsers.'
+  - date: '2024-10-15'
+    kind: published
+    text: Published.
 ---
 
 import Alert from '~/components/alert.astro'
@@ -112,11 +124,9 @@ great if there was a pure CSS solution?
 
 ## Enter the CSS `field-sizing` Property
 
-<Alert variant="warning">
-  As of now, the `field-sizing` property is relatively new and not widely
-  supported. Until support is more widespread, I would recommend leveraging a
-  `@supports` rule with fallback styles, effectively making it a [progressive
-  enhancement](https://developer.mozilla.org/en-US/docs/Glossary/Progressive_Enhancement).
+<Alert variant="info">
+  {/* prettier-ignore */}
+  <Correction date="2026-10-13"><span slot="was">As of now, the `field-sizing` property is relatively new and not widely supported. Until support is more widespread, I would recommend leveraging a `@supports` rule with fallback styles, effectively making it a progressive enhancement.</span>`field-sizing` is now Baseline 2026: it works in Chrome and Edge 123+, Safari 26.2+, and Firefox 152+, about 87% of users globally. If you still support older browsers, an optional `@supports` rule with fallback styles keeps it a [progressive enhancement](https://developer.mozilla.org/en-US/docs/Glossary/Progressive_Enhancement).</Correction>{' '}
   See https://caniuse.com/?search=field-sizing for more details.
 </Alert>
 

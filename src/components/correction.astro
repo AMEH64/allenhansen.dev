@@ -1,15 +1,24 @@
 ---
 // An inline correction, for real mistakes only. Each needs a matching `corrected` entry in
 // the note's log. <del>/<ins> aren't reliably announced, so the hidden text says what changed.
+// Pass plain text as `was`/`now`, or markup as a `was` slot and the default slot.
 import { formatDate } from '~/lib/dates'
 
-type Props = { was: string; now: string; date: string }
+type Props = { was?: string; now?: string; date: string }
 const { was, now, date } = Astro.props
+const wasHtml = Astro.slots.has('was') ? await Astro.slots.render('was') : null
+const nowHtml = Astro.slots.has('default')
+  ? await Astro.slots.render('default')
+  : null
 ---
 
 <span class="fix"
-  ><span class="vh">Correction. It used to say: </span><del>{was}</del>
-  <span class="vh">It now says: </span><ins>{now}</ins>
+  ><span class="vh">Correction. It used to say: </span><del
+    >{wasHtml ? <Fragment set:html={wasHtml} /> : was}</del
+  >
+  <span class="vh">It now says: </span><ins
+    >{nowHtml ? <Fragment set:html={nowHtml} /> : now}</ins
+  >
   <small class="corr"
     >Corrected <time datetime={date}>{formatDate(date)}</time></small
   ></span
