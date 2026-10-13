@@ -97,6 +97,11 @@ log:
     text: 'Updated: field-sizing is now Baseline 2026'
 ```
 
+Each entry links to the note file's history on GitHub
+(`github.com/AMEH64/allenhansen.dev/commits/main/<path>`), so readers can see
+the diff and you don't need a commit hash when you write the entry. To link one
+entry straight to its commit, add `commit: <sha>` to it.
+
 The "Spot something wrong or outdated?" link opens
 `.github/ISSUE_TEMPLATE/note-correction.yml`. That template adds the
 `note-correction` label, which has to exist in the GitHub repository.

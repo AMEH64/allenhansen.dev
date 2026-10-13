@@ -41,6 +41,14 @@ const blog = defineCollection({
               'tweak',
             ]),
             text: z.string().min(1),
+            // Links the entry to this commit instead of the file's history.
+            commit: z
+              .string()
+              .regex(
+                /^[0-9a-f]{7,40}$/,
+                'Use a commit SHA (7 to 40 hex digits).',
+              )
+              .optional(),
           }),
         )
         .optional()

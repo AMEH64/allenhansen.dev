@@ -74,6 +74,15 @@ export function reportUrl(title: string, url: string, lastChecked: string) {
   return `https://github.com/${notesConfig.repo}/issues/new?${query}`
 }
 
+/** Where a change-log entry links: its commit when it names one, else the note file's history. */
+export function changeUrl(entry: LogEntry, filePath?: string) {
+  const base = `https://github.com/${notesConfig.repo}`
+  if (entry.commit) return `${base}/commit/${entry.commit}`
+  return filePath
+    ? `${base}/commits/${notesConfig.branch}/${filePath}`
+    : undefined
+}
+
 export function readingMinutes(body = '') {
   const words = body
     .replace(/^import .*$/gm, '')

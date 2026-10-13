@@ -1,26 +1,45 @@
 ---
 import { formatDate } from '~/lib/dates'
-import { reportUrl, type LogEntry } from '~/lib/notes'
+import { changeUrl, reportUrl, type LogEntry } from '~/lib/notes'
 
 type Props = {
   log: LogEntry[]
   title: string
   url: string
   lastChecked: string
+  /** The note's source file, relative to the repo root. */
+  filePath?: string
 }
-const { log, title, url, lastChecked } = Astro.props
+const { log, title, url, lastChecked, filePath } = Astro.props
 ---
 
 <section class="changes" id="changes" aria-labelledby="changes-h">
   <h2 id="changes-h">Change log</h2>
   <ol>
     {
-      log.map(entry => (
-        <li class={`chg chg-${entry.kind}`}>
-          <time datetime={entry.date}>{formatDate(entry.date)}</time>
-          <span>{entry.text}</span>
-        </li>
-      ))
+      log.map(entry => {
+        const href = changeUrl(entry, filePath)
+        const [label, more] = entry.commit
+          ? ['Diff', 'of this change on GitHub']
+          : ['History', 'of this note on GitHub']
+        return (
+          <li class={`chg chg-${entry.kind}`}>
+            <time datetime={entry.date}>{formatDate(entry.date)}</time>
+            <span>
+              {entry.text}
+              {href && (
+                <>
+                  {' '}
+                  <a class="chg-link" href={href}>
+                    {label}
+                    <span class="vh">{more}</span>
+                  </a>
+                </>
+              )}
+            </span>
+          </li>
+        )
+      })
     }
   </ol>
   <p class="report">

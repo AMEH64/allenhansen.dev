@@ -864,6 +864,13 @@
   .chg-published {
     color: var(--muted);
   }
+  .chg-link {
+    margin-left: 0.3em;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    letter-spacing: 0.04em;
+    white-space: nowrap;
+  }
   .report {
     margin-top: 22px;
     font-size: 14.5px;
