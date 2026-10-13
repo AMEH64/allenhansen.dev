@@ -9,9 +9,7 @@ const { tags } = Astro.props
   {
     tags.map(tag => (
       <li>
-        <a href={tagPath(tag)} data-filter-tag={tag}>
-          {tag}
-        </a>
+        <a href={tagPath(tag)} data-filter-tag={tag} set:text={tag} />
       </li>
     ))
   }
