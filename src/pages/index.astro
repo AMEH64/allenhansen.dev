@@ -1,12 +1,12 @@
 ---
 import { SITE_TITLE } from '~/consts'
-import NoteRow from '~/components/note-row.astro'
+import PostRow from '~/components/post-row.astro'
 import MainLayout from '~/layouts/main-layout.astro'
-import { BLOG, getNotes } from '~/lib/notes'
+import { BLOG, getPosts } from '~/lib/posts'
 import { displayUrl, getProjects, statusLabel } from '~/lib/projects'
 import { meta, now } from '~/site.config'
 
-const notes = await getNotes()
+const notes = await getPosts()
 const projects = (await getProjects()).slice(0, 3)
 ---
 
@@ -42,7 +42,7 @@ const projects = (await getProjects()).slice(0, 3)
       </h2>
       <span class="rule"></span>
       <ul class="rows">
-        {notes.slice(0, 3).map(note => <NoteRow note={note} />)}
+        {notes.slice(0, 3).map(note => <PostRow note={note} />)}
       </ul>
     </section>
     <section aria-labelledby="h-projects">

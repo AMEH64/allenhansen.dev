@@ -1,16 +1,16 @@
 import { getCollection, type CollectionEntry } from 'astro:content'
 import { notesConfig } from '~/site.config'
 
-export type Note = CollectionEntry<'blog'>
+export type Post = CollectionEntry<'blog'>
 
 /** The section's base path. The pages live in src/pages/blog/, so a rename moves that folder too. */
 export const BLOG = '/blog/'
 export const postPath = (id: string) => `${BLOG}${id}/`
 export const rssPath = `${BLOG}rss.xml`
-export type LogEntry = Note['data']['log'][number]
+export type LogEntry = Post['data']['log'][number]
 
 /** Published notes, newest first. Drafts only show in `astro dev`. */
-export async function getNotes() {
+export async function getPosts() {
   const notes = await getCollection(
     'blog',
     n => !n.data.draft || import.meta.env.DEV,
@@ -19,11 +19,11 @@ export async function getNotes() {
 }
 
 /** The change log, newest first. Empty when the note has no `log`. */
-export function noteLog(data: Note['data']): LogEntry[] {
+export function postLog(data: Post['data']): LogEntry[] {
   return [...data.log].sort((a, b) => b.date.localeCompare(a.date))
 }
 
-export const kindLabel = { note: 'Note', story: 'Story' } as const
+export const typeLabel = { note: 'Note', story: 'Story' } as const
 
 /** A prefilled issue from .github/ISSUE_TEMPLATE/note-correction.yml. No `labels=`: GitHub 404s it for visitors who can't apply labels. */
 export function reportUrl(title: string, url: string) {

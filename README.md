@@ -41,7 +41,7 @@ src/
 ## Blog
 
 Posts are MDX files in `src/content/blog/<slug>/index.mdx`, served at
-`/blog/<slug>/`. Links to the section come from `BLOG` in `src/lib/notes.ts`; if
+`/blog/<slug>/`. Links to the section come from `BLOG` in `src/lib/posts.ts`; if
 the section is ever renamed, change it there and move `src/pages/blog/`. Posts
 with `draft: true` only show up in `pnpm dev`.
 
@@ -51,7 +51,7 @@ set:
 ```yaml
 title: Auto-Resizing Form Fields
 date: 2024-10-15
-kind: note # note | story
+type: note # note | story
 summary: One line, 160 characters at most.
 tags:
   - css # lowercase-with-dashes
@@ -63,7 +63,7 @@ trying to do, What I learned, Code, Gotchas, Links) or `_story-template.mdx` (no
 outline). Files starting with `_` aren't published. The same fields are set up
 for GitCMS in `gitcms.md`.
 
-Notes and stories look and behave the same; `kind` is only a small label on the
+Notes and stories look and behave the same; `type` is only a small label on the
 list and the post. The top of a post shows when it was published, plus "Updated
 {date}" when `updatedDate` is set. The foot shows the change log when the post
 has a `log`, then "See something wrong or out of date? Open an issue →".

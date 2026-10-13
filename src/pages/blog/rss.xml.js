@@ -2,7 +2,7 @@ import rss from '@astrojs/rss'
 import { getCollection } from 'astro:content'
 import { SITE_TITLE } from '../../consts'
 import { meta } from '../../site.config'
-import { postPath } from '../../lib/notes'
+import { postPath } from '../../lib/posts'
 
 export async function GET(context) {
   const notes = (await getCollection('blog', n => !n.data.draft)).sort((a, b) =>

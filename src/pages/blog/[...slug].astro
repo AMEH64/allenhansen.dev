@@ -8,29 +8,29 @@ import MainLayout from '~/layouts/main-layout.astro'
 import { formatDate } from '~/lib/dates'
 import {
   BLOG,
-  getNotes,
-  kindLabel,
-  noteLog,
+  getPosts,
+  typeLabel,
+  postLog,
   postPath,
   readingMinutes,
   reportUrl,
-  type Note,
-} from '~/lib/notes'
+  type Post,
+} from '~/lib/posts'
 
 export async function getStaticPaths() {
-  const notes = await getNotes()
+  const notes = await getPosts()
   return notes.map((note, i) => ({
     params: { slug: note.id },
     props: { note, newer: notes[i - 1], older: notes[i + 1] },
   }))
 }
 
-type Props = { note: Note; newer?: Note; older?: Note }
+type Props = { note: Post; newer?: Post; older?: Post }
 
 const { note, newer, older } = Astro.props
 const { data } = note
 const { Content, headings } = await render(note)
-const log = noteLog(data)
+const log = postLog(data)
 const url = new URL(postPath(note.id), Astro.site).href
 const toc = headings.filter(h => h.depth === 2)
 const replacement = data.supersededBy
@@ -61,7 +61,7 @@ const newerWay =
   <header class="note-head">
     <h1 class="relief" data-lit>{data.title}</h1>
     <div class="note-meta">
-      <span class="kind">{kindLabel[data.kind]}</span>
+      <span class="post-type">{typeLabel[data.type]}</span>
       <time datetime={data.date}>{formatDate(data.date)}</time>
       {
         data.updatedDate && (

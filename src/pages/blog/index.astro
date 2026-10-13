@@ -1,14 +1,14 @@
 ---
 import { SITE_TITLE } from '~/consts'
-import NoteRow from '~/components/note-row.astro'
+import PostRow from '~/components/post-row.astro'
 import PageTitle from '~/components/page-title.astro'
 import MainLayout from '~/layouts/main-layout.astro'
-import { getNotes, type Note } from '~/lib/notes'
+import { getPosts, type Post } from '~/lib/posts'
 import { meta } from '~/site.config'
 
-const notes = await getNotes()
+const notes = await getPosts()
 const years = Object.entries(
-  notes.reduce<Record<string, Note[]>>((acc, note) => {
+  notes.reduce<Record<string, Post[]>>((acc, note) => {
     ;(acc[note.data.date.slice(0, 4)] ||= []).push(note)
     return acc
   }, {}),
@@ -31,7 +31,7 @@ const years = Object.entries(
         <h2 id={`y${year}`}>{year}</h2>
         <ul class="rows">
           {list.map(note => (
-            <NoteRow note={note} />
+            <PostRow note={note} />
           ))}
         </ul>
       </section>

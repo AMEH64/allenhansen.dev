@@ -9,8 +9,8 @@ const blog = defineCollection({
       // Required: the build fails without these.
       title: z.string().trim().min(1),
       date: z.iso.date(),
-      // A category label shown on the list and the post; both kinds look and behave the same.
-      kind: z.enum(['note', 'story']),
+      // A category label shown on the list and the post; both types look and behave the same.
+      type: z.enum(['note', 'story']),
       summary: z
         .string()
         .trim()

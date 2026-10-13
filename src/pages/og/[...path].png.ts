@@ -1,6 +1,6 @@
 import type { APIRoute, GetStaticPaths } from 'astro'
 import { formatDate } from '~/lib/dates'
-import { BLOG, getNotes } from '~/lib/notes'
+import { BLOG, getPosts } from '~/lib/posts'
 import { renderOg, type OgOptions } from '~/lib/og'
 import { meta } from '~/site.config'
 
@@ -64,7 +64,7 @@ export const getStaticPaths = (async () => {
       },
     },
   ]
-  for (const note of await getNotes()) {
+  for (const note of await getPosts()) {
     pages.push({
       path: `${section}/${note.id}`,
       og: {

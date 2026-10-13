@@ -276,7 +276,7 @@
   }
 
   /* post type: a small category label, the same on the list and the post */
-  .kind {
+  .post-type {
     font-family: var(--font-mono);
     font-size: 11px;
     letter-spacing: 0.1em;

@@ -1,8 +1,8 @@
 ---
 import { formatDate } from '~/lib/dates'
-import { kindLabel, postPath, type Note } from '~/lib/notes'
+import { typeLabel, postPath, type Post } from '~/lib/posts'
 
-type Props = { note: Note }
+type Props = { note: Post }
 const { note } = Astro.props
 const href = postPath(note.id)
 ---
@@ -13,7 +13,7 @@ const href = postPath(note.id)
     <a class="t" href={href}>{note.data.title}</a>
     <span class="d">{note.data.summary}</span>
     <span class="row-meta"
-      ><span class="kind">{kindLabel[note.data.kind]}</span></span
+      ><span class="post-type">{typeLabel[note.data.type]}</span></span
     >
   </span>
 </li>
