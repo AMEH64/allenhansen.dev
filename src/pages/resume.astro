@@ -51,9 +51,6 @@ const skills = [...new Set(jobs.flatMap(job => job.data.skills))].sort(
   (a, b) => rank(a) - rank(b),
 )
 
-/** Highlights that are still "..." in the content are unwritten, not real bullets. */
-const isPlaceholder = (h: string) => /^(\.\.\.|…)$/.test(h.trim())
-
 const site = Astro.site!
 const contact = [
   [links.email, `mailto:${links.email}`],
@@ -100,43 +97,36 @@ const contact = [
     <section class="cv-sec" aria-labelledby="cv-exp">
       <h2 class="cv-h" id="cv-exp">Experience</h2>
       {
-        jobs.map(({ data: job }) => {
-          const real = job.highlights.filter(h => !isPlaceholder(h))
-          return (
-            <article class="cv-job">
-              <p class="cv-when">
-                <time datetime={job.startDate}>
-                  {formatDate(job.startDate, 'month')}
+        jobs.map(({ data: job }) => (
+          <article class="cv-job">
+            <p class="cv-when">
+              <time datetime={job.startDate}>
+                {formatDate(job.startDate, 'month')}
+              </time>
+              {' – '}
+              {job.endDate ? (
+                <time datetime={job.endDate}>
+                  {formatDate(job.endDate, 'month')}
                 </time>
-                {' – '}
-                {job.endDate ? (
-                  <time datetime={job.endDate}>
-                    {formatDate(job.endDate, 'month')}
-                  </time>
-                ) : (
-                  'Present'
-                )}
+              ) : (
+                'Present'
+              )}
+            </p>
+            <div>
+              <h3>{job.position}</h3>
+              <p class="cv-org">
+                {job.company} <span>· {job.location}</span>
               </p>
-              <div>
-                <h3>{job.position}</h3>
-                <p class="cv-org">
-                  {job.company} <span>· {job.location}</span>
-                </p>
+              {job.highlights.length > 0 && (
                 <ul class="cv-list">
-                  {real.length ? (
-                    real.map(h => <li>{h}</li>)
-                  ) : (
-                    <li class="cv-placeholder">
-                      <b>Placeholder</b> Highlights to come. This role has{' '}
-                      {job.highlights.length} unwritten bullets (“…”) in the
-                      résumé data; Allen to supply them.
-                    </li>
-                  )}
+                  {job.highlights.map(h => (
+                    <li>{h}</li>
+                  ))}
                 </ul>
-              </div>
-            </article>
-          )
-        })
+              )}
+            </div>
+          </article>
+        ))
       }
     </section>
 

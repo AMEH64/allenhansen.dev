@@ -1362,25 +1362,6 @@
     color: var(--brand);
     font-weight: 700;
   }
-  .cv-list .cv-placeholder {
-    padding: 12px 14px;
-    border: 1.5px dashed var(--brand);
-    border-radius: 2px;
-    color: var(--muted);
-    font-size: 15px;
-  }
-  .cv-placeholder::before {
-    display: none;
-  }
-  .cv-placeholder b {
-    display: block;
-    color: var(--brand);
-    font-family: var(--font-mono);
-    font-size: 12px;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    margin-bottom: 3px;
-  }
   .cv-skills {
     padding: 16px 0 4px;
     font-size: 16.5px;

@@ -47,7 +47,6 @@ const blog = defineCollection({
               .optional(),
           }),
         )
-        .optional()
         .default([]),
     }),
 })
@@ -75,7 +74,8 @@ const jobsCollection = defineCollection({
     location: z.string().min(1),
     startDate: z.iso.date(),
     endDate: z.iso.date().optional(),
-    highlights: z.string().min(1).array().min(3).max(7),
+    // Résumé bullets. An empty list shows no bullets.
+    highlights: z.array(z.string().min(1)).max(7).default([]),
     skills: z.string().min(1).array().min(1),
   }),
 })
