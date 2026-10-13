@@ -3,15 +3,15 @@ import { getEntry, render } from 'astro:content'
 import { SITE_TITLE } from '~/consts'
 import ChangeLog from '~/components/change-log.astro'
 import CodeCopy from '~/components/code-copy.astro'
-import Freshness from '~/components/freshness.astro'
 import Anchor from '~/components/mdx/anchor.astro'
 import MainLayout from '~/layouts/main-layout.astro'
 import { formatDate } from '~/lib/dates'
 import {
-  freshness,
   getNotes,
+  kindLabel,
   noteLog,
   readingMinutes,
+  reportUrl,
   type Note,
 } from '~/lib/notes'
 
@@ -29,7 +29,6 @@ const { note, newer, older } = Astro.props
 const { data } = note
 const { Content, headings } = await render(note)
 const log = noteLog(data)
-const f = freshness(data)
 const url = new URL(`/notes/${note.id}/`, Astro.site).href
 const toc = headings.filter(h => h.depth === 2)
 const replacement = data.supersededBy
@@ -53,24 +52,34 @@ const newerWay =
   ogImage={`/og/notes/${note.id}.png`}
   type="article"
   publishedTime={data.date}
-  modifiedTime={log[0].date}
+  modifiedTime={data.updatedDate ?? data.date}
   current="notes"
 >
   <a class="crumb" href="/notes/">← Notes</a>
   <header class="note-head">
     <h1 class="relief" data-lit>{data.title}</h1>
     <div class="note-meta">
-      <span>
-        {f.state === 'story' && 'Written '}<time datetime={data.date}
-          >{formatDate(data.date)}</time
-        >
-      </span>
-      <span>{readingMinutes(note.body)} min read</span>
+      <span class="kind">{kindLabel[data.kind]}</span>
+      <time datetime={data.date}>{formatDate(data.date)}</time>
       {
-        f.state !== 'story' && (
-          <Freshness state={f.state} label={f.label} href="#changes" />
+        data.updatedDate && (
+          <span>
+            Updated{' '}
+            {log.length > 0 ? (
+              <a href="#changes">
+                <time datetime={data.updatedDate}>
+                  {formatDate(data.updatedDate)}
+                </time>
+              </a>
+            ) : (
+              <time datetime={data.updatedDate}>
+                {formatDate(data.updatedDate)}
+              </time>
+            )}
+          </span>
         )
       }
+      <span>{readingMinutes(note.body)} min read</span>
     </div>
   </header>
   <div class="note-grid">
@@ -84,27 +93,17 @@ const newerWay =
         )
       }
       <Content components={{ a: Anchor }} />
-      <ChangeLog
-        log={log}
-        title={data.title}
-        url={url}
-        lastChecked={f.checked}
-        filePath={note.filePath}
-      />
+      {log.length > 0 && <ChangeLog log={log} filePath={note.filePath} />}
+      <p class="report">
+        <a href={reportUrl(data.title, url)}
+          >See something wrong or out of date? Open an issue →</a
+        >
+      </p>
       <CodeCopy />
     </article>
-    <aside class="margin" aria-label="About this note">
-      {
-        f.state !== 'story' && (
-          <section class="status-block" aria-labelledby="status-h">
-            <h2 id="status-h" class="big">
-              <Freshness state={f.state} label={f.label} href="#changes" />
-            </h2>
-          </section>
-        )
-      }
-      {
-        toc.length > 0 && (
+    {
+      toc.length > 0 && (
+        <aside class="margin" aria-label="On this page">
           <nav class="toc" aria-labelledby="toc-h">
             <h2 id="toc-h">On this page</h2>
             <ol>
@@ -113,14 +112,16 @@ const newerWay =
                   <a href={`#${h.slug}`}>{h.text}</a>
                 </li>
               ))}
-              <li>
-                <a href="#changes">Change log</a>
-              </li>
+              {log.length > 0 && (
+                <li>
+                  <a href="#changes">Change log</a>
+                </li>
+              )}
             </ol>
           </nav>
-        )
-      }
-    </aside>
+        </aside>
+      )
+    }
   </div>
   {
     (older || newer) && (

@@ -1,5 +1,6 @@
 import type { APIRoute, GetStaticPaths } from 'astro'
-import { freshness, getNotes } from '~/lib/notes'
+import { formatDate } from '~/lib/dates'
+import { getNotes } from '~/lib/notes'
 import { renderOg, type OgOptions } from '~/lib/og'
 import { meta } from '~/site.config'
 
@@ -68,7 +69,9 @@ export const getStaticPaths = (async () => {
         title: note.data.title,
         eyebrow: 'allenhansen.dev / notes',
         description: note.data.summary,
-        footnote: freshness(note.data).label,
+        footnote: note.data.updatedDate
+          ? `Updated ${formatDate(note.data.updatedDate)}`
+          : formatDate(note.data.date),
       },
     })
   }

@@ -26,7 +26,7 @@ Run these from the project root:
 ```text
 src/
 ├── assets/fonts/        Self-hosted, subset variable fonts (OFL). og/ holds TTF copies for OG images.
-├── components/          Header, footer, Lights switch, freshness label, change log, …
+├── components/          Header, footer, Lights switch, change log, …
 ├── content/blog/        Notes (MDX). The folder keeps its old name so GitCMS keeps working.
 ├── content/projects/    One JSON file per project card.
 ├── lib/                 Palette parsing, OG image renderer, icons, note helpers.
@@ -62,28 +62,10 @@ trying to do, What I learned, Code, Gotchas, Links) or `_story-template.mdx` (no
 outline). Files starting with `_` aren't published. The same fields are set up
 for GitCMS in `gitcms.md`.
 
-A story shows only when it was written. A note carries a freshness label and a
-dated change log:
-
-| Entry                | Reads                                                   |
-| :------------------- | :------------------------------------------------------ |
-| Story                | Written Nov 19, 2022                                    |
-| Checked recently     | Checked Oct 2026                                        |
-| Updated or corrected | Updated Oct 2026 (links to the change log)              |
-| Not checked lately   | Last checked Oct 2024 · some details may be out of date |
-
-The labels come from the `log`:
-
-```yaml
-log:
-  - date: 2026-10-12
-    kind: checked # published | checked | updated | corrected | tweak
-    text: Re-checked browser support; still accurate.
-```
-
-Without a `log`, the change log is built from `date` and `updatedDate`. A note
-reads "some details may be out of date" once its last check is older than
-`notesConfig.recheckMonths` (12) in `src/site.config.ts`.
+Notes and stories look and behave the same; `kind` is only a small label on the
+list and the post. The top of a post shows when it was published, plus "Updated
+{date}" when `updatedDate` is set. The foot shows the change log when the post
+has a `log`, then "See something wrong or out of date? Open an issue →".
 
 When something in a note changes, rewrite the text in place so it reads cleanly,
 with nothing struck through, and add a dated entry to the top of the `log` that
@@ -93,7 +75,7 @@ the note was wrong:
 ```yaml
 log:
   - date: 2026-10-13
-    kind: updated
+    kind: updated # published | updated | corrected | tweak
     text: 'Updated: field-sizing is now Baseline 2026'
 ```
 
@@ -115,7 +97,7 @@ log:
     text: 'Updated: field-sizing replaces this approach'
 ```
 
-The "Spot something wrong or outdated?" link opens
+The "See something wrong or out of date?" link opens
 `.github/ISSUE_TEMPLATE/note-correction.yml`. That template adds the
 `note-correction` label, which has to exist in the GitHub repository.
 

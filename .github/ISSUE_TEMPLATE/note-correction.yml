@@ -22,11 +22,6 @@ body:
       placeholder: https://www.allenhansen.dev/notes/…
     validations:
       required: true
-  - type: input
-    id: last-checked
-    attributes:
-      label: Last checked
-      description: The note's last-checked date, filled in from the page.
   - type: dropdown
     id: kind
     attributes:

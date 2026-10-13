@@ -1,16 +1,13 @@
 ---
 import { formatDate } from '~/lib/dates'
-import { changeUrl, reportUrl, type LogEntry } from '~/lib/notes'
+import { changeUrl, type LogEntry } from '~/lib/notes'
 
 type Props = {
   log: LogEntry[]
-  title: string
-  url: string
-  lastChecked: string
-  /** The note's source file, relative to the repo root. */
+  /** The post's source file, relative to the repo root. */
   filePath?: string
 }
-const { log, title, url, lastChecked, filePath } = Astro.props
+const { log, filePath } = Astro.props
 ---
 
 <section class="changes" id="changes" aria-labelledby="changes-h">
@@ -21,7 +18,7 @@ const { log, title, url, lastChecked, filePath } = Astro.props
         const href = changeUrl(entry, filePath)
         const [label, more] = entry.commit
           ? ['Diff', 'of this change on GitHub']
-          : ['History', 'of this note on GitHub']
+          : ['History', 'of this post on GitHub']
         return (
           <li class={`chg chg-${entry.kind}`}>
             <time datetime={entry.date}>{formatDate(entry.date)}</time>
@@ -42,13 +39,4 @@ const { log, title, url, lastChecked, filePath } = Astro.props
       })
     }
   </ol>
-  <p class="report">
-    <a href={reportUrl(title, url, lastChecked)}
-      >Spot something wrong or outdated?</a
-    >
-    <span
-      >Opens a GitHub issue with this note’s title, address, and last-checked
-      date filled in.</span
-    >
-  </p>
 </section>

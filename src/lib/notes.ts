@@ -1,10 +1,8 @@
 import { getCollection, type CollectionEntry } from 'astro:content'
 import { notesConfig } from '~/site.config'
-import { formatDate, isoDate, monthsBetween } from './dates'
 
 export type Note = CollectionEntry<'blog'>
 export type LogEntry = Note['data']['log'][number]
-export type FreshnessState = 'checked' | 'updated' | 'stale' | 'story'
 
 /** Published notes, newest first. Drafts only show in `astro dev`. */
 export async function getNotes() {
@@ -15,61 +13,20 @@ export async function getNotes() {
   return notes.sort((a, b) => b.data.date.localeCompare(a.data.date))
 }
 
-/** The change log, newest first. Falls back to date and updatedDate when the note has no log. */
+/** The change log, newest first. Empty when the note has no `log`. */
 export function noteLog(data: Note['data']): LogEntry[] {
-  const log: LogEntry[] = data.log.length
-    ? [...data.log]
-    : [
-        ...(data.updatedDate
-          ? [
-              {
-                date: data.updatedDate,
-                kind: 'updated' as const,
-                text: 'Updated.',
-              },
-            ]
-          : []),
-        { date: data.date, kind: 'published' as const, text: 'Published.' },
-      ]
-  return log.sort((a, b) => b.date.localeCompare(a.date))
+  return [...data.log].sort((a, b) => b.date.localeCompare(a.date))
 }
 
-/**
- * Derives the freshness label from the change log; it's never set by hand.
- * The last check is the newest entry that isn't a wording tweak. Stories get no freshness
- * label, just "Written {date}".
- */
-export function freshness(data: Note['data'], today = isoDate()) {
-  const log = noteLog(data)
-  const last = log.find(e => e.kind !== 'tweak') ?? log[log.length - 1]
-  const checked = last.date
-  const month = formatDate(checked, 'month')
-  let state: FreshnessState
-  let label: string
-  if (data.kind === 'story') {
-    state = 'story'
-    label = `Written ${formatDate(data.date)}`
-  } else if (monthsBetween(checked, today) >= notesConfig.recheckMonths) {
-    state = 'stale'
-    label = `Last checked ${month} · some details may be out of date`
-  } else if (last.kind === 'updated' || last.kind === 'corrected') {
-    state = 'updated'
-    label = `Updated ${month}`
-  } else {
-    state = 'checked'
-    label = `Checked ${month}`
-  }
-  return { state, label, checked }
-}
+export const kindLabel = { note: 'Note', story: 'Story' } as const
 
 /** A prefilled issue from .github/ISSUE_TEMPLATE/note-correction.yml. No `labels=`: GitHub 404s it for visitors who can't apply labels. */
-export function reportUrl(title: string, url: string, lastChecked: string) {
+export function reportUrl(title: string, url: string) {
   const query = new URLSearchParams({
     template: 'note-correction.yml',
     title: `Note: ${title}`,
     'note-title': title,
     'note-url': url,
-    'last-checked': lastChecked,
   })
   return `https://github.com/${notesConfig.repo}/issues/new?${query}`
 }

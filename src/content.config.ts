@@ -9,8 +9,7 @@ const blog = defineCollection({
       // Required: the build fails without these.
       title: z.string().trim().min(1),
       date: z.iso.date(),
-      // note: something learned, which can go stale, so it carries a freshness label.
-      // story: dated writing that can't go stale; it shows only "Written {Mon D, YYYY}".
+      // A category label shown on the list and the post; both kinds look and behave the same.
       kind: z.enum(['note', 'story']),
       summary: z
         .string()
@@ -29,19 +28,12 @@ const blog = defineCollection({
       draft: z.boolean().optional().default(false),
       // The slug of a newer note that replaces this one; the note page fails the build if it's missing.
       supersededBy: reference('blog').optional(),
-      // The change log at the foot of the note, newest first. When it's empty, it's
-      // derived from date and updatedDate.
+      // The change log at the foot of the post, newest first. No entries, no change log.
       log: z
         .array(
           z.object({
             date: z.iso.date(),
-            kind: z.enum([
-              'published',
-              'checked',
-              'updated',
-              'corrected',
-              'tweak',
-            ]),
+            kind: z.enum(['published', 'updated', 'corrected', 'tweak']),
             text: z.string().min(1),
             // Links the entry to this commit instead of the file's history.
             commit: z

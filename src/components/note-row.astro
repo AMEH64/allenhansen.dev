@@ -1,11 +1,9 @@
 ---
 import { formatDate } from '~/lib/dates'
-import { freshness, type Note } from '~/lib/notes'
-import Freshness from './freshness.astro'
+import { kindLabel, type Note } from '~/lib/notes'
 
 type Props = { note: Note }
 const { note } = Astro.props
-const f = freshness(note.data)
 const href = `/notes/${note.id}/`
 ---
 
@@ -14,10 +12,8 @@ const href = `/notes/${note.id}/`
   <span>
     <a class="t" href={href}>{note.data.title}</a>
     <span class="d">{note.data.summary}</span>
-    {
-      f.state !== 'story' && (
-        <Freshness state={f.state} label={f.label} href={`${href}#changes`} />
-      )
-    }
+    <span class="row-meta"
+      ><span class="kind">{kindLabel[note.data.kind]}</span></span
+    >
   </span>
 </li>

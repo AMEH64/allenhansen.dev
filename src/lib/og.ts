@@ -84,7 +84,7 @@ export type OgOptions = {
   /** The slug line under the logo, e.g. "allenhansen.dev / notes". */
   eyebrow: string
   description?: string
-  /** Small mono line at the bottom right, e.g. a note's freshness label. */
+  /** Small mono line at the bottom right, e.g. a post's date. */
   footnote?: string
   /** Page titles print uppercase and wide, like the site's pressed headings. */
   pressed?: boolean
