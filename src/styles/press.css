@@ -232,7 +232,7 @@
   .rows > li {
     position: relative;
     display: grid;
-    grid-template-columns: 110px 1fr auto;
+    grid-template-columns: 110px 1fr;
     gap: 20px;
     padding: 16px 0;
     align-items: baseline;
@@ -275,14 +275,14 @@
     line-height: 1.5;
   }
 
-  /* freshness: plain words, with a small square printed in the ink */
+  /* freshness: a quiet note in plain words, with a small square printed in the ink */
   .mark {
-    font-size: 12px;
+    font-size: 12.5px;
+    line-height: 1.45;
     color: var(--muted);
-    white-space: nowrap;
     display: inline-flex;
     gap: 8px;
-    align-items: center;
+    align-items: baseline;
   }
   .mark i {
     width: 8px;
@@ -290,11 +290,15 @@
     flex: none;
     display: inline-block;
   }
-  .m-true,
+  .rows .mark {
+    display: flex;
+    margin-top: 7px;
+  }
+  .m-checked,
   .m-updated {
     color: var(--text);
   }
-  .m-true i {
+  .m-checked i {
     background: var(--brand);
   }
   .m-updated i {
@@ -302,7 +306,7 @@
     outline: 1.5px solid var(--brand);
     outline-offset: -1.5px;
   }
-  .m-due i {
+  .m-stale i {
     outline: 1.5px dashed var(--muted);
     outline-offset: -1.5px;
   }
@@ -585,28 +589,33 @@
     text-decoration-color: var(--brand);
   }
   .status-block {
-    padding: 16px;
+    padding: 14px 16px;
     border: 1px dashed var(--muted);
     border-radius: 2px;
-    font-family: var(--font-mono);
-    font-size: 12.5px;
-    line-height: 1.6;
+    font-size: 13.5px;
+    line-height: 1.55;
+    color: var(--muted);
   }
   .status-block .big {
-    display: block;
-    color: var(--text);
-    margin-bottom: 4px;
-    font-family: var(--font-display);
-    font-variation-settings: 'wdth' 110;
-    font-size: 16px;
-    font-weight: 750;
-    text-transform: uppercase;
-    letter-spacing: 0.01em;
-    text-wrap: balance;
+    margin: 0;
+    font: inherit;
+    text-transform: none;
+    letter-spacing: normal;
   }
-  .status-block .big .mark {
-    vertical-align: middle;
-    margin-right: 6px;
+  .status-block .big .mark,
+  .status-plain .mark {
+    font-size: 15px;
+    font-weight: 600;
+    text-wrap: pretty;
+  }
+  .status-block p {
+    margin: 6px 0 0 16px;
+  }
+  .status-plain {
+    margin: 0;
+  }
+  .status-plain .mark {
+    font-weight: 400;
   }
   .pn {
     display: grid;
@@ -1647,7 +1656,7 @@
     }
     .toggle .sw::after,
     .logo-mark,
-    .m-true i,
+    .m-checked i,
     .pdot {
       background: CanvasText;
     }

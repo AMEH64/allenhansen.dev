@@ -44,11 +44,19 @@ Notes are MDX files in `src/content/blog/<slug>/index.mdx`, served at
 `/notes/<slug>/`. Old `/blog/*` URLs redirect to `/notes/*`. Posts with
 `draft: true` only show up in `pnpm dev`.
 
-Each note shows a plain-word freshness label and a dated change log. Two
-optional frontmatter fields control them:
+Each note carries a quiet freshness note and a dated change log:
+
+| Note                 | Reads                                                   |
+| :------------------- | :------------------------------------------------------ |
+| Story (`timeless`)   | Written Nov 19, 2022                                    |
+| Checked recently     | Checked Oct 2026                                        |
+| Updated or corrected | Updated Oct 2026 (links to the change log)              |
+| Not checked lately   | Last checked Oct 2024 · some details may be out of date |
+
+Two optional frontmatter fields control them:
 
 ```yaml
-timeless: true # a story or announcement; never marked "Due for a re-check"
+timeless: true # a story or announcement; never marked out of date
 log:
   - date: 2026-10-12
     kind: checked # published | checked | updated | corrected | tweak
@@ -56,10 +64,18 @@ log:
 ```
 
 Without a `log`, the change log is built from `pubDate` and `updatedDate`. A
-note is "Due for a re-check" once its last check is older than
-`notesConfig.recheckMonths` (12) in `src/site.config.ts`. For a real mistake,
-use `<Correction was="…" now="…" date="2026-10-12" />` inline and add a matching
-`corrected` entry to the log.
+note reads "some details may be out of date" once its last check is older than
+`notesConfig.recheckMonths` (12) in `src/site.config.ts`.
+
+For a real mistake, strike it inline and add a matching `corrected` entry to the
+log. Plain text goes in props; text with code or links goes in slots:
+
+<!-- prettier-ignore -->
+```mdx
+<Correction was="…" now="…" date="2026-10-12" />
+
+Keep it inline: <Correction date="2026-10-12"><span slot="was">The old `text`.</span>The new `text`.</Correction>
+```
 
 The "Spot something wrong or outdated?" link opens
 `.github/ISSUE_TEMPLATE/note-correction.yml`. That template adds the

@@ -4,7 +4,7 @@ import { formatDate, isoDate, monthsBetween } from './dates'
 
 export type Note = CollectionEntry<'blog'>
 export type LogEntry = Note['data']['log'][number]
-export type FreshnessState = 'true' | 'updated' | 'due' | 'timeless'
+export type FreshnessState = 'checked' | 'updated' | 'stale' | 'timeless'
 
 /** Published notes, newest first. Drafts only show in `astro dev`. */
 export async function getNotes() {
@@ -35,27 +35,28 @@ export function noteLog(data: Note['data']): LogEntry[] {
 }
 
 /**
- * Derives the freshness label from the change log; it's never set by hand.
+ * Derives the freshness note from the change log; it's never set by hand.
  * The last check is the newest entry that isn't a wording tweak.
  */
 export function freshness(data: Note['data'], today = isoDate()) {
   const log = noteLog(data)
   const last = log.find(e => e.kind !== 'tweak') ?? log[log.length - 1]
   const checked = last.date
+  const month = formatDate(checked, 'month')
   let state: FreshnessState
   let label: string
   if (data.timeless) {
     state = 'timeless'
-    label = `Written ${formatDate(data.pubDate, 'month')}`
+    label = `Written ${formatDate(data.pubDate)}`
   } else if (monthsBetween(checked, today) >= notesConfig.recheckMonths) {
-    state = 'due'
-    label = 'Due for a re-check'
+    state = 'stale'
+    label = `Last checked ${month} · some details may be out of date`
   } else if (last.kind === 'updated' || last.kind === 'corrected') {
     state = 'updated'
-    label = `Updated ${formatDate(checked, 'short')}`
+    label = `Updated ${month}`
   } else {
-    state = 'true'
-    label = `Still true · checked ${formatDate(checked, 'short')}`
+    state = 'checked'
+    label = `Checked ${month}`
   }
   return { state, label, checked }
 }

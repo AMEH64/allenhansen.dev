@@ -12,8 +12,8 @@ const blog = defineCollection({
       pubDate: z.iso.date(),
       updatedDate: z.iso.date().optional(),
       image: image(),
-      // Stories and other notes that can't go stale: they read "Written {Mon YYYY}" and
-      // are never "Due for a re-check".
+      // Stories and other notes that can't go stale: they read "Written {Mon D, YYYY}" and
+      // are never marked out of date.
       timeless: z.boolean().optional().default(false),
       // The change log at the foot of the note, newest first. When it's empty, it's
       // derived from pubDate and updatedDate.

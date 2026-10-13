@@ -52,7 +52,7 @@ const toc = headings.filter(h => h.depth === 2)
         <time datetime={data.pubDate}>{formatDate(data.pubDate)}</time>
       </span>
       <span>{readingMinutes(note.body)} min read</span>
-      <Freshness state={f.state} label={f.label} />
+      <Freshness state={f.state} label={f.label} href="#changes" />
     </div>
   </header>
   <div class="note-grid">
@@ -66,28 +66,26 @@ const toc = headings.filter(h => h.depth === 2)
       />
     </article>
     <aside class="margin" aria-label="About this note">
-      <section>
-        <div class="status-block">
-          <span class="big"
-            ><Freshness state={f.state} />
-            {
-              f.state === 'updated'
-                ? `Updated ${formatDate(f.checked, 'short')}`
-                : f.label
-            }</span
-          >
-          {
-            data.timeless
-              ? `Written ${formatDate(data.pubDate)}. It's a story, so it isn't re-checked.`
-              : `Last checked ${formatDate(f.checked)}. First published ${formatDate(data.pubDate)}.`
-          }
-          {
-            corrections > 0 &&
-              ` ${corrections === 1 ? 'One correction is' : `${corrections} corrections are`} shown in the text.`
-          }
-          <a href="#changes">Change log</a>
-        </div>
-      </section>
+      {
+        f.state === 'timeless' ? (
+          <p class="status-plain">
+            <Freshness state={f.state} label={f.label} />
+          </p>
+        ) : (
+          <section class="status-block" aria-labelledby="status-h">
+            <h2 id="status-h" class="big">
+              <Freshness state={f.state} label={f.label} href="#changes" />
+            </h2>
+            {corrections > 0 && (
+              <p>
+                {corrections === 1
+                  ? 'One correction is marked in the text.'
+                  : `${corrections} corrections are marked in the text.`}
+              </p>
+            )}
+          </section>
+        )
+      }
       {
         toc.length > 0 && (
           <nav class="toc" aria-labelledby="toc-h">

@@ -1,8 +1,13 @@
 ---
 import type { FreshnessState } from '~/lib/notes'
 
-type Props = { state: FreshnessState; label?: string }
-const { state, label } = Astro.props
+// `href` points "Updated …" at the change log; the other states are plain text.
+type Props = { state: FreshnessState; label: string; href?: string }
+const { state, label, href } = Astro.props
 ---
 
-<span class={`mark m-${state}`}><i aria-hidden="true"></i>{label}</span>
+<span class={`mark m-${state}`}
+  ><i aria-hidden="true"></i>{
+    href && state === 'updated' ? <a href={href}>{label}</a> : label
+  }</span
+>

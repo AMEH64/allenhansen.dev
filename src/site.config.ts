@@ -1,5 +1,5 @@
 export const notesConfig = {
-  /** A note reads "Due for a re-check" after this many months without a check. */
+  /** After this many months without a check, a note reads "Last checked {Mon YYYY} · some details may be out of date". */
   recheckMonths: 12,
   /** Where "Spot something wrong or outdated?" opens an issue. */
   repo: 'AMEH64/allenhansen.dev',
