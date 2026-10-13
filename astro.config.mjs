@@ -13,11 +13,7 @@ const fontDir = './src/assets/fonts'
 export default defineConfig({
   // The apex redirects to www, so canonical, sitemap, and OG URLs use www.
   site: 'https://www.allenhansen.dev',
-  integrations: [
-    mdx(),
-    sitemap({ filter: page => !page.includes('/lab/') }),
-    redirectTrailingSlashes(),
-  ],
+  integrations: [mdx(), sitemap(), redirectTrailingSlashes()],
   redirects: {
     '/blog': '/notes',
     '/blog/[...slug]': '/notes/[...slug]',

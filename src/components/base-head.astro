@@ -12,8 +12,6 @@ type Props = {
   type?: 'website' | 'article'
   publishedTime?: string
   modifiedTime?: string
-  /** Keeps review pages such as /lab/* out of search results. */
-  noindex?: boolean
 }
 
 const {
@@ -23,7 +21,6 @@ const {
   type = 'website',
   publishedTime,
   modifiedTime,
-  noindex = false,
 } = Astro.props
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site)
@@ -66,7 +63,6 @@ const imageURL = new URL(ogImage, Astro.site)
 <title>{title}</title>
 <meta name="description" content={description} />
 <link rel="canonical" href={canonicalURL} />
-{noindex && <meta name="robots" content="noindex" />}
 
 <link rel="icon" href="/favicon.ico" sizes="32x32" />
 <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
