@@ -4,7 +4,7 @@ import NoteRow from '~/components/note-row.astro'
 import PageTitle from '~/components/page-title.astro'
 import MainLayout from '~/layouts/main-layout.astro'
 import { getNotes, type Note } from '~/lib/notes'
-import { meta, notesConfig } from '~/site.config'
+import { meta } from '~/site.config'
 
 const notes = await getNotes()
 const years = Object.entries(
@@ -13,11 +13,6 @@ const years = Object.entries(
     return acc
   }, {}),
 ).sort(([a], [b]) => Number(b) - Number(a))
-
-const months =
-  notesConfig.recheckMonths === 12
-    ? 'a year'
-    : `${notesConfig.recheckMonths} months`
 ---
 
 <MainLayout
@@ -28,7 +23,7 @@ const months =
 >
   <PageTitle
     title="Notes"
-    lead={`Short notes on what I’ve learned. Each says when I last checked it, and one that hasn’t been checked in ${months} says so. Stories just say when I wrote them.`}
+    lead="Things I’ve learned, written down so I don’t forget them."
   />
   {
     years.map(([year, list]) => (

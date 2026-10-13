@@ -58,7 +58,7 @@ export const meta = {
   index:
     'I’m Allen Hansen, a full-stack engineer. I write short, dated notes on what I learn and build small projects that each get their own subdomain.',
   notes:
-    'Short, dated notes on what I learn as a full-stack engineer, re-checked over time and corrected in the open.',
+    'Things I’ve learned, written down so I don’t forget them.',
   projects:
     'Small things I build to learn, each on its own subdomain, each with an honest status.',
   about: `Allen Hansen, senior full-stack engineer. ${capitalize(yearsInWords)} years of making web apps faster and more accessible; lately Python, FastAPI, and AI tooling.`,
