@@ -54,7 +54,8 @@ const projects = defineCollection({
     name: z.string().min(1),
     url: z.url().optional(),
     tagline: z.string().min(1),
-    status: z.enum(['active', 'paused', 'tinkering', 'idea', 'archived']),
+    // GitHub-style: Active, Paused, or Archived.
+    status: z.enum(['active', 'paused', 'archived']),
     started: z.string().optional(),
     stack: z.string().array().default([]),
     mark: z.string().min(1),

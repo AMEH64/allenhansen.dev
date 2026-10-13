@@ -137,20 +137,18 @@ applies to `--paper`, `--text`, `--muted`, `--surface`, and `--press`.
 `text-brand`, `bg-paper`, and `border-rule` switch with the Lights setting.
 Change colors in `palette.css`, not in the tokens.
 
-| Token                      | Value                     | Example class           |
-| :------------------------- | :------------------------ | :---------------------- |
-| `--color-brand`            | `var(--brand)`            | `text-brand`            |
-| `--color-paper`            | `var(--paper)`            | `bg-paper`              |
-| `--color-text`             | `var(--text)`             | `text-text`             |
-| `--color-muted`            | `var(--muted)`            | `text-muted`            |
-| `--color-rule`             | `var(--rule)`             | `border-rule`           |
-| `--color-press`            | `var(--press)`            | `bg-press`              |
-| `--color-surface`          | `var(--surface)`          | `bg-surface`            |
-| `--color-status-active`    | `var(--status-active)`    | `text-status-active`    |
-| `--color-status-paused`    | `var(--status-paused)`    | `text-status-paused`    |
-| `--color-status-tinkering` | `var(--status-tinkering)` | `text-status-tinkering` |
-| `--color-status-idea`      | `var(--status-idea)`      | `text-status-idea`      |
-| `--color-status-archived`  | `var(--status-archived)`  | `text-status-archived`  |
+| Token                     | Value                    | Example class          |
+| :------------------------ | :----------------------- | :--------------------- |
+| `--color-brand`           | `var(--brand)`           | `text-brand`           |
+| `--color-paper`           | `var(--paper)`           | `bg-paper`             |
+| `--color-text`            | `var(--text)`            | `text-text`            |
+| `--color-muted`           | `var(--muted)`           | `text-muted`           |
+| `--color-rule`            | `var(--rule)`            | `border-rule`          |
+| `--color-press`           | `var(--press)`           | `bg-press`             |
+| `--color-surface`         | `var(--surface)`         | `bg-surface`           |
+| `--color-status-active`   | `var(--status-active)`   | `text-status-active`   |
+| `--color-status-paused`   | `var(--status-paused)`   | `text-status-paused`   |
+| `--color-status-archived` | `var(--status-archived)` | `text-status-archived` |
 
 Fonts are tokens too: `font-display` (Anybody), `font-sans` (Atkinson
 Hyperlegible Next), and `font-mono` (Atkinson Hyperlegible Mono).

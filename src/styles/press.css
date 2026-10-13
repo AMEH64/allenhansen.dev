@@ -445,12 +445,10 @@
   .pdot.st-active {
     background: var(--status-active);
   }
-  .pdot.st-tinkering {
-    background: var(--status-tinkering);
-  }
-  .pdot.st-idea {
+  .pdot.st-archived {
     background: none;
-    outline: 1px dashed var(--status-idea);
+    outline: 1px dashed var(--status-archived);
+    outline-offset: -1px;
   }
 
   /* blind deboss: type pressed into the stock. Shadow on the lit wall, highlight on the far wall. */
@@ -923,9 +921,6 @@
   a.pcard:hover {
     border-color: var(--brand);
   }
-  .pcard.idea {
-    border-style: dashed;
-  }
   .pcard .top {
     display: flex;
     justify-content: space-between;
@@ -987,15 +982,9 @@
   .st-paused {
     color: var(--status-paused);
   }
-  .st-tinkering {
-    color: var(--status-tinkering);
-  }
-  .st-idea {
-    color: var(--status-idea);
-    border-style: dashed;
-  }
   .st-archived {
     color: var(--status-archived);
+    border-style: dashed;
   }
 
   /* about */
@@ -1115,8 +1104,7 @@
     margin: 0;
   }
   .pile-stack {
-    position: relative;
-    aspect-ratio: 4/5;
+    display: grid;
     margin: 10px 12px 26px;
     touch-action: pan-y;
     user-select: none;

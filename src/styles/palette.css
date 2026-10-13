@@ -45,8 +45,6 @@
 
   --status-active: var(--brand);
   --status-paused: var(--muted);
-  --status-tinkering: var(--text);
-  --status-idea: var(--muted);
   --status-archived: var(--muted);
 }
 

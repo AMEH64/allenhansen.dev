@@ -2,7 +2,7 @@
   "name": "allenhansen.dev",
   "url": "https://www.allenhansen.dev",
   "tagline": "This site. Rebuilt in the open; every note keeps its own change log.",
-  "status": "tinkering",
+  "status": "active",
   "started": "2022-11",
   "stack": ["Astro", "Vercel"],
   "mark": "ah",

@@ -5,8 +5,6 @@ type Status = CollectionEntry<'projects'>['data']['status']
 export const statusLabel: Record<Status, string> = {
   active: 'Active',
   paused: 'Paused',
-  tinkering: 'Tinkering',
-  idea: 'Idea',
   archived: 'Archived',
 }
 

@@ -19,8 +19,6 @@
   --color-surface: var(--surface);
   --color-status-active: var(--status-active);
   --color-status-paused: var(--status-paused);
-  --color-status-tinkering: var(--status-tinkering);
-  --color-status-idea: var(--status-idea);
   --color-status-archived: var(--status-archived);
 }
 
