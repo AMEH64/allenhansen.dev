@@ -2,6 +2,7 @@
 import { render } from 'astro:content'
 import { SITE_TITLE } from '~/consts'
 import ChangeLog from '~/components/change-log.astro'
+import CodeCopy from '~/components/code-copy.astro'
 import Correction from '~/components/correction.astro'
 import Freshness from '~/components/freshness.astro'
 import Anchor from '~/components/mdx/anchor.astro'
@@ -64,6 +65,7 @@ const toc = headings.filter(h => h.depth === 2)
         url={url}
         lastChecked={f.checked}
       />
+      <CodeCopy />
     </article>
     <aside class="margin" aria-label="About this note">
       {

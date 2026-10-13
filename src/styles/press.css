@@ -738,6 +738,37 @@
     background: none;
     font-size: inherit;
   }
+  .code-block {
+    position: relative;
+  }
+  .code-block .copy {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    min-width: 28px;
+    min-height: 28px;
+    padding: 0 10px;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    line-height: 1;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+    background: var(--code-bg);
+    border: 1px solid var(--rule);
+    border-radius: 2px;
+    cursor: pointer;
+  }
+  .code-block .copy:hover,
+  .code-block .copy:focus-visible,
+  .code-block .copy[data-state='done'] {
+    color: var(--brand);
+    border-color: var(--brand);
+  }
+  .code-block .copy[data-state='failed'] {
+    color: var(--text);
+    border-style: dashed;
+  }
   .prose table {
     width: 100%;
     border-collapse: collapse;
