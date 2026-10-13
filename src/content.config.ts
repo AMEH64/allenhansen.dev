@@ -21,7 +21,9 @@ const blog = defineCollection({
         .string()
         .regex(/^[a-z0-9]+(-[a-z0-9]+)*$/, 'Tags are lowercase-with-dashes.')
         .array()
-        .min(1),
+        .min(1, 'Give the post 1 to 4 topic tags.')
+        .max(4, 'Give the post 1 to 4 topic tags.')
+        .refine(tags => new Set(tags).size === tags.length, 'Each tag once.'),
       // Optional.
       updatedDate: z.iso.date().optional(),
       image: image().optional(),

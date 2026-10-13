@@ -57,16 +57,40 @@ tags:
   - css # lowercase-with-dashes
 ```
 
-`updatedDate`, `image`, `draft`, and `log` are optional. To start a new entry,
-copy `src/content/blog/_note-template.mdx` (it has the outline: What I was
-trying to do, What I learned, Code, Gotchas, Links) or `_story-template.mdx` (no
-outline). Files starting with `_` aren't published. The same fields are set up
-for GitCMS in `gitcms.md`.
+`updatedDate`, `image`, `draft`, `log`, and `supersededBy` are optional. To
+start a new entry, copy `src/content/blog/_note-template.mdx` (it has the
+outline: What I was trying to do, What I learned, Code, Gotchas, Links) or
+`_story-template.mdx` (no outline). Files starting with `_` aren't published.
 
 Notes and stories look and behave the same; `type` is only a small label on the
 list and the post. The top of a post shows when it was published, plus "Updated
 {date}" when `updatedDate` is set. The foot shows the change log when the post
 has a `log`, then "See something wrong or out of date? Open an issue →".
+
+### Tags
+
+Every post needs 1 to 4 topic tags. Tags are lowercase-with-dashes and name a
+topic, like `css` or `productivity`, not a kind of post (that's `type`) or a
+mood. Reuse an existing tag before adding one, and keep one spelling: `forms`,
+not `form` or `html-forms`. The build fails on a missing, repeated, or fifth
+tag. Current tags:
+
+| Tag            | Posts                     |
+| :------------- | :------------------------ |
+| `blogging`     | Hello World               |
+| `css`          | Auto-Resizing Form Fields |
+| `forms`        | Auto-Resizing Form Fields |
+| `productivity` | Hello World               |
+
+### Filtering
+
+`/blog/` filters from the URL: `/blog/?type=story`, `/blog/?tag=css`, or both.
+The All, Notes, and Stories pills and every tag link are plain links that set
+those params, so a filtered view is a shareable link. The inline script in
+`src/components/blog-filter.astro` reads the params on load and on back or
+forward, hides posts that don't match, marks the active filters with
+`aria-current`, and updates the count. Clicking the active tag again clears it.
+Without JS every post shows and the links still navigate.
 
 When something in a note changes, rewrite the text in place so it reads cleanly,
 with nothing struck through, and add a dated entry to the top of the `log` that
