@@ -1,7 +1,9 @@
 ---
 // Filters the blog list from the URL (?type=story&tag=css) so filtered views are shareable
 // links. Without JS every post shows and the filter links still navigate. It runs inline,
-// right after the list, so a filtered view is settled before first paint.
+// right after the list, so a filtered view is settled before first paint. That holds up to
+// about 500 posts; past that the browser paints part of the list first (README: Blog filter
+// performance).
 ---
 
 <script is:inline>

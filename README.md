@@ -92,6 +92,57 @@ forward, hides posts that don't match, marks the active filters with
 `aria-current`, and updates the count. Clicking the active tag again clears it.
 Without JS every post shows and the links still navigate.
 
+### Blog filter performance
+
+`/blog/` renders every post and filters in the browser. To see how far that
+holds, `/blog/` was built with synthetic posts. They used the real row markup
+and filter script, were 70% notes, and had 1 to 4 of 24 tags each. Lighthouse 12
+ran on mobile with default throttling (median of 3 runs). Clicks are 16 filter
+clicks per size, timed from the click to the next frame (median / slowest), in
+Chromium at normal speed and at 4x CPU slowdown, which is roughly a mid-range
+phone.
+
+| Posts | HTML (gzip) | Perf, mobile (filtered link) |    TBT | CLS, filtered link |   LCP |        Click |  Click, 4x CPU |
+| ----: | ----------: | :--------------------------- | -----: | -----------------: | ----: | -----------: | -------------: |
+|     2 |      5.5 KB | 100 (100)                    |   0 ms |                  0 | 1.6 s |   14 / 18 ms |      9 / 17 ms |
+|    50 |     10.2 KB | 100 (100)                    |   0 ms |                  0 | 1.6 s |   13 / 19 ms |     25 / 38 ms |
+|   250 |     24.5 KB | 100 (100)                    |   0 ms |                  0 | 1.7 s |   17 / 30 ms |    73 / 155 ms |
+|   500 |     41.9 KB | 100 (100)                    |   0 ms |                  0 | 1.7 s |   27 / 68 ms |   105 / 279 ms |
+| 1,000 |     76.6 KB | 99 (77)                      |   0 ms |               0.53 | 2.0 s |  47 / 100 ms |   205 / 476 ms |
+| 2,000 |      144 KB | 91 (69)                      | 278 ms |               0.53 | 2.3 s | 114 / 391 ms |   380 / 987 ms |
+| 5,000 |      343 KB | 66 (44)                      | 928 ms |               0.53 | 3.4 s | 245 / 527 ms | 1053 / 3021 ms |
+
+Desktop Lighthouse scores 100 at every size. The unfiltered list never shifts
+layout. Almost all of the click time is the browser laying out rows it shows or
+hides, not the script: at 500 posts on a 4x slower CPU, the handler takes 12 ms
+and the next frame lands at 105 ms. The synthetic text reuses a small
+vocabulary, so it compresses better than real writing. The raw page is 3.3 MB at
+5,000 posts.
+
+The static list is comfortable up to about 250 posts. Around 500, the slowest
+clicks on a slow phone pass 200 ms, Google's limit for a "good" interaction
+(INP). Around 1,000, a filtered link shifts the layout on load, because the
+browser paints part of the list before the script at the end of it runs. Revisit
+at 300 to 500 posts and move off the static list before 1,000. At the current
+pace, that's years away.
+
+Options for later, none built:
+
+- **Hide the list until filtered.** A stopgap near 1,000 posts: when the URL has
+  filters, keep the list hidden until the script has run, which removes the
+  layout shift. Clicks stay as slow as in the table.
+- **Pagination.** Render the newest 50 or so posts, with older ones on
+  `/blog/page/2/` and so on. The page stays small, but filters need one of the
+  next two options to reach older posts.
+- **A prebuilt JSON index.** The build writes `/blog/index.json` (title, date,
+  type, tags, summary). The page ships the newest posts as HTML and renders
+  filtered results from the index. URLs stay shareable, and without JS the list
+  falls back to pagination.
+- **Worker SSR with CDN caching.** Render `/blog/?type=…&tag=…` on the server
+  and cache each normalized query at the edge. Pages are smallest, nothing
+  filters in the browser, and it works without JS. It's the only option that
+  needs a server runtime; the site is static today.
+
 When something in a note changes, rewrite the text in place so it reads cleanly,
 with nothing struck through, and add a dated entry to the top of the `log` that
 says what changed. Use `updated` when the world moved on and `corrected` when
