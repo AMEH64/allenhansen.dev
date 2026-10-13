@@ -5,7 +5,7 @@ import { meta } from '../../site.config'
 
 export async function GET(context) {
   const notes = (await getCollection('blog', n => !n.data.draft)).sort((a, b) =>
-    b.data.pubDate.localeCompare(a.data.pubDate),
+    b.data.date.localeCompare(a.data.date),
   )
   return rss({
     title: `${SITE_TITLE}: Notes`,
@@ -13,8 +13,9 @@ export async function GET(context) {
     site: context.site,
     items: notes.map(note => ({
       title: note.data.title,
-      description: note.data.description,
-      pubDate: new Date(note.data.pubDate),
+      description: note.data.summary,
+      pubDate: new Date(note.data.date),
+      categories: note.data.tags,
       link: `/notes/${note.id}/`,
     })),
   })

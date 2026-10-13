@@ -67,7 +67,7 @@ export const getStaticPaths = (async () => {
       og: {
         title: note.data.title,
         eyebrow: 'allenhansen.dev / notes',
-        description: note.data.description,
+        description: note.data.summary,
         footnote: freshness(note.data).label,
       },
     })

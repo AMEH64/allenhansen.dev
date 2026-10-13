@@ -4,7 +4,7 @@ import { formatDate, isoDate, monthsBetween } from './dates'
 
 export type Note = CollectionEntry<'blog'>
 export type LogEntry = Note['data']['log'][number]
-export type FreshnessState = 'checked' | 'updated' | 'stale' | 'timeless'
+export type FreshnessState = 'checked' | 'updated' | 'stale' | 'story'
 
 /** Published notes, newest first. Drafts only show in `astro dev`. */
 export async function getNotes() {
@@ -12,10 +12,10 @@ export async function getNotes() {
     'blog',
     n => !n.data.draft || import.meta.env.DEV,
   )
-  return notes.sort((a, b) => b.data.pubDate.localeCompare(a.data.pubDate))
+  return notes.sort((a, b) => b.data.date.localeCompare(a.data.date))
 }
 
-/** The change log, newest first. Falls back to pubDate and updatedDate when the note has no log. */
+/** The change log, newest first. Falls back to date and updatedDate when the note has no log. */
 export function noteLog(data: Note['data']): LogEntry[] {
   const log: LogEntry[] = data.log.length
     ? [...data.log]
@@ -29,14 +29,15 @@ export function noteLog(data: Note['data']): LogEntry[] {
               },
             ]
           : []),
-        { date: data.pubDate, kind: 'published' as const, text: 'Published.' },
+        { date: data.date, kind: 'published' as const, text: 'Published.' },
       ]
   return log.sort((a, b) => b.date.localeCompare(a.date))
 }
 
 /**
- * Derives the freshness note from the change log; it's never set by hand.
- * The last check is the newest entry that isn't a wording tweak.
+ * Derives the freshness label from the change log; it's never set by hand.
+ * The last check is the newest entry that isn't a wording tweak. Stories get no freshness
+ * label, just "Written {date}".
  */
 export function freshness(data: Note['data'], today = isoDate()) {
   const log = noteLog(data)
@@ -45,9 +46,9 @@ export function freshness(data: Note['data'], today = isoDate()) {
   const month = formatDate(checked, 'month')
   let state: FreshnessState
   let label: string
-  if (data.timeless) {
-    state = 'timeless'
-    label = `Written ${formatDate(data.pubDate)}`
+  if (data.kind === 'story') {
+    state = 'story'
+    label = `Written ${formatDate(data.date)}`
   } else if (monthsBetween(checked, today) >= notesConfig.recheckMonths) {
     state = 'stale'
     label = `Last checked ${month} · some details may be out of date`

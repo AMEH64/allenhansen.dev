@@ -10,10 +10,14 @@ const href = `/notes/${note.id}/`
 ---
 
 <li>
-  <time datetime={note.data.pubDate}>{formatDate(note.data.pubDate)}</time>
+  <time datetime={note.data.date}>{formatDate(note.data.date)}</time>
   <span>
     <a class="t" href={href}>{note.data.title}</a>
-    <span class="d">{note.data.description}</span>
-    <Freshness state={f.state} label={f.label} href={`${href}#changes`} />
+    <span class="d">{note.data.summary}</span>
+    {
+      f.state !== 'story' && (
+        <Freshness state={f.state} label={f.label} href={`${href}#changes`} />
+      )
+    }
   </span>
 </li>

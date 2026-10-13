@@ -38,10 +38,10 @@ const toc = headings.filter(h => h.depth === 2)
 
 <MainLayout
   title={`${data.title} · ${SITE_TITLE}`}
-  description={data.description}
+  description={data.summary}
   ogImage={`/og/notes/${note.id}.png`}
   type="article"
-  publishedTime={data.pubDate}
+  publishedTime={data.date}
   modifiedTime={log[0].date}
   current="notes"
 >
@@ -50,10 +50,16 @@ const toc = headings.filter(h => h.depth === 2)
     <h1 class="relief" data-lit>{data.title}</h1>
     <div class="note-meta">
       <span>
-        <time datetime={data.pubDate}>{formatDate(data.pubDate)}</time>
+        {f.state === 'story' && 'Written '}<time datetime={data.date}
+          >{formatDate(data.date)}</time
+        >
       </span>
       <span>{readingMinutes(note.body)} min read</span>
-      <Freshness state={f.state} label={f.label} href="#changes" />
+      {
+        f.state !== 'story' && (
+          <Freshness state={f.state} label={f.label} href="#changes" />
+        )
+      }
     </div>
   </header>
   <div class="note-grid">
@@ -69,11 +75,7 @@ const toc = headings.filter(h => h.depth === 2)
     </article>
     <aside class="margin" aria-label="About this note">
       {
-        f.state === 'timeless' ? (
-          <p class="status-plain">
-            <Freshness state={f.state} label={f.label} />
-          </p>
-        ) : (
+        f.state !== 'story' && (
           <section class="status-block" aria-labelledby="status-h">
             <h2 id="status-h" class="big">
               <Freshness state={f.state} label={f.label} href="#changes" />

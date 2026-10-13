@@ -310,12 +310,6 @@
     outline: 1.5px dashed var(--muted);
     outline-offset: -1.5px;
   }
-  .m-timeless i {
-    width: 10px;
-    height: 2px;
-    border-radius: 1px;
-    background: var(--muted);
-  }
 
   /* home */
   .hero {
@@ -602,20 +596,13 @@
     text-transform: none;
     letter-spacing: normal;
   }
-  .status-block .big .mark,
-  .status-plain .mark {
+  .status-block .big .mark {
     font-size: 15px;
     font-weight: 600;
     text-wrap: pretty;
   }
   .status-block p {
     margin: 6px 0 0 16px;
-  }
-  .status-plain {
-    margin: 0;
-  }
-  .status-plain .mark {
-    font-weight: 400;
   }
   .pn {
     display: grid;

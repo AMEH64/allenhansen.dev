@@ -6,17 +6,29 @@ const blog = defineCollection({
   loader: glob({ pattern: '**/[^_]*.{md,mdx}', base: './src/content/blog' }),
   schema: ({ image }) =>
     z.object({
-      title: z.string(),
-      description: z.string(),
-      draft: z.boolean().optional().default(false),
-      pubDate: z.iso.date(),
+      // Required: the build fails without these.
+      title: z.string().trim().min(1),
+      date: z.iso.date(),
+      // note: something learned, which can go stale, so it carries a freshness label.
+      // story: dated writing that can't go stale; it shows only "Written {Mon D, YYYY}".
+      kind: z.enum(['note', 'story']),
+      summary: z
+        .string()
+        .trim()
+        .min(1)
+        .max(160)
+        .regex(/^[^\n]*$/, 'Keep the summary to one line.'),
+      tags: z
+        .string()
+        .regex(/^[a-z0-9]+(-[a-z0-9]+)*$/, 'Tags are lowercase-with-dashes.')
+        .array()
+        .min(1),
+      // Optional.
       updatedDate: z.iso.date().optional(),
-      image: image(),
-      // Stories and other notes that can't go stale: they read "Written {Mon D, YYYY}" and
-      // are never marked out of date.
-      timeless: z.boolean().optional().default(false),
+      image: image().optional(),
+      draft: z.boolean().optional().default(false),
       // The change log at the foot of the note, newest first. When it's empty, it's
-      // derived from pubDate and updatedDate.
+      // derived from date and updatedDate.
       log: z
         .array(
           z.object({

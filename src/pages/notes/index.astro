@@ -9,7 +9,7 @@ import { meta, notesConfig } from '~/site.config'
 const notes = await getNotes()
 const years = Object.entries(
   notes.reduce<Record<string, Note[]>>((acc, note) => {
-    ;(acc[note.data.pubDate.slice(0, 4)] ||= []).push(note)
+    ;(acc[note.data.date.slice(0, 4)] ||= []).push(note)
     return acc
   }, {}),
 ).sort(([a], [b]) => Number(b) - Number(a))

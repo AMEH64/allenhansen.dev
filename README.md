@@ -44,27 +44,45 @@ Notes are MDX files in `src/content/blog/<slug>/index.mdx`, served at
 `/notes/<slug>/`. Old `/blog/*` URLs redirect to `/notes/*`. Posts with
 `draft: true` only show up in `pnpm dev`.
 
-Each note carries a quiet freshness note and a dated change log:
+The content schema in `src/content.config.ts` fails the build unless these are
+set:
 
-| Note                 | Reads                                                   |
+```yaml
+title: Auto-Resizing Form Fields
+date: 2024-10-15
+kind: note # note | story
+summary: One line, 160 characters at most.
+tags:
+  - css # lowercase-with-dashes
+```
+
+`updatedDate`, `image`, `draft`, and `log` are optional. To start a new entry,
+copy `src/content/blog/_note-template.mdx` (it has the outline: What I was
+trying to do, What I learned, Code, Gotchas, Links) or `_story-template.mdx` (no
+outline). Files starting with `_` aren't published. The same fields are set up
+for GitCMS in `gitcms.md`.
+
+A story shows only when it was written. A note carries a freshness label and a
+dated change log:
+
+| Entry                | Reads                                                   |
 | :------------------- | :------------------------------------------------------ |
-| Story (`timeless`)   | Written Nov 19, 2022                                    |
+| Story                | Written Nov 19, 2022                                    |
 | Checked recently     | Checked Oct 2026                                        |
 | Updated or corrected | Updated Oct 2026 (links to the change log)              |
 | Not checked lately   | Last checked Oct 2024 · some details may be out of date |
 
-Two optional frontmatter fields control them:
+The labels come from the `log`:
 
 ```yaml
-timeless: true # a story or announcement; never marked out of date
 log:
   - date: 2026-10-12
     kind: checked # published | checked | updated | corrected | tweak
     text: Re-checked browser support; still accurate.
 ```
 
-Without a `log`, the change log is built from `pubDate` and `updatedDate`. A
-note reads "some details may be out of date" once its last check is older than
+Without a `log`, the change log is built from `date` and `updatedDate`. A note
+reads "some details may be out of date" once its last check is older than
 `notesConfig.recheckMonths` (12) in `src/site.config.ts`.
 
 For a real mistake, strike it inline and add a matching `corrected` entry to the

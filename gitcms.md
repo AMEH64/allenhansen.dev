@@ -11,20 +11,29 @@ collections:
       - name: title
         type: title
         required: true
-      - name: description
+      - name: date
+        type: datetime
+        required: true
+      - name: kind
+        type: select
+        options:
+          - note
+          - story
+        required: true
+      - name: summary
         type: singleline
         required: true
-      - name: pubDate
-        type: datetime
+      - name: tags
+        type: multiselect
         required: true
       - name: image
         type: file
-        required: true
-      - name: draft
-        type: boolean
         required: false
       - name: updatedDate
         type: datetime
+        required: false
+      - name: draft
+        type: boolean
         required: false
 ---
 # GitCMS Configuration File
