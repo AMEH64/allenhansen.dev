@@ -37,7 +37,7 @@ const images = await Promise.all(
   photos.map(async p => {
     const img = await getImage({
       src: p.src,
-      widths: [320, 640, 960],
+      widths: [320, 480, 640, 960],
       width: 640,
       height: 800,
       format: 'webp',
@@ -90,6 +90,7 @@ const roman = (n: number) => {
                   height="800"
                   alt={img.alt}
                   decoding="async"
+                  fetchpriority="low"
                   draggable="false"
                 />
               ) : (
