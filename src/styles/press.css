@@ -1098,7 +1098,7 @@
     color: var(--muted);
   }
 
-  /* about: editorial plates, black-and-white with the ink laid over at low strength */
+  /* about: black-and-white photos with the ink laid over at low strength */
   .plate {
     margin: 0;
   }
@@ -1144,11 +1144,6 @@
     font-size: 12px;
     letter-spacing: 0.04em;
     color: var(--muted);
-  }
-  .plate figcaption span {
-    color: var(--brand);
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
   }
   .about-side > .plate + .glance {
     margin-top: 36px;

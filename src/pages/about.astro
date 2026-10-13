@@ -1,5 +1,5 @@
 ---
-// Two editorial plates: a portrait beside the opener, and Boba full width between sections.
+// Two photos: a portrait beside the opener, and Boba full width between sections.
 import { SITE_TITLE } from '~/consts'
 import PageTitle from '~/components/page-title.astro'
 import PhotoPlate from '~/components/photo-plate.astro'
@@ -47,8 +47,6 @@ import bobaWide from '~/assets/images/boba/boba-wide.jpg'
       <PhotoPlate
         src={portrait}
         alt="Allen smiling in glasses and a light linen shirt, with trees softly out of focus behind him."
-        plate="I"
-        caption="Allen Hansen"
         shape="portrait"
       />
       <section class="glance" aria-labelledby="glance-h">
@@ -70,7 +68,6 @@ import bobaWide from '~/assets/images/boba/boba-wide.jpg'
   <PhotoPlate
     src={bobaWide}
     alt="Allen sits in the grass with an arm around Boba, a black dog with a white chest and a collar, and smiles down at him."
-    plate="II"
     caption="Boba and me"
     shape="wide"
   />

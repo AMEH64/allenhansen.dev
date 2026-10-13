@@ -1,22 +1,22 @@
 ---
-// An editorial plate: one black-and-white photo with the ink laid over at low strength, square
-// corners, and a mono caption line ("Plate I · …"). No JS. Captions never name a place.
+// One black-and-white photo with the ink laid over at low strength, square corners, and an
+// optional mono caption. No JS. Captions never name a place.
 import type { ImageMetadata } from 'astro'
 import { Image } from 'astro:assets'
 
 type Props = {
   src: ImageMetadata
   alt: string
-  plate: string
-  caption: string
+  caption?: string
   /** portrait sits beside the About opener; wide runs the full width between sections. */
   shape: 'portrait' | 'wide'
 }
-const { src, alt, plate, caption, shape } = Astro.props
+const { src, alt, caption, shape } = Astro.props
 const wide = shape === 'wide'
+const Tag = caption ? 'figure' : 'div'
 ---
 
-<figure class={`plate plate-${shape}`}>
+<Tag class={`plate plate-${shape}`}>
   <div class="plate-photo">
     <Image
       src={src}
@@ -31,5 +31,5 @@ const wide = shape === 'wide'
       decoding="async"
     />
   </div>
-  <figcaption><span>Plate {plate}</span> · {caption}</figcaption>
-</figure>
+  {caption && <figcaption>{caption}</figcaption>}
+</Tag>
