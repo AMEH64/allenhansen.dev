@@ -1,61 +1,97 @@
 ---
-import { compareDesc } from 'date-fns/compareDesc'
-import { getCollection } from 'astro:content'
-import { intlFormat } from 'date-fns/intlFormat'
 import { SITE_TITLE } from '~/consts'
-import { Button } from '~/components/button'
+import PostRow from '~/components/post-row.astro'
+import PageTitle from '~/components/page-title.astro'
 import MainLayout from '~/layouts/main-layout.astro'
-import RssIcon from '~/components/icons/rss-icon.astro'
+import BlogFilter from '~/components/blog-filter.astro'
+import {
+  BLOG,
+  getPosts,
+  tagPath,
+  typePath,
+  typePlural,
+  type Post,
+} from '~/lib/posts'
+import { meta } from '~/site.config'
 
-const posts = (
-  await getCollection('blog', p => !p.data.draft || import.meta.env.DEV)
-).sort((a, b) => compareDesc(a.data.pubDate, b.data.pubDate))
+const notes = await getPosts()
+const years = Object.entries(
+  notes.reduce<Record<string, Post[]>>((acc, note) => {
+    ;(acc[note.data.date.slice(0, 4)] ||= []).push(note)
+    return acc
+  }, {}),
+).sort(([a], [b]) => Number(b) - Number(a))
+const tagCounts = Object.entries(
+  notes
+    .flatMap(note => note.data.tags)
+    .reduce<Record<string, number>>((acc, tag) => {
+      acc[tag] = (acc[tag] ?? 0) + 1
+      return acc
+    }, {}),
+).sort(([a], [b]) => a.localeCompare(b))
 ---
 
 <MainLayout
-  title={`Blog | ${SITE_TITLE}`}
-  description="Notes, thoughts, and whatever else — collected in reverse chronological order."
+  title={`Blog · ${SITE_TITLE}`}
+  description={meta.blog}
+  ogImage="/og/blog.png"
+  current="blog"
 >
-  <div class="mx-auto flex w-full max-w-2xl flex-col">
-    <header class="mb-10">
-      <h1
-        class="text-4xl font-bold tracking-tight text-balance text-zinc-900 sm:text-5xl dark:text-zinc-100"
-      >
-        Notes, thoughts, and whatever else.
-      </h1>
-      <p class="mt-4 max-w-prose text-base text-pretty text-zinc-600 dark:text-zinc-400">
-        Collected in reverse chronological order.
+  <PageTitle title="Blog" lead={meta.blog} />
+  <div class="blog-list" data-filter>
+    <nav class="filters" aria-label="Filter posts">
+      <ul class="pills">
+        <li><a href={BLOG} data-filter-type="" aria-current="true">All</a></li>
+        {
+          (['note', 'story'] as const).map(type => (
+            <li>
+              <a href={typePath(type)} data-filter-type={type}>
+                {typePlural[type]}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+      <ul class="tag-bar" aria-label="Filter by tag">
+        {
+          tagCounts.map(([tag, n]) => (
+            <li>
+              <a href={tagPath(tag)} data-filter-toggle={tag}>
+                {tag}
+                <span class="n">
+                  {n}
+                  <span class="vh">{n === 1 ? 'post' : 'posts'}</span>
+                </span>
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+      <p class="filter-status">
+        <span aria-live="polite"
+          ><span data-filter-count
+            >{notes.length} {notes.length === 1 ? 'post' : 'posts'}</span
+          ><span class="vh" data-filter-detail></span></span
+        >
+        <a href={BLOG} data-filter-clear data-off>Clear</a>
       </p>
-      <Button as="a" className="mt-4" href="/blog/rss.xml" variant="outline">
-        <RssIcon /> RSS Feed
-      </Button>
-    </header>
-
-    <div class="divide-y divide-(--surface-border)">
-      {
-        posts.map(post => (
-          <article class="group py-8 first:pt-0">
-            <a href={`/blog/${post.id}`} class="flex flex-col gap-2 rounded-sm focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary-500">
-              <div class="flex items-center gap-2 text-xs text-zinc-500 dark:text-zinc-400">
-                <span class="h-3 w-0.5 rounded-full bg-primary-500" />
-                <time datetime={post.data.pubDate}>
-                  {intlFormat(post.data.pubDate, {
-                    year: 'numeric',
-                    month: 'long',
-                    day: 'numeric',
-                  })}
-                </time>
-              </div>
-              <h2 class="text-lg font-semibold leading-snug text-zinc-900 transition-colors group-hover:text-primary-600 dark:text-zinc-100 dark:group-hover:text-primary-400">
-                {post.data.title}
-              </h2>
-              <p class="text-sm leading-relaxed text-zinc-600 dark:text-zinc-400">
-                {post.data.description}
-              </p>
-            </a>
-          </article>
-        ))
-      }
-    </div>
+    </nav>
+    {
+      years.map(([year, list]) => (
+        <section class="year" aria-labelledby={`y${year}`} data-year>
+          <h2 id={`y${year}`}>{year}</h2>
+          <ul class="rows">
+            {list.map(note => (
+              <PostRow note={note} />
+            ))}
+          </ul>
+        </section>
+      ))
+    }
+    <p class="filter-empty" data-filter-empty hidden>
+      No posts match these filters. <a href={BLOG}>Clear filters</a>
+    </p>
+    <BlogFilter />
   </div>
+  <div style="height:40px"></div>
 </MainLayout>

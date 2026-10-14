@@ -1,0 +1,101 @@
+---
+// Filters the blog list from the URL (?type=story&tag=css&tag=forms) so filtered views are
+// shareable links. A post matches the type and any selected tag. Without JS every post shows
+// and the filter links still navigate. It runs inline, right after the list, so a filtered
+// view is settled before first paint, and it only changes text and styles in the filter bar,
+// never its size. That holds up to about 500 posts; past that the browser paints part of the
+// list first (README: Blog filter performance).
+---
+
+<script is:inline>
+  ;(() => {
+    const root = document.querySelector('[data-filter]')
+    if (!root) return
+    const posts = [...root.querySelectorAll('[data-post]')]
+    const years = [...root.querySelectorAll('[data-year]')]
+    const typeLinks = [...root.querySelectorAll('[data-filter-type]')]
+    const toggles = [...root.querySelectorAll('[data-filter-toggle]')]
+    const rowTags = [...root.querySelectorAll('[data-post] [data-filter-tag]')]
+    const order = toggles.map(a => a.dataset.filterToggle)
+    const count = root.querySelector('[data-filter-count]')
+    const detail = root.querySelector('[data-filter-detail]')
+    const clear = root.querySelector('[data-filter-clear]')
+    const empty = root.querySelector('[data-filter-empty]')
+    for (const a of toggles) a.setAttribute('role', 'button')
+    const n = k => `${k} post${k === 1 ? '' : 's'}`
+    const url = (type, tags) => {
+      const q = new URLSearchParams()
+      if (type) q.set('type', type)
+      const sorted = [...tags].sort(
+        (a, b) => order.indexOf(a) - order.indexOf(b),
+      )
+      for (const tag of sorted) q.append('tag', tag)
+      const s = q.toString()
+      return location.pathname + (s ? `?${s}` : '')
+    }
+    const apply = () => {
+      const q = new URLSearchParams(location.search)
+      const type = q.get('type') || ''
+      const tags = new Set(q.getAll('tag').filter(Boolean))
+      let shown = 0
+      for (const li of posts) {
+        const ok =
+          (!type || li.dataset.type === type) &&
+          (!tags.size || li.dataset.tags.split(' ').some(t => tags.has(t)))
+        li.hidden = !ok
+        if (ok) shown++
+      }
+      for (const y of years)
+        y.hidden = !y.querySelector('[data-post]:not([hidden])')
+      let label = ''
+      for (const a of typeLinks) {
+        const t = a.dataset.filterType
+        a.href = url(t, tags)
+        if (t === type) a.setAttribute('aria-current', 'true')
+        else a.removeAttribute('aria-current')
+        if (t && t === type) label = a.textContent.trim()
+      }
+      for (const a of toggles) {
+        const tag = a.dataset.filterToggle
+        const on = tags.has(tag)
+        const next = new Set(tags)
+        if (on) next.delete(tag)
+        else next.add(tag)
+        a.href = url(type, next)
+        a.setAttribute('aria-pressed', String(on))
+      }
+      for (const a of rowTags)
+        a.toggleAttribute('data-on', tags.has(a.dataset.filterTag))
+      const filtered = Boolean(type || tags.size)
+      count.textContent = filtered
+        ? `${shown} of ${n(posts.length)}`
+        : n(posts.length)
+      detail.textContent = [
+        label,
+        tags.size ? `tagged ${[...tags].join(' or ')}` : '',
+      ]
+        .filter(Boolean)
+        .map(s => ` · ${s}`)
+        .join('')
+      clear.toggleAttribute('data-off', !filtered)
+      empty.hidden = shown > 0
+    }
+    root.addEventListener('click', e => {
+      const a = e.target.closest(
+        '[data-filter-type], [data-filter-toggle], [data-filter-tag], [data-filter-clear], [data-filter-empty] a',
+      )
+      if (!a || e.button || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey)
+        return
+      e.preventDefault()
+      if (a.href !== location.href) history.pushState(null, '', a.href)
+      apply()
+    })
+    root.addEventListener('keydown', e => {
+      if (e.key !== ' ' || !e.target.matches('[data-filter-toggle]')) return
+      e.preventDefault()
+      e.target.click()
+    })
+    addEventListener('popstate', apply)
+    apply()
+  })()
+</script>

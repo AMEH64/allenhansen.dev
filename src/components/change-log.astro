@@ -1,0 +1,42 @@
+---
+import { formatDate } from '~/lib/dates'
+import { changeUrl, type LogEntry } from '~/lib/posts'
+
+type Props = {
+  log: LogEntry[]
+  /** The post's source file, relative to the repo root. */
+  filePath?: string
+}
+const { log, filePath } = Astro.props
+---
+
+<section class="changes" id="changes" aria-labelledby="changes-h">
+  <h2 id="changes-h">Change log</h2>
+  <ol>
+    {
+      log.map(entry => {
+        const href = changeUrl(entry, filePath)
+        const [label, more] = entry.commit
+          ? ['Diff', 'of this change on GitHub']
+          : ['History', 'of this post on GitHub']
+        return (
+          <li class={`chg chg-${entry.kind}`}>
+            <time datetime={entry.date}>{formatDate(entry.date)}</time>
+            <span>
+              {entry.text}
+              {href && (
+                <>
+                  {' '}
+                  <a class="chg-link" href={href}>
+                    {label}
+                    <span class="vh">{more}</span>
+                  </a>
+                </>
+              )}
+            </span>
+          </li>
+        )
+      })
+    }
+  </ol>
+</section>

@@ -1,0 +1,21 @@
+---
+import { formatDate } from '~/lib/dates'
+import { typeLabel, postPath, type Post } from '~/lib/posts'
+import PostTags from './post-tags.astro'
+
+type Props = { note: Post }
+const { note } = Astro.props
+const { data } = note
+---
+
+<li data-post data-type={data.type} data-tags={data.tags.join(' ')}>
+  <time datetime={data.date}>{formatDate(data.date)}</time>
+  <span>
+    <a class="t" href={postPath(note.id)}>{data.title}</a>
+    <span class="d">{data.summary}</span>
+    <span class="row-meta">
+      <span class="post-type">{typeLabel[data.type]}</span>
+      <PostTags tags={data.tags} />
+    </span>
+  </span>
+</li>

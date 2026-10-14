@@ -1,16 +1,23 @@
 import rss from '@astrojs/rss'
 import { getCollection } from 'astro:content'
-import { SITE_TITLE, SITE_DESCRIPTION } from '../../consts'
+import { SITE_TITLE } from '../../consts'
+import { meta } from '../../site.config'
+import { postPath } from '../../lib/posts'
 
 export async function GET(context) {
-  const posts = await getCollection('blog')
+  const notes = (await getCollection('blog', n => !n.data.draft)).sort((a, b) =>
+    b.data.date.localeCompare(a.data.date),
+  )
   return rss({
-    title: SITE_TITLE,
-    description: SITE_DESCRIPTION,
+    title: `${SITE_TITLE}: Blog`,
+    description: meta.blog,
     site: context.site,
-    items: posts.map(post => ({
-      ...post.data,
-      link: `/blog/${post.id}/`,
+    items: notes.map(note => ({
+      title: note.data.title,
+      description: note.data.summary,
+      pubDate: new Date(note.data.date),
+      categories: note.data.tags,
+      link: postPath(note.id),
     })),
   })
 }

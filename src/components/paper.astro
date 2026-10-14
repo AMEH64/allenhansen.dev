@@ -1,0 +1,27 @@
+---
+// The stock, pre-lit from four directions plus an unlit base. The light engine cross-fades
+// the lit layers toward the lamp with opacity only, so nothing re-rasterizes per frame.
+const fiber = { type: 'fractalNoise', freq: '.55 .9', octaves: 4, scale: 3.2 }
+
+function bakedUri(azimuth: number, elevation: number) {
+  const svg = `<svg xmlns='http://www.w3.org/2000/svg' width='280' height='280'><filter id='n' x='0' y='0'><feTurbulence type='${fiber.type}' baseFrequency='${fiber.freq}' numOctaves='${fiber.octaves}' seed='4' stitchTiles='stitch'/><feDiffuseLighting surfaceScale='${fiber.scale}' diffuseConstant='1.15' lighting-color='white'><feDistantLight azimuth='${azimuth}' elevation='${elevation}'/></feDiffuseLighting></filter><rect width='100%' height='100%' filter='url(#n)'/></svg>`
+  return `data:image/svg+xml,${encodeURIComponent(svg).replace(/'/g, '%27')}`
+}
+
+const layers = [
+  ['base', 225, 55],
+  ['t', 270, 28],
+  ['r', 0, 28],
+  ['b', 90, 28],
+  ['l', 180, 28],
+] as const
+---
+
+<div class="glow" aria-hidden="true"></div>
+<div class="paper-layers" aria-hidden="true">
+  {
+    layers.map(([dir, az, el]) => (
+      <i data-dir={dir} style={`background-image:url("${bakedUri(az, el)}")`} />
+    ))
+  }
+</div>

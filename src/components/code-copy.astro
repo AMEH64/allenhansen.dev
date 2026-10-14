@@ -1,0 +1,60 @@
+---
+// A Copy button on every code block in the note. The script adds the buttons, so without JS
+// there's nothing to hide. One shared live region announces the result.
+---
+
+<p class="vh" data-copy-status aria-live="polite"></p>
+
+<script>
+  const status = document.querySelector<HTMLElement>('[data-copy-status]')
+  const RESET = 1800
+
+  async function copy(text: string) {
+    try {
+      await navigator.clipboard.writeText(text)
+      return true
+    } catch {
+      return false
+    }
+  }
+
+  document.querySelectorAll<HTMLPreElement>('.prose pre').forEach(pre => {
+    const block = document.createElement('div')
+    block.className = 'code-block'
+    pre.before(block)
+    block.append(pre)
+
+    const lang = pre.dataset.language
+    const what =
+      lang && lang !== 'plaintext' ? ` ${lang.toUpperCase()} code` : ' code'
+    const button = document.createElement('button')
+    button.type = 'button'
+    button.className = 'copy'
+    const label = document.createElement('span')
+    label.textContent = 'Copy'
+    const hidden = document.createElement('span')
+    hidden.className = 'vh'
+    hidden.textContent = what
+    button.append(label, hidden)
+    block.append(button)
+
+    let timer = 0
+    button.addEventListener('click', async () => {
+      const code = pre.querySelector('code') ?? pre
+      const ok = await copy(code.innerText.replace(/\n$/, ''))
+      label.textContent = ok ? 'Copied' : 'Copy failed'
+      button.dataset.state = ok ? 'done' : 'failed'
+      if (status) {
+        status.textContent = ok
+          ? 'Copied'
+          : 'Couldn’t copy. Select the code and copy it instead.'
+      }
+      clearTimeout(timer)
+      timer = window.setTimeout(() => {
+        label.textContent = 'Copy'
+        delete button.dataset.state
+        if (status) status.textContent = ''
+      }, RESET)
+    })
+  })
+</script>

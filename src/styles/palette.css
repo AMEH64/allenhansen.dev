@@ -1,0 +1,75 @@
+/*
+ * The palette: every color on the site comes from this file.
+ *
+ * Source colors are written as light-dark(<light>, <dark>) with hex values, one per line.
+ * The build parses these lines (src/lib/palette.ts) for the favicon, web manifest,
+ * theme-color, and OG images, and `pnpm check:contrast` fails the build if --brand,
+ * --text, or --muted drop below WCAG AA (4.5:1) on either paper.
+ *
+ * --brand is the one ink. Everything else that is "printed in ink" derives from it below,
+ * so changing the brand color means changing that one line.
+ */
+:root {
+  color-scheme: dark;
+
+  /* source colors */
+  --brand: light-dark(#2b3fd0, #9daeff);
+  --paper: light-dark(#f3efe6, #12131c);
+  --text: light-dark(#1d1c1a, #f1efea);
+  --muted: light-dark(#5c574e, #a5a8b8);
+  --press: light-dark(#e6e1d5, #0d0e15);
+  --surface: light-dark(#faf8f3, #191b27);
+
+  /* the press: highlight and shadow on debossed type and grooves */
+  --hi: light-dark(rgb(255 255 255 / 1), rgb(214 224 255 / 0.16));
+  --sh: light-dark(rgb(70 55 30 / 0.34), rgb(0 0 0 / 0.94));
+  --groove-hi: light-dark(rgb(255 255 255 / 0.95), rgb(255 255 255 / 0.06));
+  --groove-sh: light-dark(rgb(0 0 0 / 0.13), rgb(0 0 0 / 0.7));
+  --lamp: light-dark(
+    rgb(255 255 255 / 0.5),
+    color-mix(in srgb, var(--brand) 7%, transparent)
+  );
+  --paper-op: 0.66;
+  --paper-blend: soft-light;
+
+  /* everything below derives from the source colors */
+  --rule: color-mix(in srgb, var(--text) 18%, transparent);
+  --focus: var(--brand);
+  --link-underline: var(--brand);
+  --brand-wash: color-mix(in srgb, var(--brand) 22%, transparent);
+  --brand-soft: color-mix(in srgb, var(--brand) 45%, var(--paper));
+  --tint: var(--brand);
+  --code-bg: var(--press);
+  --code-text: color-mix(in srgb, var(--text) 85%, var(--paper));
+  --inline-code-bg: color-mix(in srgb, var(--text) 8%, transparent);
+
+  --status-active: var(--brand);
+  --status-paused: var(--muted);
+  --status-archived: var(--muted);
+}
+
+:root[data-color-mode='light'] {
+  color-scheme: light;
+  --paper-op: 0.34;
+}
+
+@media (prefers-color-scheme: light) {
+  :root:not([data-color-mode]) {
+    color-scheme: light;
+    --paper-op: 0.34;
+  }
+}
+
+/* print in the light ink on white paper, whatever the screen theme */
+@media print {
+  :root,
+  :root[data-color-mode] {
+    color-scheme: light;
+    --paper: white;
+    --rule: color-mix(in srgb, var(--text) 30%, transparent);
+    --groove-sh: color-mix(in srgb, var(--text) 25%, transparent);
+    --groove-hi: transparent;
+    --hi: transparent;
+    --sh: transparent;
+  }
+}

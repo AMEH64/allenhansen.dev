@@ -1,0 +1,50 @@
+<button
+  type="button"
+  class="toggle"
+  data-theme-toggle
+  role="switch"
+  aria-checked="false"
+>
+  <span class="sw" aria-hidden="true"></span><span>Lights</span>
+</button>
+
+<script>
+  // "Lights" is a switch: off is dark, on is light. The visible word is the whole accessible
+  // name. The mode itself is set before first paint by the inline script in base-head.astro.
+  const root = document.documentElement
+
+  function sync() {
+    const mode = root.dataset.colorMode === 'light' ? 'light' : 'dark'
+    document
+      .querySelectorAll('[data-theme-toggle]')
+      .forEach(b => b.setAttribute('aria-checked', String(mode === 'light')))
+    document
+      .querySelectorAll("picture > source[id^='mermaid-dark-']")
+      .forEach(el => el.setAttribute('media', mode === 'dark' ? 'all' : 'none'))
+    const probe = document.createElement('i')
+    probe.style.cssText = 'position:absolute;color:var(--paper)'
+    document.body.append(probe)
+    const paper = getComputedStyle(probe).color
+    probe.remove()
+    document
+      .querySelectorAll('meta[name="theme-color"]')
+      .forEach(m => m.setAttribute('content', paper))
+  }
+
+  document.querySelectorAll('[data-theme-toggle]').forEach(button =>
+    button.addEventListener('click', () => {
+      root.dataset.colorMode =
+        root.dataset.colorMode === 'light' ? 'dark' : 'light'
+      try {
+        localStorage.setItem(
+          'color-mode',
+          JSON.stringify(root.dataset.colorMode),
+        )
+      } catch {}
+      sync()
+      document.dispatchEvent(new Event('color-mode-change'))
+    }),
+  )
+
+  sync()
+</script>

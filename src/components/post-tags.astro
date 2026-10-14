@@ -1,0 +1,16 @@
+---
+import { tagPath } from '~/lib/posts'
+
+type Props = { tags: string[] }
+const { tags } = Astro.props
+---
+
+<ul class="tags" aria-label="Tags">
+  {
+    tags.map(tag => (
+      <li>
+        <a href={tagPath(tag)} data-filter-tag={tag} set:text={tag} />
+      </li>
+    ))
+  }
+</ul>

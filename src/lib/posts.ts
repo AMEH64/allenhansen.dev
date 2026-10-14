@@ -1,0 +1,61 @@
+import { getCollection, type CollectionEntry } from 'astro:content'
+import { notesConfig } from '~/site.config'
+
+export type Post = CollectionEntry<'blog'>
+
+/** The section's base path. The pages live in src/pages/blog/, so a rename moves that folder too. */
+export const BLOG = '/blog/'
+export const postPath = (id: string) => `${BLOG}${id}/`
+export const rssPath = `${BLOG}rss.xml`
+/** Filtered list views. Without JS they show every post; the filter script on the list applies them. */
+export const tagPath = (tag: string) =>
+  `${BLOG}?${new URLSearchParams({ tag })}`
+export const typePath = (type: Post['data']['type']) =>
+  `${BLOG}?${new URLSearchParams({ type })}`
+export type LogEntry = Post['data']['log'][number]
+
+/** Published notes, newest first. Drafts only show in `astro dev`. */
+export async function getPosts() {
+  const notes = await getCollection(
+    'blog',
+    n => !n.data.draft || import.meta.env.DEV,
+  )
+  return notes.sort((a, b) => b.data.date.localeCompare(a.data.date))
+}
+
+/** The change log, newest first. Empty when the note has no `log`. */
+export function postLog(data: Post['data']): LogEntry[] {
+  return [...data.log].sort((a, b) => b.date.localeCompare(a.date))
+}
+
+export const typeLabel = { note: 'Note', story: 'Story' } as const
+export const typePlural = { note: 'Notes', story: 'Stories' } as const
+
+/** A prefilled issue from .github/ISSUE_TEMPLATE/note-correction.yml. No `labels=`: GitHub 404s it for visitors who can't apply labels. */
+export function reportUrl(title: string, url: string) {
+  const query = new URLSearchParams({
+    template: 'note-correction.yml',
+    title: `Note: ${title}`,
+    'note-title': title,
+    'note-url': url,
+  })
+  return `https://github.com/${notesConfig.repo}/issues/new?${query}`
+}
+
+/** Where a change-log entry links: its commit when it names one, else the note file's history. */
+export function changeUrl(entry: LogEntry, filePath?: string) {
+  const base = `https://github.com/${notesConfig.repo}`
+  if (entry.commit) return `${base}/commit/${entry.commit}`
+  return filePath
+    ? `${base}/commits/${notesConfig.branch}/${filePath}`
+    : undefined
+}
+
+export function readingMinutes(body = '') {
+  const words = body
+    .replace(/^import .*$/gm, '')
+    .replace(/<[^>]+>/g, ' ')
+    .split(/\s+/)
+    .filter(Boolean).length
+  return Math.max(1, Math.round(words / 230))
+}

@@ -1,0 +1,32 @@
+---
+import { SITE_TITLE } from '~/consts'
+import PageTitle from '~/components/page-title.astro'
+import MainLayout from '~/layouts/main-layout.astro'
+import { features } from '~/config/features'
+import { BLOG } from '~/lib/posts'
+import { meta } from '~/site.config'
+---
+
+<MainLayout
+  title={`Not found · ${SITE_TITLE}`}
+  description={meta.notFound}
+  ogImage="/og/index.png"
+>
+  <PageTitle
+    title="Misprint"
+    slug="404"
+    lead="This page doesn’t exist, or it moved."
+  />
+  <ul class="contact" style="margin:0 0 60px">
+    <li><a href="/">Home</a></li>
+    <li><a href={BLOG}>Blog</a></li>
+    <li><a href="/projects/">Projects</a></li>
+    {
+      features.about && (
+        <li>
+          <a href="/about/">About</a>
+        </li>
+      )
+    }
+  </ul>
+</MainLayout>

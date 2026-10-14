@@ -1,109 +1,29 @@
 @import 'tailwindcss';
-@plugin '@tailwindcss/typography';
+@import './palette.css';
+@import './press.css';
 
 @custom-variant dark (&:where([data-color-mode=dark], [data-color-mode=dark] *));
 
+/*
+ * Theme colors for Tailwind classes (text-brand, bg-paper, border-rule, …).
+ * `inline` makes each class use the palette variable directly, so light and dark
+ * switch with the variables. Change colors in palette.css, not here.
+ */
 @theme inline {
-  --font-sans: var(--font-geist);
-  --font-mono: var(--font-geist-mono);
+  --color-brand: var(--brand);
+  --color-paper: var(--paper);
+  --color-text: var(--text);
+  --color-muted: var(--muted);
+  --color-rule: var(--rule);
+  --color-press: var(--press);
+  --color-surface: var(--surface);
+  --color-status-active: var(--status-active);
+  --color-status-paused: var(--status-paused);
+  --color-status-archived: var(--status-archived);
 }
 
-@theme {
-  --color-primary-50: color-mix(
-    in oklch,
-    var(--color-slate-50) 80%,
-    var(--color-teal-50) 20%
-  );
-  --color-primary-100: color-mix(
-    in oklch,
-    var(--color-slate-100) 70%,
-    var(--color-teal-100) 30%
-  );
-  --color-primary-200: color-mix(
-    in oklch,
-    var(--color-slate-200) 60%,
-    var(--color-teal-200) 40%
-  );
-  --color-primary-300: color-mix(
-    in oklch,
-    var(--color-slate-300) 50%,
-    var(--color-teal-300) 50%
-  );
-  --color-primary-400: color-mix(
-    in oklch,
-    var(--color-slate-400) 40%,
-    var(--color-teal-400) 60%
-  );
-  --color-primary-500: color-mix(
-    in oklch,
-    var(--color-slate-500) 30%,
-    var(--color-teal-500) 70%
-  );
-  --color-primary-600: color-mix(
-    in oklch,
-    var(--color-slate-700) 30%,
-    var(--color-cyan-700) 70%
-  );
-  --color-primary-700: color-mix(
-    in oklch,
-    var(--color-slate-800) 25%,
-    var(--color-cyan-800) 75%
-  );
-  --color-primary-800: color-mix(
-    in oklch,
-    var(--color-slate-900) 20%,
-    var(--color-cyan-900) 80%
-  );
-  --color-primary-900: color-mix(
-    in oklch,
-    var(--color-slate-950) 15%,
-    var(--color-cyan-950) 85%
-  );
-  --color-primary-950: color-mix(
-    in oklch,
-    var(--color-slate-950) 5%,
-    var(--color-cyan-950) 95%
-  );
-}
-
-@layer base {
-  :root {
-    color-scheme: light dark;
-
-    --shadow-sm: 0 1px 2px oklch(0% 0 0 / 0.06);
-
-    --surface-border: oklch(0% 0 0 / 0.07);
-    --glass-bg: oklch(100% 0 0 / 0.78);
-
-    @media (prefers-reduced-motion: no-preference) {
-      scroll-behavior: smooth;
-    }
-  }
-
-  :root[data-color-mode='light'] {
-    color-scheme: light;
-  }
-
-  :root[data-color-mode='dark'] {
-    color-scheme: dark;
-
-    --shadow-sm: 0 1px 3px oklch(0% 0 0 / 0.3);
-
-    --surface-border: oklch(100% 0 0 / 0.09);
-    --glass-bg: oklch(20% 0.01 240 / 0.8);
-  }
-
-  /*
-    The default border color has changed to `currentColor` in Tailwind CSS v4,
-    so we've added these compatibility styles to make sure everything still
-    looks the same as it did with Tailwind CSS v3.
-  */
-  *,
-  ::after,
-  ::before,
-  ::backdrop,
-  ::file-selector-button {
-    border-color: var(--color-gray-200, currentColor);
-  }
-
+@theme static {
+  --font-display: var(--font-anybody), system-ui, sans-serif;
+  --font-sans: var(--font-atkinson), system-ui, sans-serif;
+  --font-mono: var(--font-atkinson-mono), ui-monospace, monospace;
 }

@@ -1,0 +1,89 @@
+---
+// Two photos: a portrait beside the opener, and Boba full width between sections.
+import { SITE_TITLE } from '~/consts'
+import AboutNew from '~/copy/about-new.astro'
+import AboutOld from '~/copy/about-old.astro'
+import { features } from '~/config/features'
+import PageTitle from '~/components/page-title.astro'
+import PhotoPlate from '~/components/photo-plate.astro'
+import MainLayout from '~/layouts/main-layout.astro'
+import { rssPath } from '~/lib/posts'
+import { links, meta } from '~/site.config'
+import portrait from '~/assets/images/allen/allen-portrait.jpg'
+import bobaWide from '~/assets/images/boba/boba-wide.jpg'
+
+const AboutCopy = features.aboutCopy === 'old' ? AboutOld : AboutNew
+---
+
+<MainLayout
+  title={`About · ${SITE_TITLE}`}
+  description={meta.about}
+  ogImage="/og/about.png"
+  current="about"
+>
+  <PageTitle title="About" />
+  <div class="about">
+    <div class="prose">
+      <AboutCopy />
+      <ul class="contact" aria-label="Contact and elsewhere">
+        <li><a href={`mailto:${links.email}`}>{links.email}</a></li>
+        <li><a href={links.github}>GitHub</a></li>
+        <li><a href={links.linkedin}>LinkedIn</a></li>
+        <li><a href={rssPath}>RSS</a></li>
+        <li><a href="/resume/">Résumé</a></li>
+      </ul>
+    </div>
+    <div class="about-side">
+      <PhotoPlate
+        src={portrait}
+        alt="Allen smiling in glasses and a light linen shirt, with trees softly out of focus behind him."
+        shape="portrait"
+      />
+      <section class="glance" aria-labelledby="glance-h">
+        <h2 id="glance-h">At a glance</h2>
+        <dl>
+          <div><dt>Role</dt><dd>Senior full-stack engineer</dd></div>
+          <div>
+            <dt>Now</dt><dd>Schneider Electric Sustainability Business</dd>
+          </div>
+          <div><dt>Since</dt><dd>2017, from Web Forms to React</dd></div>
+          <div><dt>Lately</dt><dd>Python, FastAPI, MCP</dd></div>
+          <div>
+            <dt>More</dt><dd><a href="/resume/">The full résumé →</a></dd>
+          </div>
+        </dl>
+      </section>
+    </div>
+  </div>
+  <PhotoPlate
+    src={bobaWide}
+    alt="Allen sits in the grass with an arm around Boba, a black dog with a white chest and a collar, and smiles down at him."
+    caption="Boba and me"
+    shape="wide"
+  />
+  <section class="colophon" aria-label="Colophon">
+    <span class="rule"></span>
+    <div>
+      <h2>The press</h2>
+      <p>
+        Headings are printed blind into the stock. A lamp rakes across them; on
+        phones it follows your scroll.
+      </p>
+    </div>
+    <div>
+      <h2>Readable first</h2>
+      <p>
+        Body type is Atkinson Hyperlegible, designed for low vision. Reduced
+        motion parks the lamp.
+      </p>
+    </div>
+    <div>
+      <h2>Posts stay honest</h2>
+      <p>
+        Every post shows when it was published and last updated. When something
+        changes, I rewrite it in place and add a dated line to the change log,
+        which links to the full history on GitHub.
+      </p>
+    </div>
+  </section>
+</MainLayout>

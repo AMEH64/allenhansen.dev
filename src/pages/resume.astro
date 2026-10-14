@@ -1,274 +1,183 @@
 ---
-import { compareDesc } from 'date-fns/compareDesc'
-import { format } from 'date-fns/format'
 import { getCollection } from 'astro:content'
-import AccessibilityIcon from '~/components/icons/accessibility-icon.astro'
-import AngularIcon from '~/components/icons/angular-icon.astro'
-import AtSymbolIcon from '~/components/icons/at-symbol-icon.astro'
-import AzureDevOpsIcon from '~/components/icons/azure-dev-ops-icon.astro'
-import AzureIcon from '~/components/icons/azure-icon.astro'
-import Badge from '~/components/badge.astro'
-import BootstrapIcon from '~/components/icons/bootstrap-icon.astro'
-import CircleStackIcon from '~/components/icons/circle-stack-icon.astro'
-import CogSixToothIcon from '~/components/icons/cog-six-tooth-icon.astro'
-import CSharpIcon from '~/components/icons/c-sharp-icon.astro'
-import CssIcon from '~/components/icons/css-icon.astro'
-import DevicePhoneMobileIcon from '~/components/icons/device-phone-mobile-icon.astro'
-import DotNetIcon from '~/components/icons/dot-net-icon.astro'
-import FigmaIcon from '~/components/icons/figma-icon.astro'
-import GitHubIcon from '~/components/icons/git-hub-icon.astro'
-import GitIcon from '~/components/icons/git-icon.astro'
-import HtmlIcon from '~/components/icons/html-icon.astro'
-import invariant from 'tiny-invariant'
-import JavaScriptIcon from '~/components/icons/java-script-icon.astro'
-import LanguageIcon from '~/components/icons/language-icon.astro'
-import LinkedInIcon from '~/components/icons/linked-in-icon.astro'
-import LinkIcon from '~/components/icons/link-icon.astro'
-import NodeJsIcon from '~/components/icons/node-js-icon.astro'
-import PaintBrushIcon from '~/components/icons/paint-brush-icon.astro'
-import PeopleIcon from '~/components/icons/people-icon.astro'
-import ReactIcon from '~/components/icons/react-icon.astro'
-import RobotIcon from '~/components/icons/robot-icon.astro'
-import SassIcon from '~/components/icons/sass-icon.astro'
-import SqlServerIcon from '~/components/icons/sql-server-icon.astro'
-import TailwindCssIcon from '~/components/icons/tailwind-css-icon.astro'
-import TypeScriptIcon from '~/components/icons/type-script-icon.astro'
-import WindowIcon from '~/components/icons/window-icon.astro'
-import PythonIcon from '~/components/icons/python-icon.astro'
-import JiraIcon from '~/components/icons/jira-icon.astro'
-import FastapiIcon from '~/components/icons/fastapi-icon.astro'
-import McpIcon from '~/components/icons/mcp-icon.astro'
-import OpenapiIcon from '~/components/icons/openapi-icon.astro'
-import FullWidthLayout from '~/layouts/full-width-layout.astro'
+import { SITE_TITLE } from '~/consts'
+import CvText from '~/components/cv-text.astro'
+import MainLayout from '~/layouts/main-layout.astro'
+import { formatDate } from '~/lib/dates'
+import { links, meta, yearsOfExperience } from '~/site.config'
 
-const jobs = await getCollection('jobs')
+const jobs = (await getCollection('jobs')).sort((a, b) =>
+  b.data.startDate.localeCompare(a.data.startDate),
+)
 const education = await getCollection('education')
 
-const skillsIcons = {
-  'Automated Testing': RobotIcon,
-  Angular: AngularIcon,
-  'Azure DevOps': AzureDevOpsIcon,
-  Azure: AzureIcon,
-  Bootstrap: BootstrapIcon,
-  'Cross-Browser Compatibility': WindowIcon,
-  'Cross-Functional Collaboration': PeopleIcon,
-  'C#': CSharpIcon,
-  CSS: CssIcon,
-  'Design Systems': PaintBrushIcon,
-  '.NET': DotNetIcon,
-  FastAPI: FastapiIcon,
-  Figma: FigmaIcon,
-  Git: GitIcon,
-  HTML: HtmlIcon,
-  'Internationalization (i18n)': LanguageIcon,
-  JavaScript: JavaScriptIcon,
-  Jira: JiraIcon,
-  'Model Context Protocol (MCP)': McpIcon,
-  'Node.js': NodeJsIcon,
-  OpenAPI: OpenapiIcon,
-  Python: PythonIcon,
-  React: ReactIcon,
-  'Relational Databases (RDBs)': CircleStackIcon,
-  'Responsive Web Design': DevicePhoneMobileIcon,
-  'RESTful APIs': CogSixToothIcon,
-  Sass: SassIcon,
-  SQL: SqlServerIcon,
-  'Tailwind CSS': TailwindCssIcon,
-  TypeScript: TypeScriptIcon,
-  'Web Accessibility': AccessibilityIcon,
-} satisfies Record<string, Function>
+const skillOrder = [
+  'Automated Testing',
+  'Angular',
+  'Azure DevOps',
+  'Azure',
+  'Bootstrap',
+  'Cross-Browser Compatibility',
+  'Cross-Functional Collaboration',
+  'C#',
+  'CSS',
+  'Design Systems',
+  '.NET',
+  'FastAPI',
+  'Figma',
+  'Git',
+  'HTML',
+  'Internationalization (i18n)',
+  'JavaScript',
+  'Jira',
+  'Model Context Protocol (MCP)',
+  'Node.js',
+  'OpenAPI',
+  'Python',
+  'React',
+  'Relational Databases (RDBs)',
+  'Responsive Web Design',
+  'RESTful APIs',
+  'Sass',
+  'SQL',
+  'Tailwind CSS',
+  'TypeScript',
+  'Web Accessibility',
+]
+const rank = (skill: string) => {
+  const i = skillOrder.indexOf(skill)
+  return i === -1 ? skillOrder.length : i
+}
+const skills = [...new Set(jobs.flatMap(job => job.data.skills))].sort(
+  (a, b) => rank(a) - rank(b),
+)
+
+const site = Astro.site!
+const contact = [
+  [links.email, `mailto:${links.email}`],
+  [site.host.replace(/^www\./, ''), site.href],
+  ['linkedin.com/in/allen-hansen', links.linkedin],
+  ['github.com/ameh64', links.github],
+]
 ---
 
-<FullWidthLayout
-  class="grid min-h-svh place-content-center space-y-10 bg-white p-12 text-zinc-950 dark:bg-zinc-900 dark:text-zinc-50 print:space-y-4 print:bg-white print:p-0 print:text-zinc-950"
+<MainLayout
+  title={`Résumé · ${SITE_TITLE}`}
+  description={meta.resume}
+  ogImage="/og/resume.png"
+  current="resume"
+  bodyClass="page-resume"
 >
-  <header class="max-w-prose">
-    <h1
-      class="text-primary-600 dark:text-primary-400 print:text-primary-600 text-3xl font-bold text-balance"
-    >
-      Allen Hansen
-    </h1>
-    <h2 class="mb-6 text-xl text-balance print:mb-3">
-      Senior Full-Stack Software Engineer
-    </h2>
-    <p class="mb-6 text-pretty print:mb-3 print:text-sm">
-      Software Engineer with over 7 years of experience specializing in building
-      web apps and microservices. Passionate about leveraging web standards to
-      create accessible and intuitive user experiences that perform at scale.
-    </p>
-    <ul
-      class="flex flex-wrap gap-3 text-sm print:gap-1.5 print:divide-x print:divide-zinc-400 print:[&>li:not(:first-child)]:pl-1.5"
-    >
-      <li>
-        <a
-          class="inline-flex items-center gap-2"
-          href="mailto:me@allenhansen.dev"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <AtSymbolIcon class="size-3.5 print:hidden" />
-          me@allenhansen.dev
-        </a>
-      </li>
-      <li>
-        <a
-          class="inline-flex items-center gap-2"
-          href="https://allenhansen.dev"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <LinkIcon class="size-3.5 print:hidden" />
-          allenhansen.dev
-        </a>
-      </li>
-      <li>
-        <a
-          class="inline-flex items-center gap-2"
-          href="https://www.linkedin.com/in/allen-hansen"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <LinkedInIcon class="size-3.5 print:hidden" />
-          linkedin.com/in/allen-hansen
-        </a>
-      </li>
-      <li>
-        <a
-          class="inline-flex items-center gap-2"
-          href="https://github.com/AMEH64"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <GitHubIcon class="size-3.5 print:hidden" />
-          github.com/ameh64
-        </a>
-      </li>
-    </ul>
+  <header class="phead" style="padding-bottom:0">
+    <p class="slug-line">allenhansen.dev / résumé</p>
+    <h1 class="vh">Résumé</h1>
   </header>
-  <main class="max-w-prose space-y-10 print:space-y-4">
-    <section aria-labelledby="experience" class="space-y-10 print:space-y-4">
-      <h2
-        id="experience"
-        class="text-primary-600 dark:text-primary-400 print:text-primary-600 mb-8 text-xl font-semibold print:mb-4"
-      >
-        Experience
-      </h2>
-      {
-        jobs
-          .sort((a, b) => compareDesc(a.data.startDate, b.data.startDate))
-          .map(job => (
-            <article>
-              <div class="mb-6 grid grid-cols-1 gap-2 sm:grid-cols-2 print:mb-3 print:gap-1">
-                <h3 class="order-1 text-lg font-bold print:text-base">
-                  {job.data.position}
-                </h3>
-                <p class="order-3 sm:order-2 sm:text-end print:text-sm">
-                  <time datetime={job.data.startDate}>
-                    {format(job.data.startDate, 'MMMM yyyy')}
-                  </time>
-                  {' - '}
-                  <time datetime={job.data.endDate}>
-                    {job.data.endDate
-                      ? format(job.data.endDate, 'MMMM yyyy')
-                      : 'Present'}
-                  </time>
-                </p>
-                <p class="order-2 sm:order-3 print:text-sm">
-                  {job.data.company}
-                </p>
-                <p class="order-4 sm:text-end print:text-sm">
-                  {job.data.location}
-                </p>
-              </div>
-              <ul class="ml-6 list-disc space-y-2 print:space-y-0 print:text-sm">
-                {job.data.highlights.map(highlight => (
-                  <li>{highlight}</li>
-                ))}
-              </ul>
-            </article>
-          ))
-      }
-    </section>
-    <section aria-labelledby="skills" class="space-y-4 print:space-y-2">
-      <h2
-        id="skills"
-        class="text-primary-600 dark:text-primary-400 print:text-primary-600 mb-8 text-xl font-semibold print:mb-4"
-      >
-        Skills
-      </h2>
-      <ul class="flex flex-wrap gap-3 text-sm print:gap-0">
+  <div class="cv">
+    <header class="cv-head">
+      <h2 class="cv-name">Allen Hansen</h2>
+      <p class="cv-role">Senior Full-Stack Software Engineer</p>
+      <p class="cv-summary">
+        Full-stack engineer with {yearsOfExperience} years of experience specializing
+        in building web apps and microservices. Passionate about leveraging web standards
+        to create accessible and intuitive user experiences that perform at scale.
+      </p>
+      <ul class="cv-contact">
         {
-          [...new Set(jobs.flatMap(job => job.data.skills))]
-            .sort(
-              (a, b) =>
-                Object.keys(skillsIcons).indexOf(a) -
-                Object.keys(skillsIcons).indexOf(b),
-            )
-            .map(skill => {
-              const Icon = skillsIcons[skill as keyof typeof skillsIcons]
-              invariant(Icon, `Icon for skill ${skill} could not be found.`)
-              return (
-                <li class="group">
-                  <Badge>
-                    <Icon class="size-3.5 print:hidden" />
-                    <span class="print:before:content-[','] print:group-first:before:content-none">
-                      {skill}
-                    </span>
-                  </Badge>
-                </li>
-              )
-            })
+          contact.map(([label, href]) => (
+            <li>
+              <a href={href}>{label}</a>
+            </li>
+          ))
         }
       </ul>
-    </section>
-    <section aria-labelledby="education">
-      <h2
-        id="education"
-        class="text-primary-600 dark:text-primary-400 print:text-primary-600 mb-8 text-xl font-semibold print:mb-4"
+      <button class="cv-print" type="button" data-print
+        >Print or save as PDF</button
       >
-        Education
-      </h2>
+    </header>
+
+    <section class="cv-sec" aria-labelledby="cv-exp">
+      <h2 class="cv-h" id="cv-exp">Experience</h2>
       {
-        education.map(item => (
-          <article>
-            <div class="mb-6 grid grid-cols-1 gap-2 sm:grid-cols-2 print:mb-3 print:gap-1">
-              <h3 class="order-1 text-lg font-bold print:text-base">
-                {item.data.degree}
-              </h3>
-              <p class="order-3 sm:order-2 sm:text-end print:text-sm">
-                <time datetime={item.data.graduationDate}>
-                  {format(item.data.graduationDate, 'MMMM yyyy')}
+        jobs.map(({ data: job }) => (
+          <article class="cv-job">
+            <p class="cv-when">
+              <time datetime={job.startDate}>
+                {formatDate(job.startDate, 'month')}
+              </time>
+              {' – '}
+              {job.endDate ? (
+                <time datetime={job.endDate}>
+                  {formatDate(job.endDate, 'month')}
                 </time>
+              ) : (
+                'Present'
+              )}
+            </p>
+            <div>
+              <h3>{job.position}</h3>
+              <p class="cv-org">
+                {job.company} <span>· {job.location}</span>
               </p>
-              <p class="order-2 sm:order-3 print:text-sm">{item.data.school}</p>
-              <p class="order-4 sm:text-end print:text-sm">
-                {item.data.location}
-              </p>
+              {job.highlights.length > 0 && (
+                <ul class="cv-list">
+                  {job.highlights.map(h => (
+                    <li>
+                      <CvText text={h} />
+                    </li>
+                  ))}
+                </ul>
+              )}
             </div>
-            <ul
-              class:list={[
-                item.data.highlights.length > 1 &&
-                  'ml-6 list-disc space-y-2 print:space-y-0',
-                'print:text-sm',
-              ]}
-            >
-              {item.data.highlights.map(highlight => (
-                <li>{highlight}</li>
-              ))}
-            </ul>
           </article>
         ))
       }
     </section>
-  </main>
-</FullWidthLayout>
 
-<style>
-  @media print {
-    @page {
-      size: letter;
-      margin: 1in;
-      page-orientation: upright;
-    }
-  }
-</style>
+    <section class="cv-sec" aria-labelledby="cv-skills">
+      <h2 class="cv-h" id="cv-skills">Skills</h2>
+      <ul class="cv-skills">
+        {
+          skills.map(skill => (
+            <>
+              <li>{skill}</li>{' '}
+            </>
+          ))
+        }
+      </ul>
+    </section>
+
+    <section class="cv-sec" aria-labelledby="cv-edu">
+      <h2 class="cv-h" id="cv-edu">Education</h2>
+      {
+        education.map(({ data: item }) => (
+          <article class="cv-job">
+            <p class="cv-when">
+              <time datetime={item.graduationDate}>
+                {formatDate(item.graduationDate, 'month')}
+              </time>
+            </p>
+            <div>
+              <h3>{item.degree}</h3>
+              <p class="cv-org">
+                {item.school} <span>· {item.location}</span>
+              </p>
+              <ul class="cv-list">
+                {item.highlights.map(h => (
+                  <li>
+                    <CvText text={h} />
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </article>
+        ))
+      }
+    </section>
+  </div>
+</MainLayout>
+
+<script>
+  document
+    .querySelector('[data-print]')
+    ?.addEventListener('click', () => window.print())
+</script>
