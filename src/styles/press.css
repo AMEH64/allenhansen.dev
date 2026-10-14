@@ -312,6 +312,7 @@
   }
   .tags a::before {
     content: '#';
+    content: '#' / '';
     color: var(--brand);
   }
   .tags a:hover,
@@ -385,6 +386,7 @@
   }
   .tag-bar a::before {
     content: '#';
+    content: '#' / '';
     margin-right: -4px;
     color: var(--brand);
   }
