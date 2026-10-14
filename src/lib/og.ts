@@ -18,6 +18,12 @@ const fonts = {
   mono: path.join(fontDir, 'atkinson-hyperlegible-mono.ttf'),
 }
 
+// fonts.conf limits fontconfig to fontDir, so a character the site's fonts lack (an emoji in
+// a title) comes from noto-color-emoji.ttf there, never from the build machine's fonts, and
+// every machine draws the same image. Fontconfig reads the variable once, the first time sharp
+// draws text in this process, so nothing may draw text before this module loads.
+process.env.FONTCONFIG_FILE = path.join(fontDir, 'fonts.conf')
+
 const escape = (s: string) =>
   s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
 

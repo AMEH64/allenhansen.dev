@@ -28,7 +28,7 @@ Run these from the project root:
 
 ```text
 src/
-├── assets/fonts/        Self-hosted, subset variable fonts (OFL). og/ holds TTF copies for OG images.
+├── assets/fonts/        Self-hosted, subset variable fonts (OFL). og/ holds TTF copies and an emoji font for OG images.
 ├── components/          Header, footer, Lights switch, change log, …
 ├── config/features.ts   Build-time feature flags.
 ├── content/blog/        Blog posts (MDX): notes and stories.
@@ -288,6 +288,10 @@ Anybody and Atkinson Hyperlegible (Next and Mono) are self-hosted through
 Astro's Fonts API. They're subset to Latin plus Hawaiian (ʻokina and kahakō),
 preloaded, and paired with size-matched fallbacks. Both are under the SIL Open
 Font License; see `src/assets/fonts/`.
+
+OG images are drawn at build time from TTF copies in `src/assets/fonts/og/`,
+plus Noto Color Emoji (also OFL) for emoji in titles. `og/fonts.conf` keeps the
+build machine's own fonts out, so every machine draws the same images.
 
 ## Deploying
 

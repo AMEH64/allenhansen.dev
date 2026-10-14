@@ -221,7 +221,7 @@ function expected(path, a, b, diffs) {
     return {
       result: 'review',
       reason:
-        'OG text is drawn with the build machine’s system fonts (emoji especially); compare the images',
+        'OG images drawn with different fonts: Vercel builds used the machine’s own for emoji, this repo bundles one; compare the images',
     }
   }
   return undefined
