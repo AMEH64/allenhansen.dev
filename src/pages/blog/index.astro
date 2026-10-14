@@ -4,7 +4,14 @@ import PostRow from '~/components/post-row.astro'
 import PageTitle from '~/components/page-title.astro'
 import MainLayout from '~/layouts/main-layout.astro'
 import BlogFilter from '~/components/blog-filter.astro'
-import { BLOG, getPosts, typePath, typePlural, type Post } from '~/lib/posts'
+import {
+  BLOG,
+  getPosts,
+  tagPath,
+  typePath,
+  typePlural,
+  type Post,
+} from '~/lib/posts'
 import { meta } from '~/site.config'
 
 const notes = await getPosts()
@@ -14,6 +21,14 @@ const years = Object.entries(
     return acc
   }, {}),
 ).sort(([a], [b]) => Number(b) - Number(a))
+const tagCounts = Object.entries(
+  notes
+    .flatMap(note => note.data.tags)
+    .reduce<Record<string, number>>((acc, tag) => {
+      acc[tag] = (acc[tag] ?? 0) + 1
+      return acc
+    }, {}),
+).sort(([a], [b]) => a.localeCompare(b))
 ---
 
 <MainLayout
@@ -22,10 +37,7 @@ const years = Object.entries(
   ogImage="/og/blog.png"
   current="blog"
 >
-  <PageTitle
-    title="Blog"
-    lead={meta.blog}
-  />
+  <PageTitle title="Blog" lead={meta.blog} />
   <div class="blog-list" data-filter>
     <nav class="filters" aria-label="Filter posts">
       <ul class="pills">
@@ -40,11 +52,28 @@ const years = Object.entries(
           ))
         }
       </ul>
+      <ul class="tag-bar" aria-label="Filter by tag">
+        {
+          tagCounts.map(([tag, n]) => (
+            <li>
+              <a href={tagPath(tag)} data-filter-toggle={tag}>
+                {tag}
+                <span class="n">
+                  {n}
+                  <span class="vh">{n === 1 ? 'post' : 'posts'}</span>
+                </span>
+              </a>
+            </li>
+          ))
+        }
+      </ul>
       <p class="filter-status">
-        <span data-filter-count aria-live="polite"
-          >{notes.length} {notes.length === 1 ? 'post' : 'posts'}</span
+        <span aria-live="polite"
+          ><span data-filter-count
+            >{notes.length} {notes.length === 1 ? 'post' : 'posts'}</span
+          ><span class="vh" data-filter-detail></span></span
         >
-        <a href={BLOG} data-filter-clear hidden>Clear filters</a>
+        <a href={BLOG} data-filter-clear data-off>Clear</a>
       </p>
     </nav>
     {

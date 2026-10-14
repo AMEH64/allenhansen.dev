@@ -84,13 +84,23 @@ tag. Current tags:
 
 ### Filtering
 
-`/blog/` filters from the URL: `/blog/?type=story`, `/blog/?tag=css`, or both.
-The All, Notes, and Stories pills and every tag link are plain links that set
-those params, so a filtered view is a shareable link. The inline script in
-`src/components/blog-filter.astro` reads the params on load and on back or
-forward, hides posts that don't match, marks the active filters with
-`aria-current`, and updates the count. Clicking the active tag again clears it.
-Without JS every post shows and the links still navigate.
+`/blog/` filters from the URL, so a filtered view is a shareable link:
+`/blog/?type=story`, `/blog/?tag=css&tag=forms`, or both. A post shows when it
+matches the type and any of the selected tags.
+
+- The All, Notes, and Stories pills pick the type and keep the selected tags.
+- The tag bar under the pills lists every tag with its post count. It's
+  generated at build from the posts. Each tag toggles itself in the URL and
+  shows as pressed (`aria-pressed`) while selected.
+- Tag links on posts and in the list go to `/blog/?tag=…` for that one tag.
+- "Clear" appears whenever a filter is active. The count next to it is announced
+  to screen readers.
+
+The inline script in `src/components/blog-filter.astro` reads the params on load
+and on back or forward, and hides posts and years that don't match. It only
+changes text and colors in the filter bar, never its size, so a filtered link
+doesn't move the page. Without JS every post shows and every filter is a plain
+link.
 
 ### Blog filter performance
 

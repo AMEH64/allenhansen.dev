@@ -315,7 +315,7 @@
     color: var(--brand);
   }
   .tags a:hover,
-  .tags a[aria-current] {
+  .tags a[data-on] {
     color: var(--text);
     text-decoration: underline;
     text-decoration-color: var(--brand);
@@ -360,16 +360,63 @@
     border-color: var(--brand);
     background: var(--brand-wash);
   }
+  /* every tag with its post count; pressing one toggles it. Pressed only changes colors. */
+  .tag-bar {
+    flex-basis: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .tag-bar a {
+    display: inline-flex;
+    gap: 6px;
+    align-items: baseline;
+    padding: 3px 9px;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    letter-spacing: 0.02em;
+    color: var(--muted);
+    text-decoration: none;
+    border: 1px solid var(--rule);
+    border-radius: 2px;
+  }
+  .tag-bar a::before {
+    content: '#';
+    margin-right: -4px;
+    color: var(--brand);
+  }
+  .tag-bar .n {
+    font-variant-numeric: tabular-nums;
+    color: var(--muted);
+  }
+  .tag-bar a:hover {
+    color: var(--text);
+    border-color: var(--muted);
+  }
+  .tag-bar a[aria-pressed='true'] {
+    color: var(--text);
+    border-color: var(--brand);
+    background: var(--brand-wash);
+  }
   .filter-status {
+    flex-basis: 100%;
     display: flex;
     gap: 14px;
     margin: 0;
     font-size: 13.5px;
+    white-space: nowrap;
+    font-variant-numeric: tabular-nums;
     color: var(--muted);
   }
   .filter-status a {
     font-family: var(--font-mono);
     font-size: 12.5px;
+  }
+  .filter-status a[data-off] {
+    visibility: hidden;
   }
   .filter-empty {
     padding: 40px 0 20px;
