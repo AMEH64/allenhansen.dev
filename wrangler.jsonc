@@ -1,6 +1,8 @@
 {
   "$schema": "./node_modules/wrangler/config-schema.json",
   "name": "allenhansen-dev",
+  // The ameh64 account, which also holds the allenhansen.dev zone and Verso.
+  "account_id": "6e44b34bddff24ad8a4c7c0fbb6f5b9f",
   "compatibility_date": "2026-10-14",
   // No Worker script: every response is a static file from the Astro build.
   // _redirects and _headers in dist/ (from public/ and the build) add the rest.
