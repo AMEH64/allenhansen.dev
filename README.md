@@ -359,7 +359,7 @@ every route, then run:
 
 ```sh
 pnpm check:parity https://allenhansen-dev.ameh64.workers.dev
-pnpm check:parity --hosts   # apex → www, http → https, and blog. redirects
+pnpm check:parity --hosts   # apex → www and http → https redirects
 ```
 
 It exits 1 on any difference it doesn't recognize as a platform change, and
