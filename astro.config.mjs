@@ -3,7 +3,6 @@ import { defineConfig, fontProviders } from 'astro/config'
 import mdx from '@astrojs/mdx'
 import sitemap from '@astrojs/sitemap'
 import tailwindcss from '@tailwindcss/vite'
-import rehypeMermaid from 'rehype-mermaid'
 import { flaggedPages } from './src/lib/flagged-pages'
 import { staticRedirects } from './src/lib/static-redirects'
 
@@ -15,21 +14,8 @@ export default defineConfig({
   site: 'https://www.allenhansen.dev',
   integrations: [flaggedPages(), staticRedirects(), mdx(), sitemap()],
   markdown: {
-    syntaxHighlight: {
-      type: 'shiki',
-      excludeLangs: ['mermaid'],
-    },
     // Token colors come from palette-based CSS variables (see src/styles/press.css).
     shikiConfig: { theme: 'css-variables' },
-    rehypePlugins: [
-      [
-        rehypeMermaid,
-        {
-          strategy: 'img-svg',
-          dark: true,
-        },
-      ],
-    ],
   },
   fonts: [
     {

@@ -15,7 +15,6 @@
     "deploy": "wrangler deploy",
     "astro": "astro",
     "format": "prettier . --write",
-    "postinstall": "playwright install",
     "check:contrast": "node scripts/check-contrast.mjs",
     "check:parity": "node scripts/check-parity.mjs"
   },
@@ -26,8 +25,6 @@
     "@astrojs/sitemap": "^3.7.2",
     "@tailwindcss/vite": "^4.2.4",
     "astro": "^6.2.1",
-    "playwright": "^1.59.1",
-    "rehype-mermaid": "^3.0.0",
     "sharp": "^0.34.5",
     "tailwindcss": "^4.2.4",
     "typescript": "^6.0.3"
