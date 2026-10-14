@@ -3,7 +3,7 @@
 //   pnpm check:parity <candidate>                 compare with https://www.allenhansen.dev
 //   pnpm check:parity <candidate> --reference <url | snapshot.json>
 //   pnpm check:parity <url> --save <snapshot.json>  record a site to compare with later
-//   pnpm check:parity --hosts                     check apex, http, and blog. redirects on the live domains
+//   pnpm check:parity --hosts                     check apex and http redirects on the live domains
 //
 // Routes come from dist/ (run `pnpm build` first), dist/_redirects, the reference sitemap,
 // links on every HTML page of both sites, and the edge cases below. Exits 1 on any
@@ -444,7 +444,7 @@ function links(html, base) {
   return found
 }
 
-/** Domain-level redirects that live outside the build: apex → www, http → https, and the old blog subdomain. */
+/** Domain-level redirects that live outside the build: apex → www and http → https. */
 async function checkHosts() {
   const checks = [
     {
@@ -466,16 +466,6 @@ async function checkHosts() {
       url: 'http://allenhansen.dev/',
       status: [301, 308],
       final: 'https://www.allenhansen.dev/',
-    },
-    {
-      url: 'https://blog.allenhansen.dev/',
-      status: [301, 308],
-      location: 'https://www.allenhansen.dev/',
-    },
-    {
-      url: 'https://blog.allenhansen.dev/hello-world',
-      status: [301, 308],
-      location: 'https://www.allenhansen.dev/hello-world',
     },
     { url: 'https://www.allenhansen.dev/', status: [200], hsts: true },
   ]

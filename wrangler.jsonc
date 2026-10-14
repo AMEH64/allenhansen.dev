@@ -8,6 +8,11 @@
   // alone when the field is missing, so both are set explicitly.
   "workers_dev": true,
   "preview_urls": true,
+  // www.allenhansen.dev is a Custom Domain: Cloudflare manages its DNS record and
+  // certificate. `wrangler deploy` makes the Worker's routes match this list, so a
+  // route or domain added only in the dashboard is removed on the next deploy. The
+  // apex and http:// redirects are zone rules, not part of this Worker.
+  "routes": [{ "pattern": "www.allenhansen.dev", "custom_domain": true }],
   // Wrangler runs this before deploy, preview, versions upload, and dev, so dist/
   // exists even when the Workers Builds build command is empty.
   "build": {
