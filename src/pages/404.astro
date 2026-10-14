@@ -2,6 +2,7 @@
 import { SITE_TITLE } from '~/consts'
 import PageTitle from '~/components/page-title.astro'
 import MainLayout from '~/layouts/main-layout.astro'
+import { features } from '~/config/features'
 import { BLOG } from '~/lib/posts'
 import { meta } from '~/site.config'
 ---
@@ -20,6 +21,12 @@ import { meta } from '~/site.config'
     <li><a href="/">Home</a></li>
     <li><a href={BLOG}>Blog</a></li>
     <li><a href="/projects/">Projects</a></li>
-    <li><a href="/about/">About</a></li>
+    {
+      features.about && (
+        <li>
+          <a href="/about/">About</a>
+        </li>
+      )
+    }
   </ul>
 </MainLayout>

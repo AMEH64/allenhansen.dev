@@ -1258,6 +1258,11 @@
   .now-grid .prose {
     font-size: 17px;
   }
+  .now-away {
+    max-width: 640px;
+    font-size: 17px;
+    padding-bottom: 24px;
+  }
   .now-foot {
     max-width: 640px;
     font-size: 15px;

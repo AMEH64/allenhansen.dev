@@ -1,6 +1,7 @@
 # allenhansen.dev
 
-Allen Hansen's site: a blog, projects, an about page, a now page, and a résumé.
+Allen Hansen's site: a blog, projects, and a résumé, plus About and Now pages
+that stay behind [feature flags](#feature-flags) until their copy is final.
 Built with [Astro](https://astro.build), MDX, and Tailwind CSS 4, deployed on
 Vercel.
 
@@ -27,9 +28,12 @@ Run these from the project root:
 src/
 ├── assets/fonts/        Self-hosted, subset variable fonts (OFL). og/ holds TTF copies for OG images.
 ├── components/          Header, footer, Lights switch, change log, …
+├── config/features.ts   Build-time feature flags.
 ├── content/blog/        Blog posts (MDX): notes and stories.
 ├── content/projects/    One JSON file per project card.
-├── lib/                 Palette parsing, OG image renderer, icons, note helpers.
+├── copy/                Old and new copy for About and Now.
+├── flagged-pages/       Pages that are only built while their flag is on: About and Now.
+├── lib/                 Palette parsing, OG image renderer, icons, note helpers, flagged pages.
 ├── pages/               Routes. og/, icons/, favicon.ico, site.webmanifest, and robots.txt are generated.
 ├── site.config.ts       Copy, links, career start date, and note settings.
 └── styles/
@@ -37,6 +41,33 @@ src/
     ├── global.css       Tailwind import and theme tokens.
     └── press.css        The Letterpress components.
 ```
+
+## Feature flags
+
+`src/config/features.ts` holds build-time flags. Today they keep About and Now
+offline until their copy is final:
+
+| Flag        | Default | What it does                                                                                                                                 |
+| :---------- | :------ | :------------------------------------------------------------------------------------------------------------------------------------------- |
+| `about`     | `false` | Builds `/about/` and shows every link to it                                                                                                  |
+| `now`       | `false` | Builds `/now/`, shows every link to it, and shows the home "Now" line                                                                        |
+| `aboutCopy` | `'new'` | `'old'` or `'new'`: picks `src/copy/about-old.astro` or `about-new.astro`                                                                    |
+| `nowCopy`   | `'new'` | `'old'` or `'new'`: picks `src/copy/now-old.astro` or `now-new.astro`, plus the home "Now" line and the page description in `site.config.ts` |
+
+While a page is off:
+
+- **It isn't built.** The page lives in `src/flagged-pages/`, not `src/pages/`,
+  and `src/lib/flagged-pages.ts` only adds the route while its flag is on.
+- **Its links are hidden:** the header nav (which is also the phone menu), the
+  home "Now" line, the 404 page's links, and the Now page's "See the about page"
+  link.
+- **It's not in the sitemap or OG images.**
+- **Its URL redirects home** with a temporary 302, for `/about` and `/about/`
+  alike, because the old site served both pages and links to them are out there.
+
+To publish a page, set its flag to `true` and build. Everything comes back as it
+was. The new copy has its open questions as code comments next to the text; they
+don't render.
 
 ## Blog
 

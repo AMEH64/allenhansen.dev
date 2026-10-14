@@ -4,6 +4,7 @@ import PostRow from '~/components/post-row.astro'
 import MainLayout from '~/layouts/main-layout.astro'
 import { BLOG, getPosts } from '~/lib/posts'
 import { displayUrl, getProjects, statusLabel } from '~/lib/projects'
+import { features } from '~/config/features'
 import { meta, now } from '~/site.config'
 
 const notes = await getPosts()
@@ -70,11 +71,15 @@ const projects = (await getProjects()).slice(0, 3)
           ))
         }
       </ul>
-      <p class="nowline">
-        <b>Now:</b>
-        {now.summary}
-        <a href="/now/">Updated {now.updated}</a>.
-      </p>
+      {
+        features.now && (
+          <p class="nowline">
+            <b>Now:</b>
+            {now.summary}
+            <a href="/now/">Updated {now.updated}</a>.
+          </p>
+        )
+      }
     </section>
   </div>
 </MainLayout>

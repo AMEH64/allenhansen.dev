@@ -1,16 +1,19 @@
 ---
+import { features } from '~/config/features'
 import { BLOG } from '~/lib/posts'
 import ThemeToggle from './theme-toggle.astro'
 
 type Props = { current?: string }
 const { current } = Astro.props
 
-const items = [
-  ['blog', 'Blog', BLOG],
-  ['projects', 'Projects', '/projects/'],
-  ['about', 'About', '/about/'],
-  ['now', 'Now', '/now/'],
-] as const
+const items = (
+  [
+    ['blog', 'Blog', BLOG, true],
+    ['projects', 'Projects', '/projects/', true],
+    ['about', 'About', '/about/', features.about],
+    ['now', 'Now', '/now/', features.now],
+  ] as const
+).filter(([, , , on]) => on)
 ---
 
 <header class="site">

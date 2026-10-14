@@ -1,13 +1,18 @@
 ---
 // Two photos: a portrait beside the opener, and Boba full width between sections.
 import { SITE_TITLE } from '~/consts'
+import AboutNew from '~/copy/about-new.astro'
+import AboutOld from '~/copy/about-old.astro'
+import { features } from '~/config/features'
 import PageTitle from '~/components/page-title.astro'
 import PhotoPlate from '~/components/photo-plate.astro'
 import MainLayout from '~/layouts/main-layout.astro'
 import { rssPath } from '~/lib/posts'
-import { links, meta, yearsInWords } from '~/site.config'
+import { links, meta } from '~/site.config'
 import portrait from '~/assets/images/allen/allen-portrait.jpg'
 import bobaWide from '~/assets/images/boba/boba-wide.jpg'
+
+const AboutCopy = features.aboutCopy === 'old' ? AboutOld : AboutNew
 ---
 
 <MainLayout
@@ -19,23 +24,7 @@ import bobaWide from '~/assets/images/boba/boba-wide.jpg'
   <PageTitle title="About" />
   <div class="about">
     <div class="prose">
-      <p class="lede">I’m Allen Hansen, a senior full-stack engineer.</p>
-      <p>
-        For {yearsInWords} years I’ve made web apps faster, more accessible, and easier
-        to change: Web Forms to React and Angular, WCAG 2.1 AA, theming and design
-        systems. Lately it’s Python, FastAPI, and AI tooling.
-      </p>
-      <p>
-        Outside work I’m learning Mandarin and <span lang="haw"
-          >ʻŌlelo Hawaiʻi</span
-        >, the second through hula. That’s how <a
-          href="https://verso.allenhansen.dev">Verso</a
-        > happened: I wanted better flash cards.
-      </p>
-      <p>
-        This site is where I write down what I learn. Posts are short and dated;
-        when one turns out wrong, I correct it in the open.
-      </p>
+      <AboutCopy />
       <ul class="contact" aria-label="Contact and elsewhere">
         <li><a href={`mailto:${links.email}`}>{links.email}</a></li>
         <li><a href={links.github}>GitHub</a></li>
