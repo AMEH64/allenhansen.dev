@@ -92,7 +92,7 @@ for (const path of [
       path,
       result: 'expected',
       notes: [
-        'hashed name from the candidate build only; the snapshot predates it',
+        'hashed name from the candidate build only; the snapshot doesn’t have it',
       ],
     })
     continue
@@ -152,10 +152,29 @@ process.exit(counts.FAIL?.length ? 1 : 0)
  */
 function expected(path, a, b, diffs) {
   const ok = reason => ({ result: 'expected', reason })
-  const rest = diffs.filter(
-    d => !/^x-robots-tag – → noindex/.test(d) || !onWorkersDev(),
-  )
-  if (!rest.length) return ok('workers.dev URLs are noindex')
+  const reasons = []
+  let rest = diffs
+  const drop = (test, reason) => {
+    if (!rest.some(test)) return
+    rest = rest.filter(d => !test(d))
+    reasons.push(reason)
+  }
+  if (onWorkersDev()) {
+    drop(
+      d => /^x-robots-tag – → noindex/.test(d),
+      'workers.dev URLs are noindex',
+    )
+  }
+  // Cloudflare's edge sends text types without a charset; wrangler dev adds one.
+  // Browsers then take it from <meta charset>, which must sit in the first 1024 bytes.
+  const declared = b.ascii || (b.metaCharsetAt >= 0 && b.metaCharsetAt < 1024)
+  if (declared) {
+    drop(
+      d => /^content-type (text\/[a-z]+);charset=utf-8 → \1$/.test(d),
+      'no charset in Content-Type; the file is ASCII or declares <meta charset="utf-8"> in its first 1024 bytes',
+    )
+  }
+  if (!rest.length) return ok(reasons.join('; '))
   const only = (...fields) => rest.every(d => fields.some(f => d.startsWith(f)))
   const isHtml = r => r.headers['content-type']?.startsWith('text/html')
   const isRedirect = r => r.status >= 300 && r.status < 400
@@ -357,8 +376,12 @@ async function probe(base, path) {
     size: body.length,
     sha256: createHash('sha256').update(body).digest('hex'),
   }
+  if (headers['content-type']?.startsWith('text/')) {
+    result.ascii = body.every(byte => byte < 0x80)
+  }
   if (headers['content-type']?.startsWith('text/html')) {
     const html = body.toString('utf8')
+    result.metaCharsetAt = body.indexOf('<meta charset="utf-8"')
     result.html = signature(html)
     result.links = [...links(html, base)]
   }
