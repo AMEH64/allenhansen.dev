@@ -13,16 +13,16 @@ mode, and it prints in light ink on white paper.
 
 Run these from the project root:
 
-| Command               | Action                                                       |
-| :-------------------- | :----------------------------------------------------------- |
-| `pnpm install`        | Install dependencies                                         |
-| `pnpm dev`            | Start the dev server at `localhost:4321`                     |
-| `pnpm build`          | Check contrast, type-check, and build the site to `./dist/`  |
-| `pnpm preview`        | Serve `./dist/` with `wrangler dev`, as Cloudflare would     |
-| `pnpm run deploy`     | Deploy `./dist/` to the production Worker                    |
-| `pnpm check:contrast` | Check that the palette meets WCAG AA on both stocks          |
-| `pnpm check:parity`   | Compare a deployment's routes and headers with the live site |
-| `pnpm format`         | Format everything with Prettier                              |
+| Command               | Action                                                              |
+| :-------------------- | :------------------------------------------------------------------ |
+| `pnpm install`        | Install dependencies                                                |
+| `pnpm dev`            | Start the dev server at `localhost:4321`                            |
+| `pnpm build`          | Check contrast, type-check, and build the site to `./dist/`         |
+| `pnpm preview`        | Build, then serve `./dist/` with `wrangler dev` as Cloudflare would |
+| `pnpm run deploy`     | Build, then deploy to the production Worker                         |
+| `pnpm check:contrast` | Check that the palette meets WCAG AA on both stocks                 |
+| `pnpm check:parity`   | Compare a deployment's routes and headers with the live site        |
+| `pnpm format`         | Format everything with Prettier                                     |
 
 ## Where things live
 
@@ -306,25 +306,55 @@ in `dist/` add the rest:
 Pages live at their trailing-slash URL (`/blog/hello-world/`); the bare URL
 redirects there. Unknown URLs get the 404 page with a 404 status.
 
-`.github/workflows/deploy.yml` builds every push and pull request:
+`wrangler.jsonc` also sets `build.command` (`pnpm build`), which Wrangler runs
+before `wrangler deploy`, `wrangler preview`, `wrangler versions upload`, and
+`wrangler dev`. So `dist/` is always fresh. `wrangler dev` watches only `src/`
+and `public/`, so the build's own output doesn't start another build.
 
-- **Pushes to `main`** deploy to production.
-- **Pull requests** get a Preview at
-  `https://pr-<number>-allenhansen-dev.ameh64.workers.dev`, posted as a comment
-  and deleted when the pull request closes. Preview URLs are public and
-  `noindex`.
+[Workers Builds](https://developers.cloudflare.com/workers/ci-cd/builds/)
+deploys the site: the GitHub repository is connected to the `allenhansen-dev`
+Worker, so no API token or GitHub secret is involved.
 
-Deploys need one repository secret, `CLOUDFLARE_API_TOKEN` (Settings → Secrets
-and variables → Actions). Create it in the Cloudflare dashboard under My Profile
-→ API Tokens with the **Edit Cloudflare Workers** template, limited to the
-`ameh64` account and the `allenhansen.dev` zone. Without it, the workflow still
-builds and skips the deploy steps.
+- **Pushes to the production branch** (`main`) deploy to production, which also
+  answers at `https://allenhansen-dev.ameh64.workers.dev`.
+- **Pushes to any other branch** create or update a
+  [Preview](https://developers.cloudflare.com/workers/previews/) for that
+  branch, and Cloudflare comments the Preview URL on its pull request. Preview
+  URLs are public and `noindex`.
+
+The Worker's **Settings → Build**:
+
+| Setting         | Value                                                          |
+| :-------------- | :------------------------------------------------------------- |
+| Worker name     | `allenhansen-dev`, which must match `name` in `wrangler.jsonc` |
+| Root directory  | `/` (the repository root)                                      |
+| Build command   | leave empty; Wrangler runs `pnpm build` itself                 |
+| Deploy command  | `pnpm exec wrangler deploy`                                    |
+| Preview command | `pnpm exec wrangler preview`                                   |
+| Build variables | none needed                                                    |
+
+A dashboard build command of `pnpm run build` also works; the site is then just
+built twice. The build image reads Node from `.nvmrc` (22.22.2), and pnpm
+switches itself to the version in `packageManager`. `pnpm-workspace.yaml` allows
+install scripts for esbuild, sharp, and workerd only. Nothing downloads a
+browser.
+
+From your machine, after `pnpm wrangler login`:
+
+```sh
+pnpm preview       # build, then serve dist/ on :8787 as Cloudflare would
+pnpm run deploy    # build, then deploy to production
+```
+
+`.github/workflows/ci.yml` runs `pnpm build` (the contrast check, `astro check`,
+and the build) on every pull request and every push to `main`. It doesn't
+deploy.
 
 To check a deployment against the live site, build first so the check knows
 every route, then run:
 
 ```sh
-pnpm check:parity https://pr-123-allenhansen-dev.ameh64.workers.dev
+pnpm check:parity https://allenhansen-dev.ameh64.workers.dev
 pnpm check:parity --hosts   # apex → www, http → https, and blog. redirects
 ```
 

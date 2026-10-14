@@ -1,9 +1,21 @@
 {
   "$schema": "./node_modules/wrangler/config-schema.json",
+  // Workers Builds deploys this repository to the Worker of this name.
   "name": "allenhansen-dev",
-  // The ameh64 account, which also holds the allenhansen.dev zone and Verso.
-  "account_id": "6e44b34bddff24ad8a4c7c0fbb6f5b9f",
   "compatibility_date": "2026-10-14",
+  // Production also answers on allenhansen-dev.<subdomain>.workers.dev, and each
+  // version and branch Preview gets its own URL. Wrangler leaves either setting
+  // alone when the field is missing, so both are set explicitly.
+  "workers_dev": true,
+  "preview_urls": true,
+  // Wrangler runs this before deploy, preview, versions upload, and dev, so dist/
+  // exists even when the Workers Builds build command is empty.
+  "build": {
+    "command": "pnpm build",
+    // Watch the sources, not the repo root: the build writes to dist/ there,
+    // which would set off another build.
+    "watch_dir": ["src", "public"],
+  },
   // No Worker script: every response is a static file from the Astro build.
   // _redirects and _headers in dist/ (from public/ and the build) add the rest.
   "assets": {
@@ -17,7 +29,7 @@
     "enabled": true,
     "traces": { "enabled": true },
   },
-  // Pull request Previews (wrangler preview) need this block even when empty:
-  // the site has no bindings or variables to swap out.
+  // Required by `wrangler preview`, which Workers Builds runs for branches other
+  // than production. It's empty: the site has no bindings or variables to swap.
   "previews": {},
 }
