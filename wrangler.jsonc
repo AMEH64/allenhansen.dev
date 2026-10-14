@@ -1,0 +1,21 @@
+{
+  "$schema": "./node_modules/wrangler/config-schema.json",
+  "name": "allenhansen-dev",
+  "compatibility_date": "2026-10-14",
+  // No Worker script: every response is a static file from the Astro build.
+  // _redirects and _headers in dist/ (from public/ and the build) add the rest.
+  "assets": {
+    "directory": "./dist",
+    // /blog/x/index.html is served at /blog/x/, and /blog/x redirects there.
+    "html_handling": "auto-trailing-slash",
+    // Unknown URLs get dist/404.html with a 404 status.
+    "not_found_handling": "404-page",
+  },
+  "observability": {
+    "enabled": true,
+    "traces": { "enabled": true },
+  },
+  // Pull request Previews (wrangler preview) need this block even when empty:
+  // the site has no bindings or variables to swap out.
+  "previews": {},
+}
