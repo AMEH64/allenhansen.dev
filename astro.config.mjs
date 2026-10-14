@@ -13,6 +13,10 @@ export default defineConfig({
   // The apex redirects to www, so canonical, sitemap, and OG URLs use www.
   site: 'https://www.allenhansen.dev',
   integrations: [flaggedPages(), staticRedirects(), mdx(), sitemap()],
+  redirects: {
+    // The first post's slug had a typo until 2024.
+    '/blog/hell-world': '/blog/hello-world/',
+  },
   markdown: {
     // Token colors come from palette-based CSS variables (see src/styles/press.css).
     shikiConfig: { theme: 'css-variables' },

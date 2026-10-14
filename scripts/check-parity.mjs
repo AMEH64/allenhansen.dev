@@ -87,6 +87,16 @@ for (const path of [
 ].sort()) {
   const a = ref[path]
   const b = cand[path]
+  if (!a && path.startsWith('/_astro/') && !refLinks.has(path)) {
+    rows.push({
+      path,
+      result: 'expected',
+      notes: [
+        'hashed name from the candidate build only; the snapshot predates it',
+      ],
+    })
+    continue
+  }
   if (!a || !b) {
     rows.push({
       path,
@@ -199,6 +209,13 @@ function expected(path, a, b, diffs) {
     b.location === '/blog/rss.xml'
   ) {
     return ok('feed URL with a trailing slash redirects to the feed')
+  }
+  if (
+    a.status === 404 &&
+    [301, 308].includes(b.status) &&
+    cand[b.location]?.status === 200
+  ) {
+    return ok('new redirect from a URL that 404s on the reference')
   }
   if (path.startsWith('/og/') && only('body')) {
     return {
