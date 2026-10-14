@@ -1,6 +1,7 @@
 ---
 import { Font } from 'astro:assets'
 import { SITE_TITLE } from '~/consts'
+import { iconUrl } from '~/lib/icons'
 import { rssPath } from '~/lib/posts'
 import { palette } from '~/lib/palette'
 import '../styles/global.css'
@@ -65,10 +66,10 @@ const imageURL = new URL(ogImage, Astro.site)
 <meta name="description" content={description} />
 <link rel="canonical" href={canonicalURL} />
 
-<link rel="icon" href="/favicon.ico" sizes="32x32" />
-<link rel="icon" href="/favicon.svg" type="image/svg+xml" />
-<link rel="apple-touch-icon" href="/favicons/apple-touch-icon.png" />
-<link rel="manifest" href="/site.webmanifest" />
+<link rel="icon" href={iconUrl('/icons/favicon.ico')} sizes="32x32" />
+<link rel="icon" href={iconUrl('/icons/favicon.svg')} type="image/svg+xml" />
+<link rel="apple-touch-icon" href={iconUrl('/icons/apple-touch-icon.png')} />
+<link rel="manifest" href={iconUrl('/site.webmanifest')} />
 <link
   rel="alternate"
   type="application/rss+xml"

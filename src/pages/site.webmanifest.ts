@@ -1,5 +1,6 @@
 import type { APIRoute } from 'astro'
 import { SITE_TITLE } from '~/consts'
+import { iconUrl } from '~/lib/icons'
 import { palette } from '~/lib/palette'
 
 export const GET: APIRoute = () =>
@@ -10,17 +11,23 @@ export const GET: APIRoute = () =>
         short_name: 'AH',
         icons: [
           {
-            src: '/favicons/android-chrome-192x192.png',
+            src: iconUrl('/icons/icon-192.png'),
             sizes: '192x192',
             type: 'image/png',
           },
           {
-            src: '/favicons/android-chrome-512x512.png',
+            src: iconUrl('/icons/icon-512.png'),
             sizes: '512x512',
             type: 'image/png',
           },
+          {
+            src: iconUrl('/icons/icon-maskable-512.png'),
+            sizes: '512x512',
+            type: 'image/png',
+            purpose: 'maskable',
+          },
         ],
-        theme_color: palette.brand.light,
+        theme_color: palette.paper.dark,
         background_color: palette.paper.dark,
         display: 'standalone',
       },

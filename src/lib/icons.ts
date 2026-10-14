@@ -1,26 +1,54 @@
+import { createHash } from 'node:crypto'
 import sharp from 'sharp'
 import { palette, type Scheme } from './palette'
 
-// The logo mark as an icon: a square of the brand ink with a small square of paper showing
-// through, like the spot on a press sheet. Colors come from palette.css via ./palette.
+// The logo mark as an icon: the header's square of brand ink on a tile of paper. Colors come
+// from palette.css via ./palette. The square's edges land on whole pixels at 16, 32, and 48 px.
 
-const shape = (radius: number) =>
-  `<rect class="ink" width="32" height="32" rx="${radius}"/><rect class="hole" x="19" y="19" width="7" height="7"/>`
+type Shape = { radius: number; mark: number }
+const TILE: Shape = { radius: 6, mark: 20 }
+// iOS rounds the corners itself and shows transparency as black, so the tile is full bleed.
+const FULL_BLEED: Shape = { radius: 0, mark: 20 }
+// Maskable icons get cropped to as little as a circle 80% wide; the square's corners stay inside it.
+const MASKABLE: Shape = { radius: 0, mark: 16 }
 
-/** SVG favicon that follows the OS color scheme. */
+const shape = ({ radius, mark }: Shape) => {
+  const at = (32 - mark) / 2
+  return `<rect class="paper" width="32" height="32" rx="${radius}"/><rect class="ink" x="${at}" y="${at}" width="${mark}" height="${mark}"/>`
+}
+const fills = (scheme: Scheme) =>
+  `.paper{fill:${palette.paper[scheme]}}.ink{fill:${palette.brand[scheme]}}`
+
+/** SVG favicon: dark paper by default, light paper when the browser or OS is in light mode. */
 export function faviconSvg() {
-  const { brand, paper } = palette
-  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><style>.ink{fill:${brand.light}}.hole{fill:${paper.light}}@media (prefers-color-scheme:dark){.ink{fill:${brand.dark}}.hole{fill:${paper.dark}}}</style>${shape(3)}</svg>`
+  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><style>${fills('dark')}@media (prefers-color-scheme:light){${fills('light')}}</style>${shape(TILE)}</svg>`
 }
 
-/** PNG icon at `size` px. Raster icons can't follow the OS scheme, so they use the light-mode ink, which reads on both. */
-export function iconPng(
-  size: number,
-  { radius = 3, scheme = 'light' as Scheme } = {},
-) {
-  const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="${size}" height="${size}"><style>.ink{fill:${palette.brand[scheme]}}.hole{fill:${palette.paper[scheme]}}</style>${shape(radius)}</svg>`
+export const pngIcons = {
+  'apple-touch-icon': { size: 180, shape: FULL_BLEED },
+  'icon-192': { size: 192, shape: TILE },
+  'icon-512': { size: 512, shape: TILE },
+  'icon-maskable-512': { size: 512, shape: MASKABLE },
+} as const
+
+/** PNG icon. Raster icons can't follow the color scheme, so they use the dark paper, the site's default. */
+export function iconPng(size: number, iconShape: Shape = TILE) {
+  const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="${size}" height="${size}"><style>${fills('dark')}</style>${shape(iconShape)}</svg>`
   return sharp(Buffer.from(svg)).png().toBuffer()
 }
+
+/**
+ * Changes whenever the icons do. Browsers keep favicons long after the file changes, so icon
+ * URLs carry it (`?v=…`) to make them fetch the new one.
+ */
+export const iconVersion = createHash('sha256')
+  .update(
+    [faviconSvg(), ...Object.values(pngIcons).map(i => shape(i.shape))].join(),
+  )
+  .digest('hex')
+  .slice(0, 8)
+
+export const iconUrl = (path: string) => `${path}?v=${iconVersion}`
 
 /** A .ico that wraps PNG images (supported by every current browser). */
 export async function faviconIco(sizes = [16, 32, 48]) {

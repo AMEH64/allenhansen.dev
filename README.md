@@ -30,7 +30,7 @@ src/
 ├── content/blog/        Blog posts (MDX): notes and stories.
 ├── content/projects/    One JSON file per project card.
 ├── lib/                 Palette parsing, OG image renderer, icons, note helpers.
-├── pages/               Routes. og/, favicon*, site.webmanifest, and robots.txt are generated.
+├── pages/               Routes. og/, icons/, favicon.ico, site.webmanifest, and robots.txt are generated.
 ├── site.config.ts       Copy, links, career start date, and note settings.
 └── styles/
     ├── palette.css      Every color on the site.
@@ -203,6 +203,12 @@ Everything else follows automatically:
 - The favicon (SVG, PNG, and ICO), the web manifest, `theme-color`, and the OG
   images are generated at build time from the same line through
   `src/lib/palette.ts`.
+
+The icon is the header's ink square on a tile of paper (`src/lib/icons.ts`). The
+SVG favicon follows the browser's light or dark mode. The ICO and PNGs can't, so
+they use the dark paper. Icon URLs end in `?v=` plus a hash of the icons, so a
+change gets a new URL. Browsers still cache favicons hard: after a change, a
+hard refresh or a new tab may be needed to see it.
 
 `pnpm build` runs the contrast check first, so a color that fails AA stops the
 build (and the Vercel deploy) with a message naming the failing pair. The same

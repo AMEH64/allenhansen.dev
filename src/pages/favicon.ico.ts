@@ -1,7 +1,2 @@
-import type { APIRoute } from 'astro'
-import { faviconIco } from '~/lib/icons'
-
-export const GET: APIRoute = async () =>
-  new Response(new Uint8Array(await faviconIco()), {
-    headers: { 'Content-Type': 'image/x-icon' },
-  })
+// /favicon.ico is what browsers and feed readers fetch when a page has no icon link.
+export { GET } from './icons/favicon.ico'
