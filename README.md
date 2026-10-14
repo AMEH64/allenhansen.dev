@@ -2,8 +2,8 @@
 
 Allen Hansen's site: a blog, projects, and a résumé, plus About and Now pages
 that stay behind [feature flags](#feature-flags) until their copy is final.
-Built with [Astro](https://astro.build), MDX, and Tailwind CSS 4, deployed on
-Vercel.
+Built with [Astro](https://astro.build), MDX, and Tailwind CSS 4, and served as
+static files from [Cloudflare Workers](#deploying).
 
 The design is "Letterpress": one spot ink (ultramarine) on a paper stock, with
 debossed display type and a "Lights" switch. It's dark first, with a full light
@@ -13,14 +13,16 @@ mode, and it prints in light ink on white paper.
 
 Run these from the project root:
 
-| Command               | Action                                                      |
-| :-------------------- | :---------------------------------------------------------- |
-| `pnpm install`        | Install dependencies                                        |
-| `pnpm dev`            | Start the dev server at `localhost:4321`                    |
-| `pnpm build`          | Check contrast, type-check, and build the site to `./dist/` |
-| `pnpm preview`        | Preview the build locally                                   |
-| `pnpm check:contrast` | Check that the palette meets WCAG AA on both stocks         |
-| `pnpm format`         | Format everything with Prettier                             |
+| Command               | Action                                                       |
+| :-------------------- | :----------------------------------------------------------- |
+| `pnpm install`        | Install dependencies                                         |
+| `pnpm dev`            | Start the dev server at `localhost:4321`                     |
+| `pnpm build`          | Check contrast, type-check, and build the site to `./dist/`  |
+| `pnpm preview`        | Serve `./dist/` with `wrangler dev`, as Cloudflare would     |
+| `pnpm run deploy`     | Deploy `./dist/` to the production Worker                    |
+| `pnpm check:contrast` | Check that the palette meets WCAG AA on both stocks          |
+| `pnpm check:parity`   | Compare a deployment's routes and headers with the live site |
+| `pnpm format`         | Format everything with Prettier                              |
 
 ## Where things live
 
@@ -64,6 +66,8 @@ While a page is off:
 - **It's not in the sitemap or OG images.**
 - **Its URL redirects home** with a temporary 302, for `/about` and `/about/`
   alike, because the old site served both pages and links to them are out there.
+  The build writes these to `dist/_redirects` (see
+  `src/lib/static-redirects.ts`).
 
 To publish a page, set its flag to `true` and build. Everything comes back as it
 was. The new copy has its open questions as code comments next to the text; they
@@ -252,8 +256,8 @@ change gets a new URL. Browsers still cache favicons hard: after a change, a
 hard refresh or a new tab may be needed to see it.
 
 `pnpm build` runs the contrast check first, so a color that fails AA stops the
-build (and the Vercel deploy) with a message naming the failing pair. The same
-applies to `--paper`, `--text`, `--muted`, `--surface`, and `--press`.
+build (and the deploy) with a message naming the failing pair. The same applies
+to `--paper`, `--text`, `--muted`, `--surface`, and `--press`.
 
 ## Tailwind theme tokens
 
@@ -284,3 +288,47 @@ Anybody and Atkinson Hyperlegible (Next and Mono) are self-hosted through
 Astro's Fonts API. They're subset to Latin plus Hawaiian (ʻokina and kahakō),
 preloaded, and paired with size-matched fallbacks. Both are under the SIL Open
 Font License; see `src/assets/fonts/`.
+
+## Deploying
+
+The site is static: `pnpm build` writes everything to `dist/`, and a Cloudflare
+Worker with
+[static assets](https://developers.cloudflare.com/workers/static-assets/) serves
+it. There's no Worker script. `wrangler.jsonc` holds the settings, and two files
+in `dist/` add the rest:
+
+- `_headers`, from `public/_headers`: HSTS, CORS, a year of caching for hashed
+  `/_astro/` files, four hours for icons, OG images, and `robots.txt`, and
+  `noindex` on the `workers.dev` URL.
+- `_redirects`, from `public/_redirects` plus the redirects in
+  `astro.config.mjs` and the [feature flags](#feature-flags).
+
+Pages live at their trailing-slash URL (`/blog/hello-world/`); the bare URL
+redirects there. Unknown URLs get the 404 page with a 404 status.
+
+`.github/workflows/deploy.yml` builds every push and pull request:
+
+- **Pushes to `main`** deploy to production.
+- **Pull requests** get a Preview at
+  `https://pr-<number>-allenhansen-dev.ameh64.workers.dev`, posted as a comment
+  and deleted when the pull request closes. Preview URLs are public and
+  `noindex`.
+
+Deploys need one repository secret, `CLOUDFLARE_API_TOKEN` (Settings → Secrets
+and variables → Actions). Create it in the Cloudflare dashboard under My Profile
+→ API Tokens with the **Edit Cloudflare Workers** template, limited to the
+`ameh64` account and the `allenhansen.dev` zone. Without it, the workflow still
+builds and skips the deploy steps.
+
+To check a deployment against the live site, build first so the check knows
+every route, then run:
+
+```sh
+pnpm check:parity https://pr-123-allenhansen-dev.ameh64.workers.dev
+pnpm check:parity --hosts   # apex → www, http → https, and blog. redirects
+```
+
+It exits 1 on any difference it doesn't recognize as a platform change, and
+`--report <file.md>` writes the full table. Before changing where the live site
+is served from, save a snapshot with `--save <file.json>` and compare with
+`--reference <file.json>` afterward.
