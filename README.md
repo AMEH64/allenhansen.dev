@@ -310,6 +310,13 @@ in `dist/` add the rest:
 Pages live at their trailing-slash URL (`/blog/hello-world/`); the bare URL
 redirects there. Unknown URLs get the 404 page with a 404 status.
 
+`www.allenhansen.dev` is a
+[Custom Domain](https://developers.cloudflare.com/workers/configuration/routing/custom-domains/)
+listed under `routes` in `wrangler.jsonc`. Each deploy makes the Worker's
+domains and routes match that list, so add new ones there, not in the dashboard.
+Redirect rules on the zone send the apex and `http://` to
+`https://www.allenhansen.dev`.
+
 `wrangler.jsonc` also sets `build.command` (`pnpm build`), which Wrangler runs
 before `wrangler deploy`, `wrangler preview`, `wrangler versions upload`, and
 `wrangler dev`. So `dist/` is always fresh. `wrangler dev` watches only `src/`
