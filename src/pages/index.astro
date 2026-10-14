@@ -1,5 +1,6 @@
 ---
 import { SITE_TITLE } from '~/consts'
+import Anchor from '~/components/mdx/anchor.astro'
 import PostRow from '~/components/post-row.astro'
 import MainLayout from '~/layouts/main-layout.astro'
 import { BLOG, getPosts } from '~/lib/posts'
@@ -58,9 +59,9 @@ const projects = (await getProjects()).slice(0, 3)
               <span class={`pdot st-${p.status}`} aria-hidden="true" />
               <span>
                 {p.url ? (
-                  <a class="t" href={p.url}>
+                  <Anchor class="t" href={p.url}>
                     {p.name}
-                  </a>
+                  </Anchor>
                 ) : (
                   <span class="t">{p.name}</span>
                 )}

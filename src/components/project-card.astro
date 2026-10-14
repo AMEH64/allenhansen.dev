@@ -1,12 +1,13 @@
 ---
 import type { CollectionEntry } from 'astro:content'
+import Anchor from '~/components/mdx/anchor.astro'
 import { formatDate } from '~/lib/dates'
 import { statusLabel, displayUrl } from '~/lib/projects'
 
 type Props = { project: CollectionEntry<'projects'> }
 const { name, url, tagline, status, started, stack, mark } =
   Astro.props.project.data
-const Tag = url ? 'a' : 'div'
+const Tag = url ? Anchor : 'div'
 ---
 
 <Tag class={`pcard ${status}`} href={url} data-lit>

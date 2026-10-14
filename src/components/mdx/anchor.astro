@@ -4,12 +4,17 @@ import type { HTMLAttributes } from 'astro/types'
 type Props = HTMLAttributes<'a'>
 
 const { href, ...props } = Astro.props
-const external = typeof href === 'string' && /^https?:\/\//.test(href)
+// Absolute URLs on this site's own host (like the allenhansen.dev project card) stay in the tab.
+const external =
+  typeof href === 'string' &&
+  /^https?:\/\//.test(href) &&
+  new URL(href).host !== Astro.site?.host
 ---
 
 <a
   href={href}
   target={external ? '_blank' : undefined}
   rel={external ? 'noopener noreferrer' : undefined}
-  {...props}><slot /></a
+  {...props}
+  ><slot />{external && <span class="vh"> (opens in a new tab)</span>}</a
 >
