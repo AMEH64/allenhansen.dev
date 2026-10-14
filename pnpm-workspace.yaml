@@ -1,2 +1,9 @@
 packages:
   - '.'
+
+# Install scripts these packages may run: esbuild and workerd check their
+# platform binaries, and sharp links its image library.
+onlyBuiltDependencies:
+  - esbuild
+  - sharp
+  - workerd
