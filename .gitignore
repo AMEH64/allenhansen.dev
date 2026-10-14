@@ -3,7 +3,10 @@ dist/
 
 # generated types
 .astro/
-.vercel/
+
+# wrangler dev state and local secrets
+.wrangler/
+.dev.vars*
 
 # dependencies
 node_modules/

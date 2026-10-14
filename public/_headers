@@ -1,0 +1,27 @@
+/*
+  Strict-Transport-Security: max-age=63072000
+  Access-Control-Allow-Origin: *
+
+# Astro puts a content hash in these file names, so a changed file gets a new URL.
+/_astro/*
+  Cache-Control: public, max-age=31536000, immutable
+
+# Not hashed, but rarely change: browsers may reuse them for four hours.
+/icons/*
+  Cache-Control: public, max-age=14400, must-revalidate
+
+/og/*
+  Cache-Control: public, max-age=14400, must-revalidate
+
+/favicon.ico
+  Cache-Control: public, max-age=14400, must-revalidate
+
+/robots.txt
+  Cache-Control: public, max-age=14400, must-revalidate
+
+/site.webmanifest
+  Content-Type: application/manifest+json; charset=utf-8
+
+# The Worker's own workers.dev URL mirrors the site; keep it out of search results.
+https://:worker.:subdomain.workers.dev/*
+  X-Robots-Tag: noindex

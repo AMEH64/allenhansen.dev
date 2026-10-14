@@ -2,10 +2,9 @@
 import { defineConfig, fontProviders } from 'astro/config'
 import mdx from '@astrojs/mdx'
 import sitemap from '@astrojs/sitemap'
-import vercel from '@astrojs/vercel'
 import tailwindcss from '@tailwindcss/vite'
-import rehypeMermaid from 'rehype-mermaid'
 import { flaggedPages } from './src/lib/flagged-pages'
+import { staticRedirects } from './src/lib/static-redirects'
 
 const fontDir = './src/assets/fonts'
 
@@ -13,23 +12,14 @@ const fontDir = './src/assets/fonts'
 export default defineConfig({
   // The apex redirects to www, so canonical, sitemap, and OG URLs use www.
   site: 'https://www.allenhansen.dev',
-  integrations: [flaggedPages(), mdx(), sitemap()],
+  integrations: [flaggedPages(), staticRedirects(), mdx(), sitemap()],
+  redirects: {
+    // The first post's slug had a typo until 2024.
+    '/blog/hell-world': '/blog/hello-world/',
+  },
   markdown: {
-    syntaxHighlight: {
-      type: 'shiki',
-      excludeLangs: ['mermaid'],
-    },
     // Token colors come from palette-based CSS variables (see src/styles/press.css).
     shikiConfig: { theme: 'css-variables' },
-    rehypePlugins: [
-      [
-        rehypeMermaid,
-        {
-          strategy: 'img-svg',
-          dark: true,
-        },
-      ],
-    ],
   },
   fonts: [
     {
@@ -89,8 +79,8 @@ export default defineConfig({
       },
     },
   ],
+  // Served by Cloudflare Workers static assets; see wrangler.jsonc.
   output: 'static',
-  adapter: vercel({ webAnalytics: { enabled: true } }),
   vite: {
     plugins: [tailwindcss()],
   },

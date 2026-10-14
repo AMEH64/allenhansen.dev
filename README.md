@@ -2,8 +2,8 @@
 
 Allen Hansen's site: a blog, projects, and a résumé, plus About and Now pages
 that stay behind [feature flags](#feature-flags) until their copy is final.
-Built with [Astro](https://astro.build), MDX, and Tailwind CSS 4, deployed on
-Vercel.
+Built with [Astro](https://astro.build), MDX, and Tailwind CSS 4, and served as
+static files from [Cloudflare Workers](#deploying).
 
 The design is "Letterpress": one spot ink (ultramarine) on a paper stock, with
 debossed display type and a "Lights" switch. It's dark first, with a full light
@@ -13,20 +13,22 @@ mode, and it prints in light ink on white paper.
 
 Run these from the project root:
 
-| Command               | Action                                                      |
-| :-------------------- | :---------------------------------------------------------- |
-| `pnpm install`        | Install dependencies                                        |
-| `pnpm dev`            | Start the dev server at `localhost:4321`                    |
-| `pnpm build`          | Check contrast, type-check, and build the site to `./dist/` |
-| `pnpm preview`        | Preview the build locally                                   |
-| `pnpm check:contrast` | Check that the palette meets WCAG AA on both stocks         |
-| `pnpm format`         | Format everything with Prettier                             |
+| Command               | Action                                                              |
+| :-------------------- | :------------------------------------------------------------------ |
+| `pnpm install`        | Install dependencies                                                |
+| `pnpm dev`            | Start the dev server at `localhost:4321`                            |
+| `pnpm build`          | Check contrast, type-check, and build the site to `./dist/`         |
+| `pnpm preview`        | Build, then serve `./dist/` with `wrangler dev` as Cloudflare would |
+| `pnpm run deploy`     | Build, then deploy to the production Worker                         |
+| `pnpm check:contrast` | Check that the palette meets WCAG AA on both stocks                 |
+| `pnpm check:parity`   | Compare a deployment's routes and headers with the live site        |
+| `pnpm format`         | Format everything with Prettier                                     |
 
 ## Where things live
 
 ```text
 src/
-├── assets/fonts/        Self-hosted, subset variable fonts (OFL). og/ holds TTF copies for OG images.
+├── assets/fonts/        Self-hosted, subset variable fonts (OFL). og/ holds TTF copies and an emoji font for OG images.
 ├── components/          Header, footer, Lights switch, change log, …
 ├── config/features.ts   Build-time feature flags.
 ├── content/blog/        Blog posts (MDX): notes and stories.
@@ -64,6 +66,8 @@ While a page is off:
 - **It's not in the sitemap or OG images.**
 - **Its URL redirects home** with a temporary 302, for `/about` and `/about/`
   alike, because the old site served both pages and links to them are out there.
+  The build writes these to `dist/_redirects` (see
+  `src/lib/static-redirects.ts`).
 
 To publish a page, set its flag to `true` and build. Everything comes back as it
 was. The new copy has its open questions as code comments next to the text; they
@@ -252,8 +256,8 @@ change gets a new URL. Browsers still cache favicons hard: after a change, a
 hard refresh or a new tab may be needed to see it.
 
 `pnpm build` runs the contrast check first, so a color that fails AA stops the
-build (and the Vercel deploy) with a message naming the failing pair. The same
-applies to `--paper`, `--text`, `--muted`, `--surface`, and `--press`.
+build (and the deploy) with a message naming the failing pair. The same applies
+to `--paper`, `--text`, `--muted`, `--surface`, and `--press`.
 
 ## Tailwind theme tokens
 
@@ -284,3 +288,81 @@ Anybody and Atkinson Hyperlegible (Next and Mono) are self-hosted through
 Astro's Fonts API. They're subset to Latin plus Hawaiian (ʻokina and kahakō),
 preloaded, and paired with size-matched fallbacks. Both are under the SIL Open
 Font License; see `src/assets/fonts/`.
+
+OG images are drawn at build time from TTF copies in `src/assets/fonts/og/`,
+plus Noto Color Emoji (also OFL) for emoji in titles. `og/fonts.conf` keeps the
+build machine's own fonts out, so every machine draws the same images.
+
+## Deploying
+
+The site is static: `pnpm build` writes everything to `dist/`, and a Cloudflare
+Worker with
+[static assets](https://developers.cloudflare.com/workers/static-assets/) serves
+it. There's no Worker script. `wrangler.jsonc` holds the settings, and two files
+in `dist/` add the rest:
+
+- `_headers`, from `public/_headers`: HSTS, CORS, a year of caching for hashed
+  `/_astro/` files, four hours for icons, OG images, and `robots.txt`, and
+  `noindex` on the `workers.dev` URL.
+- `_redirects`, from `public/_redirects` plus the redirects in
+  `astro.config.mjs` and the [feature flags](#feature-flags).
+
+Pages live at their trailing-slash URL (`/blog/hello-world/`); the bare URL
+redirects there. Unknown URLs get the 404 page with a 404 status.
+
+`wrangler.jsonc` also sets `build.command` (`pnpm build`), which Wrangler runs
+before `wrangler deploy`, `wrangler preview`, `wrangler versions upload`, and
+`wrangler dev`. So `dist/` is always fresh. `wrangler dev` watches only `src/`
+and `public/`, so the build's own output doesn't start another build.
+
+[Workers Builds](https://developers.cloudflare.com/workers/ci-cd/builds/)
+deploys the site: the GitHub repository is connected to the `allenhansen-dev`
+Worker, so no API token or GitHub secret is involved.
+
+- **Pushes to the production branch** (`main`) deploy to production, which also
+  answers at `https://allenhansen-dev.ameh64.workers.dev`.
+- **Pushes to any other branch** create or update a
+  [Preview](https://developers.cloudflare.com/workers/previews/) for that
+  branch, and Cloudflare comments the Preview URL on its pull request. Preview
+  URLs are public and `noindex`.
+
+The Worker's **Settings → Build**:
+
+| Setting         | Value                                                          |
+| :-------------- | :------------------------------------------------------------- |
+| Worker name     | `allenhansen-dev`, which must match `name` in `wrangler.jsonc` |
+| Root directory  | `/` (the repository root)                                      |
+| Build command   | leave empty; Wrangler runs `pnpm build` itself                 |
+| Deploy command  | `pnpm exec wrangler deploy`                                    |
+| Preview command | `pnpm exec wrangler preview`                                   |
+| Build variables | none needed                                                    |
+
+A dashboard build command of `pnpm run build` also works; the site is then just
+built twice. The build image reads Node from `.nvmrc` (22.22.2), and pnpm
+switches itself to the version in `packageManager`. `pnpm-workspace.yaml` allows
+install scripts for esbuild, sharp, and workerd only. Nothing downloads a
+browser.
+
+From your machine, after `pnpm wrangler login`:
+
+```sh
+pnpm preview       # build, then serve dist/ on :8787 as Cloudflare would
+pnpm run deploy    # build, then deploy to production
+```
+
+`.github/workflows/ci.yml` runs `pnpm build` (the contrast check, `astro check`,
+and the build) on every pull request and every push to `main`. It doesn't
+deploy.
+
+To check a deployment against the live site, build first so the check knows
+every route, then run:
+
+```sh
+pnpm check:parity https://allenhansen-dev.ameh64.workers.dev
+pnpm check:parity --hosts   # apex → www, http → https, and blog. redirects
+```
+
+It exits 1 on any difference it doesn't recognize as a platform change, and
+`--report <file.md>` writes the full table. Before changing where the live site
+is served from, save a snapshot with `--save <file.json>` and compare with
+`--reference <file.json>` afterward.

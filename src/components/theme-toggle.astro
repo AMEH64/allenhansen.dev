@@ -18,9 +18,6 @@
     document
       .querySelectorAll('[data-theme-toggle]')
       .forEach(b => b.setAttribute('aria-checked', String(mode === 'light')))
-    document
-      .querySelectorAll("picture > source[id^='mermaid-dark-']")
-      .forEach(el => el.setAttribute('media', mode === 'dark' ? 'all' : 'none'))
     const probe = document.createElement('i')
     probe.style.cssText = 'position:absolute;color:var(--paper)'
     document.body.append(probe)

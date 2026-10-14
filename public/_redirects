@@ -1,0 +1,2 @@
+# The build appends the redirects from astro.config.mjs (see src/lib/static-redirects.ts).
+/blog/rss.xml/ /blog/rss.xml 301
