@@ -441,12 +441,6 @@
     font-size: 21px;
     line-height: 1.45;
   }
-  .hero .intro p + p {
-    margin-top: 14px;
-    font-size: 15px;
-    color: var(--muted);
-    line-height: 1.6;
-  }
   .slug-line {
     font-family: var(--font-mono);
     font-size: 12px;
