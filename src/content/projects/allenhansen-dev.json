@@ -4,7 +4,7 @@
   "tagline": "This site. Rebuilt in the open; every note keeps its own change log.",
   "status": "active",
   "started": "2022-11",
-  "stack": ["Astro", "Vercel"],
+  "stack": ["Astro", "Cloudflare"],
   "mark": "ah",
   "order": 3
 }

@@ -37,7 +37,6 @@
   --focus: var(--brand);
   --link-underline: var(--brand);
   --brand-wash: color-mix(in srgb, var(--brand) 22%, transparent);
-  --brand-soft: color-mix(in srgb, var(--brand) 45%, var(--paper));
   --tint: var(--brand);
   --code-bg: var(--press);
   --code-text: color-mix(in srgb, var(--text) 85%, var(--paper));
