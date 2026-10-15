@@ -390,8 +390,7 @@ The Worker's **Settings → Build**:
 A dashboard build command of `pnpm run build` also works; the site is then just
 built twice. The build image reads Node from `.nvmrc` (22.22.2), and pnpm
 switches itself to the version in `packageManager`. `pnpm-workspace.yaml` allows
-install scripts for esbuild, sharp, and workerd only. Nothing downloads a
-browser.
+install scripts for esbuild and workerd only. Nothing downloads a browser.
 
 From your machine, after `pnpm wrangler login`:
 
