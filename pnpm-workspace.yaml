@@ -2,8 +2,8 @@ packages:
   - '.'
 
 # Install scripts these packages may run: esbuild and workerd check their
-# platform binaries, and sharp links its image library.
+# platform binaries. sharp, the Astro compiler, and Sätteri ship prebuilt
+# binaries as optional dependencies and run no install script.
 onlyBuiltDependencies:
   - esbuild
-  - sharp
   - workerd
