@@ -3,7 +3,6 @@ import { defineConfig, fontProviders } from 'astro/config'
 import mdx from '@astrojs/mdx'
 import sitemap from '@astrojs/sitemap'
 import tailwindcss from '@tailwindcss/vite'
-import { flaggedPages } from './src/lib/flagged-pages'
 import { staticRedirects } from './src/lib/static-redirects'
 
 const fontDir = './src/assets/fonts'
@@ -12,7 +11,7 @@ const fontDir = './src/assets/fonts'
 export default defineConfig({
   // The apex redirects to www, so canonical, sitemap, and OG URLs use www.
   site: 'https://www.allenhansen.dev',
-  integrations: [flaggedPages(), staticRedirects(), mdx(), sitemap()],
+  integrations: [staticRedirects(), mdx(), sitemap()],
   redirects: {
     // The first post's slug had a typo until 2024.
     '/blog/hell-world': '/blog/hello-world/',

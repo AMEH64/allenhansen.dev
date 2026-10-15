@@ -1,18 +1,18 @@
 ---
 // Two photos: a portrait beside the opener, and Boba full width between sections.
 import { SITE_TITLE } from '~/consts'
-import AboutNew from '~/copy/about-new.astro'
-import AboutOld from '~/copy/about-old.astro'
-import { features } from '~/config/features'
+import Anchor from '~/components/mdx/anchor.astro'
 import PageTitle from '~/components/page-title.astro'
 import PhotoPlate from '~/components/photo-plate.astro'
 import MainLayout from '~/layouts/main-layout.astro'
 import { rssPath } from '~/lib/posts'
-import { links, meta } from '~/site.config'
+import { links, meta, yearsInWords } from '~/site.config'
 import portrait from '~/assets/images/allen/allen-portrait.jpg'
 import bobaWide from '~/assets/images/boba/boba-wide.jpg'
 
-const AboutCopy = features.aboutCopy === 'old' ? AboutOld : AboutNew
+const body = 'text-[18.5px]'
+const dropCap =
+  "first-letter:float-left first-letter:mt-[0.1em] first-letter:mr-[0.1em] first-letter:font-display first-letter:text-[3.5em] first-letter:leading-[0.78] first-letter:font-black first-letter:text-brand first-letter:[font-variation-settings:'wdth'_116]"
 const glanceRow =
   'grid grid-cols-[64px_minmax(0,1fr)] gap-2.5 border-b border-rule py-2 text-[14.5px] leading-[1.45]'
 const glanceTerm =
@@ -33,7 +33,41 @@ const colophonText = 'text-[15px] leading-[1.55] text-muted'
     class="grid grid-cols-[minmax(0,640px)_300px] gap-20 pb-10 phone:grid-cols-[minmax(0,1fr)] phone:gap-10"
   >
     <div class="prose">
-      <AboutCopy />
+      <p
+        class="font-display text-[27px] leading-[1.3] font-bold tracking-[-0.005em] [font-variation-settings:'wdth'_112] phone:text-[22px]"
+      >
+        I’m Allen Hansen, a senior full-stack engineer.
+      </p>
+      <p class:list={[body, dropCap]}>
+        For {yearsInWords} years I’ve made web apps faster, more accessible, and easier
+        to change: Web Forms to React and Angular, WCAG 2.1 AA, theming and design
+        systems. Lately it’s Python, FastAPI, and AI tooling.
+      </p>
+      <p class={body}>
+        I’m originally from Michigan. In college, my friends in architecture and
+        mechanical engineering designed buildings and other things made to hold
+        up under real loads, and I found the same kind of work in software,
+        built from code instead of steel. At the University of Minnesota I
+        switched from Management Information Systems to computer science, and
+        co-founded <Anchor href="https://www.socialcoding.net/"
+          >Social Coding</Anchor
+        >.
+      </p>
+      {
+        /* Open question: is it fine to name Resource Advisor+ in public? If not: "Now I build AI features into Schneider Electric’s sustainability software." */
+      }
+      {
+        /* Open question: keep the takeaway? The last sentence ("AI has changed…") can be cut on its own. */
+      }
+      <p class={body}>
+        What I enjoy most is taking an idea all the way to the people who use
+        it: a polished, accessible experience, with AI layered on top so they
+        get things done faster. For years that meant rebuilding large, older
+        apps as smaller services with careful attention to how they feel to use.
+        Now I build AI features into Resource Advisor+ at Schneider Electric. AI
+        has changed how software gets built, and I’m working to keep the craft
+        alive while using it.
+      </p>
       <ul
         class="mt-[22px] flex list-none flex-wrap gap-6 p-0 *:mt-0 [&_a]:font-mono [&_a]:text-[14px]"
         aria-label="Contact and elsewhere"

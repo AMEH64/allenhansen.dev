@@ -1,5 +1,3 @@
-import { features, type Copy } from '~/config/features'
-
 export const notesConfig = {
   /** Where "Open an issue" and the change-log links point. */
   repo: 'AMEH64/allenhansen.dev',
@@ -43,24 +41,11 @@ export const yearsInWords =
   NUMBER_WORDS[yearsOfExperience] ?? String(yearsOfExperience)
 const capitalize = (s: string) => s.charAt(0).toUpperCase() + s.slice(1)
 
-const nowLines: Record<Copy, { summary: string; description: string }> = {
-  old: {
-    summary:
-      'Drilling HSK 3 in Verso, learning hula vocabulary, and rebuilding this site, again.',
-    description:
-      'What Allen Hansen is working on, learning, and reading right now.',
-  },
-  new: {
-    summary:
-      'Building AI features at Schneider Electric, and working on Verso and this site.',
-    description: 'What Allen Hansen is working on right now.',
-  },
-}
-
 export const now = {
   updated: 'Oct 2026',
-  /** The home page's "Now" line, shown while the Now page is on. */
-  summary: nowLines[features.nowCopy].summary,
+  /** The home page's "Now" line. */
+  summary:
+    'Building AI features at Schneider Electric, and working on Verso and this site.',
 }
 
 export const links = {
@@ -75,7 +60,7 @@ export const meta = {
   blog: 'Notes on what I’ve learned, and the stories behind them.',
   projects: 'Side projects, experiments, and tools I’ve built.',
   about: `Allen Hansen, senior full-stack engineer. ${capitalize(yearsInWords)} years of making web apps faster and more accessible; lately Python, FastAPI, and AI tooling.`,
-  now: nowLines[features.nowCopy].description,
+  now: 'What Allen Hansen is working on right now.',
   resume:
     'Résumé of Allen Hansen, senior full-stack software engineer: experience, skills, and education.',
   notFound: 'This page doesn’t exist, or it moved.',

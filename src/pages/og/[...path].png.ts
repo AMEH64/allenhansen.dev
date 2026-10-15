@@ -2,13 +2,12 @@ import type { APIRoute, GetStaticPaths } from 'astro'
 import { formatDate } from '~/lib/dates'
 import { BLOG, getPosts } from '~/lib/posts'
 import { renderOg, type OgOptions } from '~/lib/og'
-import { features } from '~/config/features'
 import { meta } from '~/site.config'
 
 const section = BLOG.slice(1, -1)
 
 export const getStaticPaths = (async () => {
-  const pages: { path: string; og: OgOptions; on?: boolean }[] = [
+  const pages: { path: string; og: OgOptions }[] = [
     {
       path: 'index',
       og: {
@@ -39,7 +38,6 @@ export const getStaticPaths = (async () => {
     },
     {
       path: 'about',
-      on: features.about,
       og: {
         title: 'About',
         eyebrow: 'allenhansen.dev / about',
@@ -49,7 +47,6 @@ export const getStaticPaths = (async () => {
     },
     {
       path: 'now',
-      on: features.now,
       og: {
         title: 'Now',
         eyebrow: 'allenhansen.dev / now',
@@ -80,9 +77,7 @@ export const getStaticPaths = (async () => {
       },
     })
   }
-  return pages
-    .filter(({ on = true }) => on)
-    .map(({ path, og }) => ({ params: { path }, props: og }))
+  return pages.map(({ path, og }) => ({ params: { path }, props: og }))
 }) satisfies GetStaticPaths
 
 export const GET: APIRoute = async ({ props }) => {
