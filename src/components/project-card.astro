@@ -9,6 +9,8 @@ type Props = { project: CollectionEntry<'projects'> }
 const { name, url, tagline, status, started, stack, mark } =
   Astro.props.project.data
 const Tag = url ? Anchor : 'div'
+// A domain name is one long word; let it break before the dot on narrow cards.
+const nameParts = name.split(/(?=\.)/)
 ---
 
 <Tag
@@ -31,7 +33,7 @@ const Tag = url ? Anchor : 'div'
   <h2
     class="font-display text-[26px] leading-[1.1] font-[750] tracking-[-0.005em] uppercase [font-variation-settings:'wdth'_118]"
   >
-    {name}
+    {nameParts.map((part, i) => (i > 0 ? [<wbr />, part] : part))}
   </h2>
   <p class="mb-auto text-[15.5px] leading-[1.5] text-muted">{tagline}</p>
   {
