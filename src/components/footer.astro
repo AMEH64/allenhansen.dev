@@ -6,11 +6,16 @@ type Props = { current?: string }
 const { current } = Astro.props
 ---
 
-<footer class="site-foot">
+<footer
+  class="relative flex justify-between gap-5 pt-8 pb-10 text-[13.5px] text-muted before:absolute before:inset-x-0 before:top-0 before:rule print:in-[.page-resume]:hidden phone:flex-col"
+>
   <p>
     © {new Date().getFullYear()} Allen Hansen. Set in Anybody and Atkinson Hyperlegible.
   </p>
-  <nav aria-label="Elsewhere">
+  <nav
+    class="flex flex-wrap items-center gap-x-5 gap-y-2 *:no-underline after:ml-1.5 after:size-3.5 after:registration-mark *:hover:text-text *:hover:underline *:hover:decoration-brand *:hover:decoration-auto *:aria-[current=page]:text-text *:aria-[current=page]:underline *:aria-[current=page]:decoration-brand *:aria-[current=page]:decoration-auto"
+    aria-label="Elsewhere"
+  >
     <a href={rssPath}>RSS</a>
     <a href={links.github}>GitHub</a>
     <a href={links.linkedin}>LinkedIn</a>

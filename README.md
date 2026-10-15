@@ -40,8 +40,8 @@ src/
 ├── site.config.ts       Copy, links, career start date, and note settings.
 └── styles/
     ├── palette.css      Every color on the site.
-    ├── global.css       Tailwind import and theme tokens.
-    └── press.css        The Letterpress components.
+    ├── global.css       Tailwind import, theme tokens, and variants.
+    └── press.css        What classes can't say: the lamp, paper, pressed type, and post bodies.
 ```
 
 ## Feature flags
@@ -269,18 +269,61 @@ Change colors in `palette.css`, not in the tokens.
 | Token                     | Value                    | Example class          |
 | :------------------------ | :----------------------- | :--------------------- |
 | `--color-brand`           | `var(--brand)`           | `text-brand`           |
+| `--color-brand-wash`      | `var(--brand-wash)`      | `bg-brand-wash`        |
 | `--color-paper`           | `var(--paper)`           | `bg-paper`             |
 | `--color-text`            | `var(--text)`            | `text-text`            |
 | `--color-muted`           | `var(--muted)`           | `text-muted`           |
 | `--color-rule`            | `var(--rule)`            | `border-rule`          |
 | `--color-press`           | `var(--press)`           | `bg-press`             |
 | `--color-surface`         | `var(--surface)`         | `bg-surface`           |
+| `--color-code-bg`         | `var(--code-bg)`         | `bg-code-bg`           |
+| `--color-groove-sh`       | `var(--groove-sh)`       | `border-groove-sh`     |
+| `--color-groove-hi`       | `var(--groove-hi)`       | `border-groove-hi`     |
 | `--color-status-active`   | `var(--status-active)`   | `text-status-active`   |
 | `--color-status-paused`   | `var(--status-paused)`   | `text-status-paused`   |
 | `--color-status-archived` | `var(--status-archived)` | `text-status-archived` |
 
 Fonts are tokens too: `font-display` (Anybody), `font-sans` (Atkinson
 Hyperlegible Next), and `font-mono` (Atkinson Hyperlegible Mono).
+
+### Styling with classes
+
+Style markup with Tailwind classes. The design is drawn in px on a 17px root
+(16px on phones), so a few defaults are different:
+
+- **One spacing step is exactly 4px**, so `p-4` is 16px at every breakpoint
+  (Tailwind's 0.25rem would be 4.25px on the 17px root). Write values off the
+  scale as arbitrary values, like `p-[26px]`, and rem as `px-[1rem]`. Type sizes
+  are arbitrary values too: `text-[14.5px]`.
+- **`rounded-xs` is 2px**, the site's one corner radius.
+- **`phone:`** is the one breakpoint, `max-width: 760px`. The layout is
+  desktop-first, so write the desktop style and add `phone:` overrides.
+- **`light:`** and **`dark:`** follow the Lights switch.
+- **`print:` comes before `phone:`** in the output, and a printed page is
+  phone-width, so a `print:` class that overrides a `phone:` one needs `!`, like
+  `print:text-[30pt]!`.
+
+`src/styles/press.css` keeps what classes can't say, as custom utilities you use
+like any other class. It's plain CSS that reads the theme variables
+(`var(--color-brand)`, `calc(var(--spacing) * 4)`, `var(--radius-xs)`) wherever
+one has the exact value, and uses `@variant phone` for the breakpoint. Don't use
+`@apply`.
+
+| Class               | What it is                                                 |
+| :------------------ | :--------------------------------------------------------- |
+| `deboss`            | Type pressed blind into the stock, lit by the lamp         |
+| `inked`             | Type printed in ink, still catching the lamp (page titles) |
+| `relief`            | A lighter impression (post titles)                         |
+| `glow`              | The lamp                                                   |
+| `paper-layers`      | The paper fiber, lit from the lamp's side                  |
+| `rule`              | The pressed groove under headings, rows, and the page      |
+| `tag-hash`          | The `#` before a tag, which screen readers skip            |
+| `registration-mark` | The footer's registration mark                             |
+
+Each type effect prints flat in the text color with more contrast, forced
+colors, or on paper. Post bodies (`.prose`) stay in CSS too, because MDX content
+can't carry classes. Class lists that repeat across components live in
+`src/lib/classes.ts`.
 
 ## Fonts
 

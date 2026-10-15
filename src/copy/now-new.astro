@@ -2,13 +2,19 @@
 // Now copy drafted in October 2026. Pick it with features.nowCopy = 'new'.
 // The home "Now" line and the page description switch with it, in site.config.ts.
 import Anchor from '~/components/mdx/anchor.astro'
+
+const section = 'relative pt-[18px] pb-[26px]'
+const heading =
+  'mb-2.5 font-mono text-[12px] font-semibold tracking-[0.16em] text-brand uppercase'
 ---
 
-<div class="now-grid">
-  <section aria-labelledby="now-work">
-    <span class="rule"></span>
-    <h2 id="now-work">Working on</h2>
-    <div class="prose">
+<div
+  class="grid max-w-[900px] grid-cols-2 gap-x-14 gap-y-2.5 pb-[30px] phone:grid-cols-[1fr]"
+>
+  <section class={section} aria-labelledby="now-work">
+    <span class="absolute inset-x-0 top-0 rule"></span>
+    <h2 class={heading} id="now-work">Working on</h2>
+    <div class="prose text-[17px]">
       <ul>
         {
           /* Open question: is it fine to name Resource Advisor+ in public? If not: "AI features in Schneider Electric’s sustainability software." */
@@ -26,10 +32,10 @@ import Anchor from '~/components/mdx/anchor.astro'
       </ul>
     </div>
   </section>
-  <section aria-labelledby="now-side">
-    <span class="rule"></span>
-    <h2 id="now-side">Side projects</h2>
-    <div class="prose">
+  <section class={section} aria-labelledby="now-side">
+    <span class="absolute inset-x-0 top-0 rule"></span>
+    <h2 class={heading} id="now-side">Side projects</h2>
+    <div class="prose text-[17px]">
       <ul>
         {
           /* Open question: will verso.allenhansen.dev be live when this ships? */
@@ -43,4 +49,4 @@ import Anchor from '~/components/mdx/anchor.astro'
     </div>
   </section>
 </div>
-<p class="now-away">Away from work: walks with Boba.</p>
+<p class="max-w-[640px] pb-6 text-[17px]">Away from work: walks with Boba.</p>

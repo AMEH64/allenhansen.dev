@@ -21,7 +21,7 @@ const NowCopy = features.nowCopy === 'old' ? NowOld : NowNew
     lead={`What I’d tell a friend I hadn’t seen in a year. Last updated ${now.updated}.`}
   />
   <NowCopy />
-  <p class="now-foot">
+  <p class="max-w-[640px] pb-10 text-[15px] text-muted">
     Inspired by the <a href="https://nownownow.com/about">/now movement</a>.
     {
       features.about && (

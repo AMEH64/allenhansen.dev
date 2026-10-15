@@ -2,6 +2,7 @@
 import { getCollection } from 'astro:content'
 import { SITE_TITLE } from '~/consts'
 import CvText from '~/components/cv-text.astro'
+import SlugLine from '~/components/slug-line.astro'
 import MainLayout from '~/layouts/main-layout.astro'
 import { formatDate } from '~/lib/dates'
 import { links, meta, yearsOfExperience } from '~/site.config'
@@ -59,6 +60,22 @@ const contact = [
   ['linkedin.com/in/allen-hansen', links.linkedin],
   ['github.com/ameh64', links.github],
 ]
+
+// Numbered sections and ink dashes. On paper: no site chrome, one ink, letter size.
+const cv = {
+  sec: 'relative pt-[34px] [counter-increment:sec] print:pt-[10pt]',
+  h: 'flex items-center gap-3.5 pb-1 font-mono text-[12px] font-semibold tracking-[0.16em] uppercase before:text-brand before:content-[counter(sec,decimal-leading-zero)] after:h-px after:flex-1 after:bg-rule',
+  job: 'relative grid grid-cols-[170px_minmax(0,1fr)] gap-7 py-[22px] after:absolute after:inset-x-0 after:bottom-0 after:h-px after:bg-rule last:after:hidden phone:grid-cols-[minmax(0,1fr)] phone:gap-1.5 print:break-inside-avoid print:grid-cols-[1.25in_minmax(0,1fr)]! print:gap-[14pt]! print:py-[8pt]',
+  when: 'pt-1 font-mono text-[12.5px] tracking-[0.02em] text-brand tabular-nums [&_time]:whitespace-nowrap',
+  title:
+    "font-display text-[19px] leading-[1.25] font-[750] tracking-[0.01em] uppercase [font-variation-settings:'wdth'_118]",
+  org: 'mt-[3px] text-[15.5px] font-semibold',
+  where: 'font-normal text-muted',
+  list: 'mt-3 text-[16px] leading-[1.6] print:text-[10.5pt] print:leading-[1.45]',
+  skill:
+    "inline whitespace-nowrap not-last:after:pr-[0.2em] not-last:after:pl-[0.45em] not-last:after:font-extrabold not-last:after:text-brand not-last:after:content-['·']",
+  item: "relative pl-5 not-first:mt-1.5 before:absolute before:left-0 before:font-bold before:text-brand before:content-['–']",
+}
 ---
 
 <MainLayout
@@ -66,22 +83,38 @@ const contact = [
   description={meta.resume}
   ogImage="/og/resume.png"
   current="resume"
-  bodyClass="page-resume"
+  bodyClass="page-resume print:text-[10.5pt]"
 >
-  <header class="phead" style="padding-bottom:0">
-    <p class="slug-line">allenhansen.dev / résumé</p>
-    <h1 class="vh">Résumé</h1>
+  <header class="relative pt-5 print:hidden">
+    <SlugLine>allenhansen.dev / résumé</SlugLine>
+    <h1 class="sr-only">Résumé</h1>
   </header>
-  <div class="cv">
-    <header class="cv-head">
-      <h2 class="cv-name">Allen Hansen</h2>
-      <p class="cv-role">Senior Full-Stack Software Engineer</p>
-      <p class="cv-summary">
+  <div
+    class="max-w-[900px] pb-10 [counter-reset:sec] print:max-w-none print:p-0"
+  >
+    <header
+      class="border-b-2 border-brand pt-[18px] pb-[30px] print:pt-0 print:pb-[10pt]"
+    >
+      <h2
+        class="font-display text-[58px] leading-[0.9] font-black tracking-[-0.015em] uppercase [font-variation-settings:'wdth'_116] print:text-[30pt]! phone:text-[length:clamp(34px,11vw,58px)]"
+      >
+        Allen Hansen
+      </h2>
+      <p
+        class="mt-3.5 font-mono text-[13px] tracking-[0.16em] text-brand uppercase"
+      >
+        Senior Full-Stack Software Engineer
+      </p>
+      <p
+        class="mt-[18px] max-w-[62ch] text-[19px] leading-[1.6] print:text-[10.5pt]! print:leading-[1.45] phone:text-[17px]"
+      >
         Full-stack engineer with {yearsOfExperience} years of experience specializing
         in building web apps and microservices. Passionate about leveraging web standards
         to create accessible and intuitive user experiences that perform at scale.
       </p>
-      <ul class="cv-contact">
+      <ul
+        class="mt-[18px] flex flex-wrap gap-x-[22px] gap-y-2 font-mono text-[13.5px] print:[&_a]:no-underline"
+      >
         {
           contact.map(([label, href]) => (
             <li>
@@ -90,17 +123,19 @@ const contact = [
           ))
         }
       </ul>
-      <button class="cv-print" type="button" data-print
-        >Print or save as PDF</button
+      <button
+        class="mt-5 cursor-pointer rounded-xs border border-brand px-3.5 py-[7px] font-mono text-[12.5px] tracking-[0.04em] text-brand print:hidden"
+        type="button"
+        data-print>Print or save as PDF</button
       >
     </header>
 
-    <section class="cv-sec" aria-labelledby="cv-exp">
-      <h2 class="cv-h" id="cv-exp">Experience</h2>
+    <section class={cv.sec} aria-labelledby="cv-exp">
+      <h2 class={cv.h} id="cv-exp">Experience</h2>
       {
         jobs.map(({ data: job }) => (
-          <article class="cv-job">
-            <p class="cv-when">
+          <article class={cv.job}>
+            <p class={cv.when}>
               <time datetime={job.startDate}>
                 {formatDate(job.startDate, 'month')}
               </time>
@@ -114,14 +149,14 @@ const contact = [
               )}
             </p>
             <div>
-              <h3>{job.position}</h3>
-              <p class="cv-org">
-                {job.company} <span>· {job.location}</span>
+              <h3 class={cv.title}>{job.position}</h3>
+              <p class={cv.org}>
+                {job.company} <span class={cv.where}>· {job.location}</span>
               </p>
               {job.highlights.length > 0 && (
-                <ul class="cv-list">
+                <ul class={cv.list}>
                   {job.highlights.map(h => (
-                    <li>
+                    <li class={cv.item}>
                       <CvText text={h} />
                     </li>
                   ))}
@@ -133,37 +168,39 @@ const contact = [
       }
     </section>
 
-    <section class="cv-sec" aria-labelledby="cv-skills">
-      <h2 class="cv-h" id="cv-skills">Skills</h2>
-      <ul class="cv-skills">
+    <section class={cv.sec} aria-labelledby="cv-skills">
+      <h2 class={cv.h} id="cv-skills">Skills</h2>
+      <ul
+        class="max-w-[70ch] pt-4 pb-1 text-[16.5px] leading-[1.9] print:text-[10pt] print:leading-[1.6]"
+      >
         {
           skills.map(skill => (
             <>
-              <li>{skill}</li>{' '}
+              <li class={cv.skill}>{skill}</li>{' '}
             </>
           ))
         }
       </ul>
     </section>
 
-    <section class="cv-sec" aria-labelledby="cv-edu">
-      <h2 class="cv-h" id="cv-edu">Education</h2>
+    <section class={cv.sec} aria-labelledby="cv-edu">
+      <h2 class={cv.h} id="cv-edu">Education</h2>
       {
         education.map(({ data: item }) => (
-          <article class="cv-job">
-            <p class="cv-when">
+          <article class={cv.job}>
+            <p class={cv.when}>
               <time datetime={item.graduationDate}>
                 {formatDate(item.graduationDate, 'month')}
               </time>
             </p>
             <div>
-              <h3>{item.degree}</h3>
-              <p class="cv-org">
-                {item.school} <span>· {item.location}</span>
+              <h3 class={cv.title}>{item.degree}</h3>
+              <p class={cv.org}>
+                {item.school} <span class={cv.where}>· {item.location}</span>
               </p>
-              <ul class="cv-list">
+              <ul class={cv.list}>
                 {item.highlights.map(h => (
-                  <li>
+                  <li class={cv.item}>
                     <CvText text={h} />
                   </li>
                 ))}

@@ -1,6 +1,7 @@
 ---
 import InfoIcon from './icons/info-icon.astro'
 import WarningIcon from './icons/warning-icon.astro'
+import { callout } from '~/lib/classes'
 
 type Props = {
   class?: string
@@ -15,7 +16,20 @@ const [title, Icon] = {
 }[variant]
 ---
 
-<aside class:list={['callout', variant, className]}>
-  <p class="callout-title"><Icon />{title}</p>
+<aside
+  class:list={[
+    callout,
+    variant === 'warning'
+      ? 'border-l-5 [border-left-style:double]'
+      : 'border-l-3',
+    '[&>*+*]:mt-[0.6em]',
+    className,
+  ]}
+>
+  <p
+    class="flex items-center gap-2 font-mono text-[12px] font-semibold tracking-[0.12em] text-brand uppercase"
+  >
+    <Icon />{title}
+  </p>
   <slot />
 </aside>

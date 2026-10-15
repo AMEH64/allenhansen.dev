@@ -21,14 +21,22 @@ const { current, bodyClass, ...head } = Astro.props
 ---
 
 <!doctype html>
-<html lang="en">
+<html
+  lang="en"
+  class="bg-paper font-sans text-[17px] leading-[1.6] text-text transition-[background-color,color] duration-600 ease-[ease] phone:text-[16px]"
+>
   <head>
     <BaseHead {...head} />
   </head>
-  <body class={bodyClass}>
-    <a class="skip" href="#main">Skip to content</a>
+  <body class:list={['relative min-h-screen overflow-x-hidden', bodyClass]}>
+    <a
+      class="absolute -top-15 left-3 z-50 rounded-xs bg-text px-3.5 py-2 text-paper focus:top-3 print:hidden"
+      href="#main">Skip to content</a
+    >
     <Paper />
-    <div class="wrap">
+    <div
+      class="relative z-1 mx-auto max-w-[1240px] px-12 print:in-[.page-resume]:max-w-none print:in-[.page-resume]:p-0! phone:px-5"
+    >
       <Header current={current} />
       <main id="main">
         <slot />

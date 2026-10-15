@@ -3,7 +3,7 @@ import type { HTMLAttributes } from 'astro/types'
 
 type Props = Omit<HTMLAttributes<'svg'>, 'xmlns' | 'viewBox' | 'fill'>
 
-const { class: className = 'size-4', ...props } = Astro.props
+const { class: className = 'size-[1rem]', ...props } = Astro.props
 ---
 
 <svg

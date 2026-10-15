@@ -1,0 +1,17 @@
+---
+// A home section's heading, with a link to the full list, over a pressed groove.
+type Props = { id: string; href: string; link: string }
+const { id, href, link } = Astro.props
+---
+
+<h2
+  class="flex items-baseline justify-between pb-3.5 text-[13px] font-semibold tracking-[0.08em] text-muted uppercase"
+  id={id}
+>
+  <slot />
+  <a
+    class="font-[450] tracking-normal text-muted normal-case no-underline hover:text-text hover:underline hover:decoration-brand hover:decoration-auto"
+    href={href}>{link}</a
+  >
+</h2>
+<span class="relative rule"></span>

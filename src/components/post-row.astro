@@ -1,6 +1,7 @@
 ---
 import { formatDate } from '~/lib/dates'
 import { typeLabel, postPath, type Post } from '~/lib/posts'
+import { postType, row, rowDesc, rowTitle } from '~/lib/classes'
 import PostTags from './post-tags.astro'
 
 type Props = { note: Post }
@@ -8,13 +9,20 @@ const { note } = Astro.props
 const { data } = note
 ---
 
-<li data-post data-type={data.type} data-tags={data.tags.join(' ')}>
-  <time datetime={data.date}>{formatDate(data.date)}</time>
+<li
+  class:list={[row, 'grid-cols-[110px_1fr] phone:grid-cols-[1fr]']}
+  data-post
+  data-type={data.type}
+  data-tags={data.tags.join(' ')}
+>
+  <time class="text-[13px] text-muted tabular-nums" datetime={data.date}
+    >{formatDate(data.date)}</time
+  >
   <span>
-    <a class="t" href={postPath(note.id)}>{data.title}</a>
-    <span class="d">{data.summary}</span>
-    <span class="row-meta">
-      <span class="post-type">{typeLabel[data.type]}</span>
+    <a class={rowTitle} href={postPath(note.id)}>{data.title}</a>
+    <span class={rowDesc}>{data.summary}</span>
+    <span class="mt-[7px] flex flex-wrap items-baseline gap-x-3 gap-y-1">
+      <span class={postType}>{typeLabel[data.type]}</span>
       <PostTags tags={data.tags} />
     </span>
   </span>
