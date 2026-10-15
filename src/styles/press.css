@@ -1020,12 +1020,12 @@
     text-transform: uppercase;
   }
   .pcard p {
+    margin-bottom: auto;
     font-size: 15.5px;
     color: var(--muted);
     line-height: 1.5;
   }
   .pcard .url {
-    margin-top: auto;
     font-family: var(--font-mono);
     font-size: 13.5px;
   }

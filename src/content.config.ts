@@ -55,6 +55,7 @@ const projects = defineCollection({
   loader: glob({ pattern: '**/*.json', base: './src/content/projects' }),
   schema: z.object({
     name: z.string().min(1),
+    // Any link: a live site, a repo, or a package page. Omit it and the card has no link.
     url: z.url().optional(),
     tagline: z.string().min(1),
     // GitHub-style: Active, Paused, or Archived.

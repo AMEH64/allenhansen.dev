@@ -17,17 +17,13 @@ const Tag = url ? Anchor : 'div'
   </div>
   <h2>{name}</h2>
   <p>{tagline}</p>
-  <span class="url">
-    {
-      url ? (
-        <>
-          {displayUrl(url)} <span aria-hidden="true">↗</span>
-        </>
-      ) : (
-        'Gets an address when it ships'
-      )
-    }
-  </span>
+  {
+    url && (
+      <span class="url">
+        {displayUrl(url)} <span aria-hidden="true">↗</span>
+      </span>
+    )
+  }
   {
     (started || stack.length > 0) && (
       <div class="meta">
