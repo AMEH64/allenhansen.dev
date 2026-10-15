@@ -1,9 +1,8 @@
 # allenhansen.dev
 
-Allen Hansen's site: a blog, projects, and a résumé, plus About and Now pages
-that stay behind [feature flags](#feature-flags) until their copy is final.
-Built with [Astro](https://astro.build), MDX, and Tailwind CSS 4, and served as
-static files from [Cloudflare Workers](#deploying).
+Allen Hansen's site: a blog, projects, About and Now pages, and a résumé. Built
+with [Astro](https://astro.build), MDX, and Tailwind CSS 4, and served as static
+files from [Cloudflare Workers](#deploying).
 
 The design is "Letterpress": one spot ink (ultramarine) on a paper stock, with
 debossed display type and a "Lights" switch. It's dark first, with a full light
@@ -30,12 +29,9 @@ Run these from the project root:
 src/
 ├── assets/fonts/        Self-hosted, subset variable fonts (OFL). og/ holds TTF copies and an emoji font for OG images.
 ├── components/          Header, footer, Lights switch, change log, …
-├── config/features.ts   Build-time feature flags.
 ├── content/blog/        Blog posts (MDX): notes and stories.
 ├── content/projects/    One JSON file per project card.
-├── copy/                Old and new copy for About and Now.
-├── flagged-pages/       Pages that are only built while their flag is on: About and Now.
-├── lib/                 Palette parsing, OG image renderer, icons, note helpers, flagged pages.
+├── lib/                 Palette parsing, OG image renderer, icons, note helpers, redirects.
 ├── pages/               Routes. og/, icons/, favicon.ico, site.webmanifest, and robots.txt are generated.
 ├── site.config.ts       Copy, links, career start date, and note settings.
 └── styles/
@@ -43,35 +39,6 @@ src/
     ├── global.css       Tailwind import, theme tokens, and variants.
     └── press.css        What classes can't say: the lamp, paper, pressed type, and post bodies.
 ```
-
-## Feature flags
-
-`src/config/features.ts` holds build-time flags. Today they keep About and Now
-offline until their copy is final:
-
-| Flag        | Default | What it does                                                                                                                                 |
-| :---------- | :------ | :------------------------------------------------------------------------------------------------------------------------------------------- |
-| `about`     | `false` | Builds `/about/` and shows every link to it                                                                                                  |
-| `now`       | `false` | Builds `/now/`, shows every link to it, and shows the home "Now" line                                                                        |
-| `aboutCopy` | `'new'` | `'old'` or `'new'`: picks `src/copy/about-old.astro` or `about-new.astro`                                                                    |
-| `nowCopy`   | `'new'` | `'old'` or `'new'`: picks `src/copy/now-old.astro` or `now-new.astro`, plus the home "Now" line and the page description in `site.config.ts` |
-
-While a page is off:
-
-- **It isn't built.** The page lives in `src/flagged-pages/`, not `src/pages/`,
-  and `src/lib/flagged-pages.ts` only adds the route while its flag is on.
-- **Its links are hidden:** the header nav (which is also the phone menu), the
-  home "Now" line, the 404 page's links, and the Now page's "See the about page"
-  link.
-- **It's not in the sitemap or OG images.**
-- **Its URL redirects home** with a temporary 302, for `/about` and `/about/`
-  alike, because the old site served both pages and links to them are out there.
-  The build writes these to `dist/_redirects` (see
-  `src/lib/static-redirects.ts`).
-
-To publish a page, set its flag to `true` and build. Everything comes back as it
-was. The new copy has its open questions as code comments next to the text; they
-don't render.
 
 ## Blog
 
@@ -348,7 +315,7 @@ in `dist/` add the rest:
   `/_astro/` files, four hours for icons, OG images, and `robots.txt`, and
   `noindex` on the `workers.dev` URL.
 - `_redirects`, from `public/_redirects` plus the redirects in
-  `astro.config.mjs` and the [feature flags](#feature-flags).
+  `astro.config.mjs` (see `src/lib/static-redirects.ts`).
 
 Pages live at their trailing-slash URL (`/blog/hello-world/`); the bare URL
 redirects there. Unknown URLs get the 404 page with a 404 status.

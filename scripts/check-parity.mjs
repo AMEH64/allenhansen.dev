@@ -36,6 +36,8 @@ const EDGE_CASES = [
   '/404',
   '/_vercel/insights/script.js',
 ]
+// Pages that redirect home (302) or 404 on a reference built before they were published.
+const PUBLISHED = ['/about/', '/now/']
 
 const args = process.argv.slice(2)
 const flag = name => {
@@ -235,6 +237,29 @@ function expected(path, a, b, diffs) {
     cand[b.location]?.status === 200
   ) {
     return ok('new redirect from a URL that 404s on the reference')
+  }
+  const published = PUBLISHED.find(
+    p => path.replace(/\/(index\.html)?$/, '') === p.slice(0, -1),
+  )
+  if (published) {
+    const unpublished = isRedirect(a) || a.status === 404
+    if (unpublished && path === published && b.status === 200 && isHtml(b)) {
+      return ok('published page; the reference redirects it home')
+    }
+    if (
+      unpublished &&
+      [307, 308].includes(b.status) &&
+      b.location === published
+    ) {
+      return ok(`published page; redirects to ${published}`)
+    }
+  }
+  if (
+    PUBLISHED.some(p => path === `/og${p.slice(0, -1)}.png`) &&
+    a.status === 404 &&
+    b.status === 200
+  ) {
+    return ok('OG image for a published page')
   }
   if (path.startsWith('/og/') && only('body')) {
     return {

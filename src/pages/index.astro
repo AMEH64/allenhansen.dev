@@ -8,7 +8,6 @@ import MainLayout from '~/layouts/main-layout.astro'
 import { row, rowDesc, rowTitle, status } from '~/lib/classes'
 import { BLOG, getPosts } from '~/lib/posts'
 import { displayUrl, getProjects, statusLabel } from '~/lib/projects'
-import { features } from '~/config/features'
 import { meta, now } from '~/site.config'
 
 const notes = await getPosts()
@@ -117,15 +116,13 @@ const dot = {
           ))
         }
       </ul>
-      {
-        features.now && (
-          <p class="mt-7 rounded-xs border border-rule px-[22px] py-5 text-[14.5px] leading-[1.55] text-muted">
-            <b class="font-[560] text-text">Now:</b>
-            {now.summary}
-            <a href="/now/">Updated {now.updated}</a>.
-          </p>
-        )
-      }
+      <p
+        class="mt-7 rounded-xs border border-rule px-[22px] py-5 text-[14.5px] leading-[1.55] text-muted"
+      >
+        <b class="font-[560] text-text">Now:</b>
+        {now.summary}
+        <a href="/now/">Updated {now.updated}</a>.
+      </p>
     </section>
   </div>
 </MainLayout>

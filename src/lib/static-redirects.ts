@@ -2,8 +2,8 @@ import { appendFile } from 'node:fs/promises'
 import type { AstroConfig, AstroIntegration } from 'astro'
 
 /**
- * Writes the site's `redirects` (from astro.config.mjs and integrations like
- * flagged-pages) to dist/_redirects, which Workers static assets apply before
+ * Writes the site's `redirects` (from astro.config.mjs and integrations) to
+ * dist/_redirects, which Workers static assets apply before
  * serving any file. Astro's meta-refresh pages are turned off, so the build
  * doesn't ship a 200 page for a URL that should redirect.
  */
