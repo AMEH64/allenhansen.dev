@@ -6,8 +6,12 @@
   .about {
     display: grid;
     grid-template-columns: minmax(0, 640px) 300px;
-    gap: 80px;
-    padding-bottom: 40px;
+    gap: calc(var(--spacing) * 20);
+    padding-bottom: calc(var(--spacing) * 10);
+    @variant phone {
+      grid-template-columns: minmax(0, 1fr);
+      gap: calc(var(--spacing) * 10);
+    }
   }
   .about .prose p {
     font-size: 18.5px;
@@ -15,26 +19,29 @@
   .about .lede {
     font-family: var(--font-display);
     font-variation-settings: 'wdth' 112;
-    font-weight: 700;
+    font-weight: var(--font-weight-bold);
     font-size: 27px !important;
     line-height: 1.3;
     letter-spacing: -0.005em;
+    @variant phone {
+      font-size: 22px !important;
+    }
   }
   .about .lede + p::first-letter {
     float: left;
     font-family: var(--font-display);
-    font-weight: 900;
+    font-weight: var(--font-weight-black);
     font-variation-settings: 'wdth' 116;
     font-size: 3.5em;
     line-height: 0.78;
     margin: 0.1em 0.1em 0 0;
-    color: var(--brand);
+    color: var(--color-brand);
   }
   .contact {
     list-style: none !important;
     padding: 0 !important;
     display: flex;
-    gap: 24px;
+    gap: calc(var(--spacing) * 6);
     flex-wrap: wrap;
     margin-top: 22px;
   }
@@ -47,42 +54,45 @@
   }
   .glance {
     margin-top: 30px;
-    border-top: 2px solid var(--brand);
-    padding-top: 12px;
+    border-top: 2px solid var(--color-brand);
+    padding-top: calc(var(--spacing) * 3);
   }
   .glance h2 {
     font-family: var(--font-mono);
     font-size: 11.5px;
-    font-weight: 600;
+    font-weight: var(--font-weight-semibold);
     letter-spacing: 0.16em;
     text-transform: uppercase;
-    color: var(--brand);
-    margin-bottom: 4px;
+    color: var(--color-brand);
+    margin-bottom: calc(var(--spacing) * 1);
   }
   .glance div {
     display: grid;
     grid-template-columns: 64px minmax(0, 1fr);
-    gap: 10px;
-    padding: 8px 0;
-    border-bottom: 1px solid var(--rule);
+    gap: calc(var(--spacing) * 2.5);
+    padding: calc(var(--spacing) * 2) 0;
+    border-bottom: 1px solid var(--color-rule);
     font-size: 14.5px;
     line-height: 1.45;
   }
   .glance dt {
     font-family: var(--font-mono);
     font-size: 11px;
-    letter-spacing: 0.1em;
+    letter-spacing: var(--tracking-widest);
     text-transform: uppercase;
-    color: var(--muted);
-    padding-top: 2px;
+    color: var(--color-muted);
+    padding-top: calc(var(--spacing) * 0.5);
   }
   .colophon {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    gap: 28px;
-    padding: 30px 0 40px;
+    gap: calc(var(--spacing) * 7);
+    padding: 30px 0 calc(var(--spacing) * 10);
     position: relative;
     counter-reset: col;
+    @variant phone {
+      grid-template-columns: 1fr;
+    }
   }
   .colophon > .rule {
     position: absolute;
@@ -97,31 +107,34 @@
     font-size: 13px;
     letter-spacing: 0.08em;
     text-transform: uppercase;
-    color: var(--muted);
-    font-weight: 600;
-    margin-bottom: 8px;
+    color: var(--color-muted);
+    font-weight: var(--font-weight-semibold);
+    margin-bottom: calc(var(--spacing) * 2);
   }
   .colophon h2::before {
     content: counter(col, decimal-leading-zero);
-    color: var(--brand);
-    margin-right: 10px;
+    color: var(--color-brand);
+    margin-right: calc(var(--spacing) * 2.5);
     font-family: var(--font-mono);
   }
   .colophon p {
     font-size: 15px;
     line-height: 1.55;
-    color: var(--muted);
+    color: var(--color-muted);
   }
   .about-side > .plate + .glance {
-    margin-top: 36px;
+    margin-top: calc(var(--spacing) * 9);
   }
 
   .now-grid {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 10px 56px;
+    gap: calc(var(--spacing) * 2.5) calc(var(--spacing) * 14);
     max-width: 900px;
     padding-bottom: 30px;
+    @variant phone {
+      grid-template-columns: 1fr;
+    }
   }
   .now-grid section {
     position: relative;
@@ -136,11 +149,11 @@
   .now-grid h2 {
     font-family: var(--font-mono);
     font-size: 12px;
-    font-weight: 600;
+    font-weight: var(--font-weight-semibold);
     letter-spacing: 0.16em;
     text-transform: uppercase;
-    color: var(--brand);
-    margin-bottom: 10px;
+    color: var(--color-brand);
+    margin-bottom: calc(var(--spacing) * 2.5);
   }
   .now-grid .prose {
     font-size: 17px;
@@ -148,26 +161,12 @@
   .now-away {
     max-width: 640px;
     font-size: 17px;
-    padding-bottom: 24px;
+    padding-bottom: calc(var(--spacing) * 6);
   }
   .now-foot {
     max-width: 640px;
     font-size: 15px;
-    color: var(--muted);
-    padding-bottom: 40px;
-  }
-
-  @media (max-width: 760px) {
-    .about {
-      grid-template-columns: minmax(0, 1fr);
-      gap: 40px;
-    }
-    .colophon,
-    .now-grid {
-      grid-template-columns: 1fr;
-    }
-    .about .lede {
-      font-size: 22px !important;
-    }
+    color: var(--color-muted);
+    padding-bottom: calc(var(--spacing) * 10);
   }
 }

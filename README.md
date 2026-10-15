@@ -305,7 +305,10 @@ Style markup with Tailwind classes. The design is drawn in px on a 17px root
   `print:text-[30pt]!`.
 
 `src/styles/press.css` keeps what classes can't say, as custom utilities you use
-like any other class:
+like any other class. It's plain CSS that reads the theme variables
+(`var(--color-brand)`, `calc(var(--spacing) * 4)`, `var(--radius-xs)`) wherever
+one has the exact value, and uses `@variant phone` for the breakpoint. Don't use
+`@apply`.
 
 | Class               | What it is                                                 |
 | :------------------ | :--------------------------------------------------------- |

@@ -1,6 +1,7 @@
 /*
  * Letterpress: what Tailwind classes can't say. Type pressed into paper, lit by a lamp,
- * printed in one ink (--brand), and the bodies of posts. Colors come only from palette.css.
+ * printed in one ink (--color-brand), and the bodies of posts. Read Tailwind's theme
+ * variables (--color-*, --spacing, --radius-xs) where one fits; never @apply.
  * The light engine (src/components/light-engine.astro) writes --sx, --sy, --px, --py,
  * --lx, --ly to [data-lit], .paper-layers, and .glow.
  */
@@ -27,10 +28,10 @@
   :focus-visible {
     outline: 2px solid var(--focus);
     outline-offset: 3px;
-    border-radius: 2px;
+    border-radius: var(--radius-xs);
   }
   ::selection {
-    background: var(--brand-wash);
+    background: var(--color-brand-wash);
   }
 
   @media (prefers-reduced-motion: reduce) {
@@ -79,14 +80,14 @@
  */
 /* blind deboss: type pressed into the stock. Shadow on the lit wall, highlight on the far wall. */
 @utility deboss {
-  color: var(--press);
+  color: var(--color-press);
   text-shadow:
     calc(var(--sx) * -1 * var(--deboss, 1.3px))
       calc(var(--sy) * -1 * var(--deboss, 1.3px)) 1px var(--sh),
     calc(var(--sx) * var(--deboss, 1.3px))
       calc(var(--sy) * var(--deboss, 1.3px)) 0.5px var(--hi);
   @media (prefers-contrast: more) {
-    color: var(--text);
+    color: var(--color-text);
     text-shadow: none;
   }
   @media (forced-colors: active) {
@@ -94,13 +95,13 @@
     text-shadow: none;
   }
   @media print {
-    color: var(--text);
+    color: var(--color-text);
     text-shadow: none;
   }
 }
 /* page titles are inked impressions: full contrast, still catching the lamp */
 @utility inked {
-  color: var(--text);
+  color: var(--color-text);
   text-shadow:
     calc(var(--sx) * 1.2px) calc(var(--sy) * 1.2px) 0.5px var(--hi),
     calc(var(--sx) * -1px) calc(var(--sy) * -1px) 1px var(--sh);
@@ -120,7 +121,7 @@
     calc(var(--sx) * 1px) calc(var(--sy) * 1px) 0 var(--hi),
     calc(var(--sx) * -0.8px) calc(var(--sy) * -0.8px) 1px var(--sh);
   @media (prefers-contrast: more) {
-    color: var(--text);
+    color: var(--color-text);
     text-shadow: none;
   }
   @media (forced-colors: active) {
@@ -132,9 +133,9 @@
 /* the pressed groove under a heading, a row, or the page */
 @utility rule {
   display: block;
-  height: 2px;
-  border-top: 1px solid var(--groove-sh);
-  border-bottom: 1px solid var(--groove-hi);
+  height: calc(var(--spacing) * 0.5);
+  border-top: 1px solid var(--color-groove-sh);
+  border-bottom: 1px solid var(--color-groove-hi);
 }
 
 /* a tag's "#", which screen readers skip */
@@ -143,17 +144,19 @@
     content: '#';
     content: '#' / '';
     margin-right: var(--tag-hash-gap, 0);
-    color: var(--brand);
+    color: var(--color-brand);
   }
 }
 
 /* the trim edge of a press sheet: a registration mark */
 @utility registration-mark {
   border-radius: 50%;
-  border: 1px solid var(--muted);
+  border: 1px solid var(--color-muted);
   background:
-    linear-gradient(var(--muted), var(--muted)) center/1px 22px no-repeat,
-    linear-gradient(var(--muted), var(--muted)) center/22px 1px no-repeat;
+    linear-gradient(var(--color-muted), var(--color-muted)) center/1px 22px
+      no-repeat,
+    linear-gradient(var(--color-muted), var(--color-muted)) center/22px 1px
+      no-repeat;
 }
 
 /* prose: the body of a post, written in MDX */
@@ -161,6 +164,9 @@
   .prose {
     font-size: 18px;
     line-height: 1.7;
+    @variant phone {
+      font-size: 17px;
+    }
   }
   .prose > * + * {
     margin-top: 1.1em;
@@ -168,7 +174,7 @@
   .prose h2,
   .prose h3 {
     font-family: var(--font-display);
-    line-height: 1.25;
+    line-height: var(--leading-tight);
     font-weight: 750;
     font-variation-settings: 'wdth' 118;
     letter-spacing: -0.005em;
@@ -188,13 +194,13 @@
   }
   .prose a {
     text-decoration: underline;
-    text-decoration-color: var(--brand);
+    text-decoration-color: var(--color-brand);
   }
   .prose a:hover {
     text-decoration-thickness: 2px;
   }
   .prose strong {
-    font-weight: 700;
+    font-weight: var(--font-weight-bold);
   }
   .prose ul,
   .prose ol {
@@ -210,34 +216,34 @@
     margin-top: 0.35em;
   }
   .prose li::marker {
-    color: var(--brand);
+    color: var(--color-brand);
   }
   .prose blockquote {
-    border-left: 3px solid var(--brand);
+    border-left: 3px solid var(--color-brand);
     padding-left: 1em;
-    color: var(--muted);
+    color: var(--color-muted);
   }
   .prose hr {
     border: 0;
-    border-top: 1px solid var(--rule);
+    border-top: 1px solid var(--color-rule);
   }
   .prose img {
-    border-radius: 2px;
+    border-radius: var(--radius-xs);
   }
   .prose code {
     font-size: 0.86em;
     padding: 0.12em 0.36em;
-    border-radius: 2px;
+    border-radius: var(--radius-xs);
     background: var(--inline-code-bg);
   }
   .prose pre {
-    padding: 18px 20px;
-    border-radius: 2px;
+    padding: 18px calc(var(--spacing) * 5);
+    border-radius: var(--radius-xs);
     overflow: auto;
     font-size: 14.5px;
     line-height: 1.6;
-    border: 1px solid var(--rule);
-    background: var(--code-bg) !important;
+    border: 1px solid var(--color-rule);
+    background: var(--color-code-bg) !important;
   }
   .prose pre code {
     padding: 0;
@@ -251,28 +257,23 @@
   }
   .prose th,
   .prose td {
-    border-bottom: 1px solid var(--rule);
-    padding: 8px 10px 8px 0;
+    border-bottom: 1px solid var(--color-rule);
+    padding: calc(var(--spacing) * 2) calc(var(--spacing) * 2.5)
+      calc(var(--spacing) * 2) 0;
     text-align: left;
   }
   /* Shiki's css-variables theme, in the one ink */
   .astro-code {
     --astro-code-foreground: var(--code-text);
-    --astro-code-background: var(--code-bg);
-    --astro-code-token-keyword: var(--brand);
-    --astro-code-token-constant: var(--brand);
-    --astro-code-token-link: var(--brand);
-    --astro-code-token-string: var(--text);
-    --astro-code-token-string-expression: var(--text);
-    --astro-code-token-function: var(--text);
+    --astro-code-background: var(--color-code-bg);
+    --astro-code-token-keyword: var(--color-brand);
+    --astro-code-token-constant: var(--color-brand);
+    --astro-code-token-link: var(--color-brand);
+    --astro-code-token-string: var(--color-text);
+    --astro-code-token-string-expression: var(--color-text);
+    --astro-code-token-function: var(--color-text);
     --astro-code-token-parameter: var(--code-text);
-    --astro-code-token-comment: var(--muted);
-    --astro-code-token-punctuation: var(--muted);
-  }
-
-  @media (max-width: 760px) {
-    .prose {
-      font-size: 17px;
-    }
+    --astro-code-token-comment: var(--color-muted);
+    --astro-code-token-punctuation: var(--color-muted);
   }
 }
