@@ -15,7 +15,7 @@ export const getStaticPaths = (async () => {
         title: 'Allen Hansen',
         eyebrow: 'Blog & projects · Full-stack engineering',
         description:
-          'Full-stack engineer. I write down what I learn, and I build small things that each get their own address.',
+          'Full-stack engineer who likes turning rough ideas into software people enjoy using.',
         pressed: true,
       },
     },
