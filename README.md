@@ -315,7 +315,6 @@ like any other class:
 | `paper-layers`      | The paper fiber, lit from the lamp's side                  |
 | `rule`              | The pressed groove under headings, rows, and the page      |
 | `tag-hash`          | The `#` before a tag, which screen readers skip            |
-| `color-bar`         | The footer's color bar                                     |
 | `registration-mark` | The footer's registration mark                             |
 
 Each type effect prints flat in the text color with more contrast, forced
