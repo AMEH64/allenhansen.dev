@@ -41,8 +41,7 @@ src/
 └── styles/
     ├── palette.css      Every color on the site.
     ├── global.css       Tailwind import, theme tokens, and variants.
-    ├── press.css        What classes can't say: the lamp, paper, pressed type, and post bodies.
-    └── about-now.css    About and Now page styles, until those pages leave their flags.
+    └── press.css        What classes can't say: the lamp, paper, pressed type, and post bodies.
 ```
 
 ## Feature flags

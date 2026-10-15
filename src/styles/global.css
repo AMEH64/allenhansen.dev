@@ -1,7 +1,6 @@
 @import 'tailwindcss';
 @import './palette.css';
 @import './press.css';
-@import './about-now.css';
 
 @custom-variant dark (&:where([data-color-mode=dark], [data-color-mode=dark] *));
 @custom-variant light (&:where([data-color-mode=light], [data-color-mode=light] *));
