@@ -13,7 +13,11 @@ const bare = (url: string) =>
     i % 3 === 0 ? (
       part
     ) : i % 3 === 1 ? (
-      <Anchor href={parts[i + 1]} data-print-url={bare(parts[i + 1]!)}>
+      <Anchor
+        class="print:no-underline print:after:content-['_('_attr(data-print-url)_')']"
+        href={parts[i + 1]}
+        data-print-url={bare(parts[i + 1]!)}
+      >
         {part}
       </Anchor>
     ) : null,

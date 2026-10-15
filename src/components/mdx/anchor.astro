@@ -16,5 +16,5 @@ const external =
   target={external ? '_blank' : undefined}
   rel={external ? 'noopener noreferrer' : undefined}
   {...props}
-  ><slot />{external && <span class="vh"> (opens in a new tab)</span>}</a
+  ><slot />{external && <span class="sr-only"> (opens in a new tab)</span>}</a
 >

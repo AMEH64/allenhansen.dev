@@ -29,6 +29,9 @@ const tagCounts = Object.entries(
       return acc
     }, {}),
 ).sort(([a], [b]) => a.localeCompare(b))
+
+const pill =
+  'inline-block rounded-xs border border-rule px-12 py-5 font-mono text-[12px] tracking-[0.08em] text-muted uppercase no-underline hover:border-muted hover:text-text [&[aria-current]]:border-brand [&[aria-current]]:bg-brand-wash [&[aria-current]]:text-brand'
 ---
 
 <MainLayout
@@ -38,49 +41,76 @@ const tagCounts = Object.entries(
   current="blog"
 >
   <PageTitle title="Blog" lead={meta.blog} />
-  <div class="blog-list" data-filter>
-    <nav class="filters" aria-label="Filter posts">
-      <ul class="pills">
-        <li><a href={BLOG} data-filter-type="" aria-current="true">All</a></li>
+  <div data-filter>
+    <nav
+      class="mt-6 flex flex-wrap items-center gap-x-24 gap-y-10"
+      aria-label="Filter posts"
+    >
+      <ul class="flex gap-6">
+        <li>
+          <a class={pill} href={BLOG} data-filter-type="" aria-current="true"
+            >All</a
+          >
+        </li>
         {
           (['note', 'story'] as const).map(type => (
             <li>
-              <a href={typePath(type)} data-filter-type={type}>
+              <a class={pill} href={typePath(type)} data-filter-type={type}>
                 {typePlural[type]}
               </a>
             </li>
           ))
         }
       </ul>
-      <ul class="tag-bar" aria-label="Filter by tag">
+      <ul class="flex basis-full flex-wrap gap-6" aria-label="Filter by tag">
         {
           tagCounts.map(([tag, n]) => (
             <li>
-              <a href={tagPath(tag)} data-filter-toggle={tag}>
+              <a
+                class="tag-hash inline-flex items-baseline gap-6 rounded-xs border border-rule px-9 py-3 font-mono text-[12px] tracking-[0.02em] text-muted no-underline [--tag-hash-gap:-4px] hover:border-muted hover:text-text aria-pressed:border-brand aria-pressed:bg-brand-wash aria-pressed:text-text"
+                href={tagPath(tag)}
+                data-filter-toggle={tag}
+              >
                 {tag}
-                <span class="n">
+                <span class="text-muted tabular-nums">
                   {n}
-                  <span class="vh">{n === 1 ? 'post' : 'posts'}</span>
+                  <span class="sr-only">{n === 1 ? 'post' : 'posts'}</span>
                 </span>
               </a>
             </li>
           ))
         }
       </ul>
-      <p class="filter-status">
+      <p
+        class="flex basis-full gap-14 text-[13.5px] whitespace-nowrap text-muted tabular-nums"
+      >
         <span aria-live="polite"
           ><span data-filter-count
             >{notes.length} {notes.length === 1 ? 'post' : 'posts'}</span
-          ><span class="vh" data-filter-detail></span></span
+          ><span class="sr-only" data-filter-detail></span></span
         >
-        <a href={BLOG} data-filter-clear data-off>Clear</a>
+        <a
+          class="font-mono text-[12.5px] data-off:invisible"
+          href={BLOG}
+          data-filter-clear
+          data-off>Clear</a
+        >
       </p>
     </nav>
     {
       years.map(([year, list]) => (
-        <section class="year" aria-labelledby={`y${year}`} data-year>
-          <h2 id={`y${year}`}>{year}</h2>
-          <ul class="rows">
+        <section
+          class="grid grid-cols-[140px_1fr] gap-20 pt-30 phone:grid-cols-[1fr] phone:gap-0"
+          aria-labelledby={`y${year}`}
+          data-year
+        >
+          <h2
+            class="pt-16 text-[15px] font-semibold text-muted"
+            id={`y${year}`}
+          >
+            {year}
+          </h2>
+          <ul>
             {list.map(note => (
               <PostRow note={note} />
             ))}
@@ -88,10 +118,10 @@ const tagCounts = Object.entries(
         </section>
       ))
     }
-    <p class="filter-empty" data-filter-empty hidden>
+    <p class="pt-40 pb-20 text-muted" data-filter-empty hidden>
       No posts match these filters. <a href={BLOG}>Clear filters</a>
     </p>
     <BlogFilter />
   </div>
-  <div style="height:40px"></div>
+  <div class="h-40"></div>
 </MainLayout>

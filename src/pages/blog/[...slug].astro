@@ -5,6 +5,7 @@ import ChangeLog from '~/components/change-log.astro'
 import CodeCopy from '~/components/code-copy.astro'
 import Anchor from '~/components/mdx/anchor.astro'
 import PostTags from '~/components/post-tags.astro'
+import { callout, postType } from '~/lib/classes'
 import MainLayout from '~/layouts/main-layout.astro'
 import { formatDate } from '~/lib/dates'
 import {
@@ -47,6 +48,12 @@ const newerWay =
   replacement && (!replacement.data.draft || import.meta.env.DEV)
     ? replacement
     : undefined
+
+const tocLink =
+  'no-underline hover:text-text hover:underline hover:decoration-brand hover:decoration-auto'
+const pnLink =
+  'text-[17px] font-[520] no-underline hover:underline hover:decoration-brand hover:decoration-auto'
+const pnLabel = 'mb-4 block text-[12.5px] font-normal text-muted'
 ---
 
 <MainLayout
@@ -58,11 +65,18 @@ const newerWay =
   modifiedTime={data.updatedDate ?? data.date}
   current="blog"
 >
-  <a class="crumb" href={BLOG}>← Blog</a>
-  <header class="note-head">
-    <h1 class="relief" data-lit>{data.title}</h1>
-    <div class="note-meta">
-      <span class="post-type">{typeLabel[data.type]}</span>
+  <a class="text-[14px] text-muted no-underline hover:text-text" href={BLOG}
+    >← Blog</a
+  >
+  <header class="max-w-900 pt-18 pb-30">
+    <h1
+      class="mt-14 mb-18 font-display text-[50px] leading-[1.04] font-extrabold tracking-[-0.01em] text-balance relief [font-variation-settings:'wdth'_112] phone:text-[32px]"
+      data-lit
+    >
+      {data.title}
+    </h1>
+    <div class="flex flex-wrap items-center gap-18 text-[14px] text-muted">
+      <span class={postType}>{typeLabel[data.type]}</span>
       <time datetime={data.date}>{formatDate(data.date)}</time>
       {
         data.updatedDate && (
@@ -84,13 +98,15 @@ const newerWay =
       }
       <span>{readingMinutes(note.body)} min read</span>
     </div>
-    <PostTags tags={data.tags} />
+    <PostTags class="mt-14" tags={data.tags} />
   </header>
-  <div class="note-grid">
+  <div
+    class="grid grid-cols-[minmax(0,680px)_280px] gap-72 pb-40 phone:grid-cols-[minmax(0,1fr)] phone:gap-40"
+  >
     <article class="prose">
       {
         newerWay && (
-          <p class="callout superseded">
+          <p class:list={[callout, 'mt-0 mb-[1.6em] border-l-3']}>
             There’s a newer way to do this →{' '}
             <a href={postPath(newerWay.id)}>{newerWay.data.title}</a>
           </p>
@@ -98,8 +114,10 @@ const newerWay =
       }
       <Content components={{ a: Anchor }} />
       {log.length > 0 && <ChangeLog log={log} filePath={note.filePath} />}
-      <p class="report">
-        <a href={reportUrl(data.title, url)}
+      <p class="mt-22 text-[14.5px] leading-[1.5] print:hidden">
+        <a
+          class="font-mono text-[13.5px] tracking-[0.02em]"
+          href={reportUrl(data.title, url)}
           >See something wrong or out of date? Open an issue →</a
         >
       </p>
@@ -107,18 +125,30 @@ const newerWay =
     </article>
     {
       toc.length > 0 && (
-        <aside class="margin" aria-label="On this page">
-          <nav class="toc" aria-labelledby="toc-h">
-            <h2 id="toc-h">On this page</h2>
-            <ol>
+        <aside
+          class="text-[14px] leading-[1.55] text-muted"
+          aria-label="On this page"
+        >
+          <nav aria-labelledby="toc-h">
+            <h2
+              class="mb-10 text-[12px] font-semibold tracking-[0.1em] uppercase"
+              id="toc-h"
+            >
+              On this page
+            </h2>
+            <ol class="*:relative *:py-8">
               {toc.map(h => (
                 <li>
-                  <a href={`#${h.slug}`}>{h.text}</a>
+                  <a class={tocLink} href={`#${h.slug}`}>
+                    {h.text}
+                  </a>
                 </li>
               ))}
               {log.length > 0 && (
                 <li>
-                  <a href="#changes">Change log</a>
+                  <a class={tocLink} href="#changes">
+                    Change log
+                  </a>
                 </li>
               )}
             </ol>
@@ -129,17 +159,23 @@ const newerWay =
   </div>
   {
     (older || newer) && (
-      <nav class="pn" aria-label="More posts">
-        <span class="rule" />
+      <nav
+        class="relative grid grid-cols-[1fr_1fr] gap-30 pt-30 pb-50"
+        aria-label="More posts"
+      >
+        <span class="absolute inset-x-0 top-0 rule" />
         {older && (
-          <a href={postPath(older.id)}>
-            <small>← Older</small>
+          <a class={pnLink} href={postPath(older.id)}>
+            <small class={pnLabel}>← Older</small>
             {older.data.title}
           </a>
         )}
         {newer && (
-          <a class="next" href={postPath(newer.id)}>
-            <small>Newer →</small>
+          <a
+            class:list={[pnLink, 'col-start-2 text-right']}
+            href={postPath(newer.id)}
+          >
+            <small class={pnLabel}>Newer →</small>
             {newer.data.title}
           </a>
         )}

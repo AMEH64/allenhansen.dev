@@ -3,7 +3,7 @@
 // there's nothing to hide. One shared live region announces the result.
 ---
 
-<p class="vh" data-copy-status aria-live="polite"></p>
+<p class="sr-only" data-copy-status aria-live="polite"></p>
 
 <script>
   const status = document.querySelector<HTMLElement>('[data-copy-status]')
@@ -20,7 +20,7 @@
 
   document.querySelectorAll<HTMLPreElement>('.prose pre').forEach(pre => {
     const block = document.createElement('div')
-    block.className = 'code-block'
+    block.className = 'relative'
     pre.before(block)
     block.append(pre)
 
@@ -29,11 +29,12 @@
       lang && lang !== 'plaintext' ? ` ${lang.toUpperCase()} code` : ' code'
     const button = document.createElement('button')
     button.type = 'button'
-    button.className = 'copy'
+    button.className =
+      'absolute top-8 right-8 min-h-28 min-w-28 cursor-pointer rounded-xs border border-rule bg-code-bg px-10 font-mono text-[11px] leading-none tracking-[0.12em] text-muted uppercase hover:border-brand hover:text-brand focus-visible:border-brand focus-visible:text-brand data-[state=done]:border-brand data-[state=done]:text-brand data-[state=failed]:border-dashed data-[state=failed]:text-text print:hidden'
     const label = document.createElement('span')
     label.textContent = 'Copy'
     const hidden = document.createElement('span')
-    hidden.className = 'vh'
+    hidden.className = 'sr-only'
     hidden.textContent = what
     button.append(label, hidden)
     block.append(button)

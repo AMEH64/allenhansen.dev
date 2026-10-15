@@ -1,6 +1,7 @@
 ---
 import type { CollectionEntry } from 'astro:content'
 import Anchor from '~/components/mdx/anchor.astro'
+import { status as statusClass } from '~/lib/classes'
 import { formatDate } from '~/lib/dates'
 import { statusLabel, displayUrl } from '~/lib/projects'
 
@@ -10,23 +11,39 @@ const { name, url, tagline, status, started, stack, mark } =
 const Tag = url ? Anchor : 'div'
 ---
 
-<Tag class={`pcard ${status}`} href={url} data-lit>
-  <div class="top">
-    <span class="pm" aria-hidden="true">{mark}</span>
-    <span class={`st st-${status}`}>{statusLabel[status]}</span>
+<Tag
+  class:list={[
+    'relative flex min-h-240 flex-col gap-12 rounded-xs border border-rule p-26 text-text no-underline transition-[border-color] duration-200 ease-[ease]',
+    url && 'hover:border-brand',
+  ]}
+  href={url}
+  data-lit
+>
+  <div class="flex items-center justify-between">
+    <span
+      class="font-display text-[64px] leading-[0.9] font-black deboss [--deboss:1.2px] [font-variation-settings:'wdth'_116] phone:text-[48px]"
+      aria-hidden="true">{mark}</span
+    >
+    <span class:list={[statusClass.base, statusClass[status]]}
+      >{statusLabel[status]}</span
+    >
   </div>
-  <h2>{name}</h2>
-  <p>{tagline}</p>
+  <h2
+    class="font-display text-[26px] leading-[1.1] font-[750] tracking-[-0.005em] uppercase [font-variation-settings:'wdth'_118]"
+  >
+    {name}
+  </h2>
+  <p class="mb-auto text-[15.5px] leading-[1.5] text-muted">{tagline}</p>
   {
     url && (
-      <span class="url">
+      <span class="font-mono text-[13.5px]">
         {displayUrl(url)} <span aria-hidden="true">↗</span>
       </span>
     )
   }
   {
     (started || stack.length > 0) && (
-      <div class="meta">
+      <div class="flex flex-wrap gap-x-14 gap-y-6 text-[12.5px] text-muted">
         {started && <span>Since {formatDate(`${started}-01`, 'month')}</span>}
         {stack.length > 0 && <span>{stack.join(' · ')}</span>}
       </div>

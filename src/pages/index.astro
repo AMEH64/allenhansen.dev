@@ -2,7 +2,10 @@
 import { SITE_TITLE } from '~/consts'
 import Anchor from '~/components/mdx/anchor.astro'
 import PostRow from '~/components/post-row.astro'
+import SectionHead from '~/components/section-head.astro'
+import SlugLine from '~/components/slug-line.astro'
 import MainLayout from '~/layouts/main-layout.astro'
+import { row, rowDesc, rowTitle, status } from '~/lib/classes'
 import { BLOG, getPosts } from '~/lib/posts'
 import { displayUrl, getProjects, statusLabel } from '~/lib/projects'
 import { features } from '~/config/features'
@@ -10,66 +13,114 @@ import { meta, now } from '~/site.config'
 
 const notes = await getPosts()
 const projects = (await getProjects()).slice(0, 3)
+
+// Printer's crop marks at the hero's corners: a 22px rule each way.
+const crop =
+  'pointer-events-none absolute size-22 before:absolute before:h-px before:w-22 before:bg-muted before:opacity-70 after:absolute after:h-22 after:w-px after:bg-muted after:opacity-70 phone:hidden'
+const corners = [
+  '-top-6 -left-34 before:top-0 before:left-0 after:top-0 after:right-0',
+  '-top-6 -right-34 before:top-0 before:right-0 after:top-0 after:left-0',
+  '-bottom-6 -left-34 before:bottom-0 before:left-0 after:right-0 after:bottom-0',
+  '-right-34 -bottom-6 before:right-0 before:bottom-0 after:bottom-0 after:left-0',
+]
+const dot = {
+  active: 'bg-status-active',
+  paused: 'bg-status-paused forced-colors:bg-[CanvasText]',
+  archived:
+    'outline-1 -outline-offset-1 outline-status-archived outline-dashed',
+}
 ---
 
 <MainLayout title={SITE_TITLE} description={meta.index} ogImage="/og/index.png">
-  <section class="hero" aria-labelledby="hero-h">
-    <span class="crop tl" aria-hidden="true"></span><span
-      class="crop tr"
-      aria-hidden="true"></span><span class="crop bl" aria-hidden="true"
-    ></span><span class="crop br" aria-hidden="true"></span>
-    <p class="slug-line">Blog &amp; projects · Full-stack engineering</p>
-    <h1 class="vh" id="hero-h">Allen Hansen</h1>
-    <div class="emboss hero-name" data-lit aria-hidden="true">
-      <span>Allen</span><span>Hansen</span>
+  <section
+    class="relative mt-6 min-h-560 phone:min-h-0 phone:pt-34"
+    aria-labelledby="hero-h"
+  >
+    {
+      corners.map(corner => (
+        <span class:list={[crop, corner]} aria-hidden="true" />
+      ))
+    }
+    <SlugLine class="absolute top-14 left-0 phone:static phone:mb-18">
+      Blog &amp; projects · Full-stack engineering
+    </SlugLine>
+    <h1 class="sr-only" id="hero-h">Allen Hansen</h1>
+    <div
+      class="absolute top-60 -left-6 font-display text-[172px] leading-[0.8] font-black tracking-[-0.022em] deboss uppercase select-none [font-variation-settings:'wdth'_116] phone:relative phone:top-0 phone:-left-3 phone:text-[length:clamp(50px,16.5vw,120px)] phone:[font-variation-settings:'wdth'_100]"
+      data-lit
+      aria-hidden="true"
+    >
+      <span class="block">Allen</span><span class="block">Hansen</span>
     </div>
-    <div class="intro">
-      <p>
+    <div
+      class="absolute right-0 bottom-28 w-410 phone:relative phone:right-auto phone:bottom-auto phone:mt-18 phone:w-auto"
+    >
+      <p class="text-[21px] leading-[1.45] phone:text-[18px]">
         Full-stack engineer who likes turning rough ideas into software people
         enjoy using.
       </p>
     </div>
   </section>
 
-  <div class="home-cols">
+  <div
+    class="grid grid-cols-[7fr_5fr] gap-80 pt-34 pb-50 phone:grid-cols-[minmax(0,1fr)] phone:gap-40"
+  >
     <section aria-labelledby="h-lately">
-      <h2 class="sec-h" id="h-lately">
-        Lately <a href={BLOG}>All {notes.length} posts →</a>
-      </h2>
-      <span class="rule"></span>
-      <ul class="rows">
+      <SectionHead
+        id="h-lately"
+        href={BLOG}
+        link={`All ${notes.length} posts →`}>Lately</SectionHead
+      >
+      <ul>
         {notes.slice(0, 3).map(note => <PostRow note={note} />)}
       </ul>
     </section>
     <section aria-labelledby="h-projects">
-      <h2 class="sec-h" id="h-projects">
-        Projects <a href="/projects/">All projects →</a>
-      </h2>
-      <span class="rule"></span>
-      <ul class="rows proj-rows">
+      <SectionHead id="h-projects" href="/projects/" link="All projects →"
+        >Projects</SectionHead
+      >
+      <ul>
         {
           projects.map(({ data: p }) => (
-            <li>
-              <span class={`pdot st-${p.status}`} aria-hidden="true" />
+            <li
+              class:list={[
+                row,
+                'grid-cols-[20px_1fr_auto] phone:grid-cols-[20px_1fr]',
+              ]}
+            >
+              <span
+                class:list={['mt-8 size-8', dot[p.status]]}
+                aria-hidden="true"
+              />
               <span>
                 {p.url ? (
-                  <Anchor class="t" href={p.url}>
+                  <Anchor class={rowTitle} href={p.url}>
                     {p.name}
                   </Anchor>
                 ) : (
-                  <span class="t">{p.name}</span>
+                  <span class={rowTitle}>{p.name}</span>
                 )}
-                <span class="d">{p.url ? displayUrl(p.url) : p.tagline}</span>
+                <span class={rowDesc}>
+                  {p.url ? displayUrl(p.url) : p.tagline}
+                </span>
               </span>
-              <span class={`st st-${p.status}`}>{statusLabel[p.status]}</span>
+              <span
+                class:list={[
+                  status.base,
+                  status[p.status],
+                  'phone:col-[2] phone:justify-self-start',
+                ]}
+              >
+                {statusLabel[p.status]}
+              </span>
             </li>
           ))
         }
       </ul>
       {
         features.now && (
-          <p class="nowline">
-            <b>Now:</b>
+          <p class="mt-28 rounded-xs border border-rule px-22 py-20 text-[14.5px] leading-[1.55] text-muted">
+            <b class="font-[560] text-text">Now:</b>
             {now.summary}
             <a href="/now/">Updated {now.updated}</a>.
           </p>

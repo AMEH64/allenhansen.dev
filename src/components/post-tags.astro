@@ -1,15 +1,26 @@
 ---
 import { tagPath } from '~/lib/posts'
 
-type Props = { tags: string[] }
-const { tags } = Astro.props
+type Props = { tags: string[]; class?: string }
+const { tags, class: className } = Astro.props
 ---
 
-<ul class="tags" aria-label="Tags">
+<ul
+  class:list={[
+    'flex flex-wrap gap-x-10 gap-y-4 font-mono text-[12px] tracking-[0.02em]',
+    className,
+  ]}
+  aria-label="Tags"
+>
   {
     tags.map(tag => (
       <li>
-        <a href={tagPath(tag)} data-filter-tag={tag} set:text={tag} />
+        <a
+          class="tag-hash text-muted no-underline hover:text-text hover:underline hover:decoration-brand hover:decoration-auto data-on:text-text data-on:underline data-on:decoration-brand data-on:decoration-auto"
+          href={tagPath(tag)}
+          data-filter-tag={tag}
+          set:text={tag}
+        />
       </li>
     ))
   }

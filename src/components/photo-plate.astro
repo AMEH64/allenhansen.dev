@@ -16,9 +16,20 @@ const wide = shape === 'wide'
 const Tag = caption ? 'figure' : 'div'
 ---
 
-<Tag class={`plate plate-${shape}`}>
-  <div class="plate-photo">
+<Tag
+  class:list={[
+    'plate',
+    wide ? 'mt-24 mb-64 phone:mt-8 phone:mb-44' : 'max-w-260 phone:max-w-240',
+  ]}
+>
+  <div
+    class="relative isolate overflow-hidden bg-press ring-1 ring-rule after:pointer-events-none after:absolute after:inset-0 after:bg-(--tint) after:opacity-26 after:mix-blend-color forced-colors:after:hidden"
+  >
     <Image
+      class:list={[
+        'block h-auto w-full object-cover filter-[grayscale(1)_contrast(1.06)]',
+        wide ? 'aspect-[12/5] phone:aspect-[3/2]' : 'aspect-[4/5]',
+      ]}
       src={src}
       alt={alt}
       widths={wide ? [720, 1280, 1920, 2400] : [280, 480, 720]}
@@ -31,5 +42,11 @@ const Tag = caption ? 'figure' : 'div'
       decoding="async"
     />
   </div>
-  {caption && <figcaption>{caption}</figcaption>}
+  {
+    caption && (
+      <figcaption class="mt-12 font-mono text-[12px] tracking-[0.04em] text-muted">
+        {caption}
+      </figcaption>
+    )
+  }
 </Tag>

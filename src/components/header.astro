@@ -16,14 +16,28 @@ const items = (
 ).filter(([, , , on]) => on)
 ---
 
-<header class="site">
-  <a class="logo" href="/">
-    <span class="logo-mark" aria-hidden="true"></span><span>Allen Hansen</span>
+<header
+  class="flex items-center justify-between gap-24 py-28 print:in-[.page-resume]:hidden phone:flex-wrap phone:gap-x-20 phone:gap-y-12 phone:py-18"
+>
+  <a
+    class="inline-flex items-center gap-9 font-display text-[14.5px] leading-none font-extrabold tracking-[0.02em] uppercase no-underline [font-variation-settings:'wdth'_104] phone:text-[13.5px]"
+    href="/"
+  >
+    <span
+      class="size-11 flex-none bg-brand forced-colors:bg-[CanvasText]"
+      aria-hidden="true"></span><span>Allen Hansen</span>
   </a>
-  <nav aria-label="Primary">
+  <nav
+    class="ml-auto flex items-center gap-30 text-[15px] phone:order-3 phone:ml-0 phone:basis-full phone:gap-22 phone:text-[14.5px]"
+    aria-label="Primary"
+  >
     {
       items.map(([key, label, href]) => (
-        <a href={href} aria-current={current === key ? 'page' : undefined}>
+        <a
+          class="text-muted no-underline hover:text-text aria-[current=page]:text-text aria-[current=page]:underline aria-[current=page]:decoration-brand aria-[current=page]:decoration-2 aria-[current=page]:underline-offset-[0.4em]"
+          href={href}
+          aria-current={current === key ? 'page' : undefined}
+        >
           {label}
         </a>
       ))

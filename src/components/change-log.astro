@@ -10,9 +10,18 @@ type Props = {
 const { log, filePath } = Astro.props
 ---
 
-<section class="changes" id="changes" aria-labelledby="changes-h">
-  <h2 id="changes-h">Change log</h2>
-  <ol>
+<section
+  class="relative mt-[3.2em] pt-26 before:absolute before:top-0 before:left-0 before:w-64 before:border-t-2 before:border-brand"
+  id="changes"
+  aria-labelledby="changes-h"
+>
+  <h2
+    class="mt-0 mb-10 font-mono text-[12px] font-semibold tracking-[0.16em] uppercase [font-variation-settings:normal]"
+    id="changes-h"
+  >
+    Change log
+  </h2>
+  <ol class="m-0 list-none p-0 text-[15.5px] leading-[1.55]">
     {
       log.map(entry => {
         const href = changeUrl(entry, filePath)
@@ -20,16 +29,30 @@ const { log, filePath } = Astro.props
           ? ['Diff', 'of this change on GitHub']
           : ['History', 'of this post on GitHub']
         return (
-          <li class={`chg chg-${entry.kind}`}>
-            <time datetime={entry.date}>{formatDate(entry.date)}</time>
+          <li
+            class:list={[
+              'mt-0 grid grid-cols-[118px_1fr] gap-16 border-t border-rule py-9 first:border-t-0 phone:grid-cols-[1fr] phone:gap-0',
+              (entry.kind === 'tweak' || entry.kind === 'published') &&
+                'text-muted',
+            ]}
+          >
+            <time
+              class="pt-2 font-mono text-[12.5px] tracking-[0.02em] whitespace-nowrap text-brand"
+              datetime={entry.date}
+            >
+              {formatDate(entry.date)}
+            </time>
             <span>
               {entry.text}
               {href && (
                 <>
                   {' '}
-                  <a class="chg-link" href={href}>
+                  <a
+                    class="ml-[0.3em] font-mono text-[12px] tracking-[0.04em] whitespace-nowrap"
+                    href={href}
+                  >
                     {label}
-                    <span class="vh">{more}</span>
+                    <span class="sr-only">{more}</span>
                   </a>
                 </>
               )}

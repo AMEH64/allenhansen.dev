@@ -1,8 +1,16 @@
 @import 'tailwindcss';
 @import './palette.css';
 @import './press.css';
+@import './about-now.css';
 
 @custom-variant dark (&:where([data-color-mode=dark], [data-color-mode=dark] *));
+@custom-variant light (&:where([data-color-mode=light], [data-color-mode=light] *));
+/* The layout is desktop-first, with one breakpoint for phones. */
+/*
+ * A printed letter page is phone-width too, and Tailwind outputs print: before phone:,
+ * so a print: class that overrides a phone: one needs the important flag (print:p-0!).
+ */
+@custom-variant phone (@media (max-width: 760px));
 
 /*
  * Theme colors for Tailwind classes (text-brand, bg-paper, border-rule, …).
@@ -11,12 +19,16 @@
  */
 @theme inline {
   --color-brand: var(--brand);
+  --color-brand-wash: var(--brand-wash);
   --color-paper: var(--paper);
   --color-text: var(--text);
   --color-muted: var(--muted);
   --color-rule: var(--rule);
   --color-press: var(--press);
   --color-surface: var(--surface);
+  --color-code-bg: var(--code-bg);
+  --color-groove-sh: var(--groove-sh);
+  --color-groove-hi: var(--groove-hi);
   --color-status-active: var(--status-active);
   --color-status-paused: var(--status-paused);
   --color-status-archived: var(--status-archived);
@@ -26,4 +38,13 @@
   --font-display: var(--font-anybody), system-ui, sans-serif;
   --font-sans: var(--font-atkinson), system-ui, sans-serif;
   --font-mono: var(--font-atkinson-mono), ui-monospace, monospace;
+}
+
+/*
+ * The design is drawn in px on a 17px root, so one spacing step is 1px:
+ * p-26 is 26px, gap-30 is 30px. Write rem as an arbitrary value: px-[1rem].
+ */
+@theme {
+  --spacing: 1px;
+  --radius-xs: 2px;
 }

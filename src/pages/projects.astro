@@ -19,7 +19,9 @@ const projects = await getProjects()
     title="Projects"
     lead="Side projects, experiments, and tools I’ve built."
   />
-  <div class="pgrid">
+  <div
+    class="grid grid-cols-[repeat(2,1fr)] gap-28 pt-10 pb-50 phone:grid-cols-[1fr]"
+  >
     {projects.map(project => <ProjectCard project={project} />)}
   </div>
 </MainLayout>
