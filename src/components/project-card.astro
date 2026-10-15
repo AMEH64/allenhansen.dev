@@ -13,7 +13,7 @@ const Tag = url ? Anchor : 'div'
 
 <Tag
   class:list={[
-    'relative flex min-h-240 flex-col gap-12 rounded-xs border border-rule p-26 text-text no-underline transition-[border-color] duration-200 ease-[ease]',
+    'relative flex min-h-60 flex-col gap-3 rounded-xs border border-rule p-[26px] text-text no-underline transition-[border-color] duration-200 ease-[ease]',
     url && 'hover:border-brand',
   ]}
   href={url}
@@ -43,7 +43,7 @@ const Tag = url ? Anchor : 'div'
   }
   {
     (started || stack.length > 0) && (
-      <div class="flex flex-wrap gap-x-14 gap-y-6 text-[12.5px] text-muted">
+      <div class="flex flex-wrap gap-x-3.5 gap-y-1.5 text-[12.5px] text-muted">
         {started && <span>Since {formatDate(`${started}-01`, 'month')}</span>}
         {stack.length > 0 && <span>{stack.join(' · ')}</span>}
       </div>

@@ -19,7 +19,7 @@ const Tag = caption ? 'figure' : 'div'
 <Tag
   class:list={[
     'plate',
-    wide ? 'mt-24 mb-64 phone:mt-8 phone:mb-44' : 'max-w-260 phone:max-w-240',
+    wide ? 'mt-6 mb-16 phone:mt-2 phone:mb-11' : 'max-w-65 phone:max-w-60',
   ]}
 >
   <div
@@ -44,7 +44,7 @@ const Tag = caption ? 'figure' : 'div'
   </div>
   {
     caption && (
-      <figcaption class="mt-12 font-mono text-[12px] tracking-[0.04em] text-muted">
+      <figcaption class="mt-3 font-mono text-[12px] tracking-[0.04em] text-muted">
         {caption}
       </figcaption>
     )

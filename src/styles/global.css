@@ -41,10 +41,11 @@
 }
 
 /*
- * The design is drawn in px on a 17px root, so one spacing step is 1px:
- * p-26 is 26px, gap-30 is 30px. Write rem as an arbitrary value: px-[1rem].
+ * Tailwind's spacing step is 0.25rem, which is 4.25px on this site's 17px root.
+ * Pinning it to 4px keeps the standard scale exact (p-4 is 16px) at every
+ * breakpoint. Off-scale values are arbitrary: p-[26px].
  */
 @theme {
-  --spacing: 1px;
+  --spacing: 4px;
   --radius-xs: 2px;
 }

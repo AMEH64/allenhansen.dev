@@ -20,7 +20,7 @@ const projects = await getProjects()
     lead="Side projects, experiments, and tools I’ve built."
   />
   <div
-    class="grid grid-cols-[repeat(2,1fr)] gap-28 pt-10 pb-50 phone:grid-cols-[1fr]"
+    class="grid grid-cols-[repeat(2,1fr)] gap-7 pt-2.5 pb-[50px] phone:grid-cols-[1fr]"
   >
     {projects.map(project => <ProjectCard project={project} />)}
   </div>

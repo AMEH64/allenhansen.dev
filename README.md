@@ -292,9 +292,10 @@ Hyperlegible Next), and `font-mono` (Atkinson Hyperlegible Mono).
 Style markup with Tailwind classes. The design is drawn in px on a 17px root
 (16px on phones), so a few defaults are different:
 
-- **One spacing step is 1px**: `p-26` is 26px and `gap-30` is 30px. Write rem as
-  an arbitrary value, like `px-[1rem]`. Type sizes are arbitrary values too:
-  `text-[14.5px]`.
+- **One spacing step is exactly 4px**, so `p-4` is 16px at every breakpoint
+  (Tailwind's 0.25rem would be 4.25px on the 17px root). Write values off the
+  scale as arbitrary values, like `p-[26px]`, and rem as `px-[1rem]`. Type sizes
+  are arbitrary values too: `text-[14.5px]`.
 - **`rounded-xs` is 2px**, the site's one corner radius.
 - **`phone:`** is the one breakpoint, `max-width: 760px`. The layout is
   desktop-first, so write the desktop style and add `phone:` overrides.

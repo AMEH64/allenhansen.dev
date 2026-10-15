@@ -30,12 +30,12 @@ const { current, bodyClass, ...head } = Astro.props
   </head>
   <body class:list={['relative min-h-screen overflow-x-hidden', bodyClass]}>
     <a
-      class="absolute -top-60 left-12 z-50 rounded-xs bg-text px-14 py-8 text-paper focus:top-12 print:hidden"
+      class="absolute -top-15 left-3 z-50 rounded-xs bg-text px-3.5 py-2 text-paper focus:top-3 print:hidden"
       href="#main">Skip to content</a
     >
     <Paper />
     <div
-      class="relative z-1 mx-auto max-w-1240 px-48 print:in-[.page-resume]:max-w-none print:in-[.page-resume]:p-0! phone:px-20"
+      class="relative z-1 mx-auto max-w-[1240px] px-12 print:in-[.page-resume]:max-w-none print:in-[.page-resume]:p-0! phone:px-5"
     >
       <Header current={current} />
       <main id="main">

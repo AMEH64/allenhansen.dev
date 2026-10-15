@@ -7,10 +7,10 @@ type Props = { title: string; lead?: string; slug?: string }
 const { title, lead, slug = title.toLowerCase() } = Astro.props
 ---
 
-<header class="relative pt-20 pb-34">
+<header class="relative pt-5 pb-[34px]">
   <SlugLine>allenhansen.dev / {slug}</SlugLine>
   <div
-    class="mt-6 font-display text-[112px] leading-[0.84] font-black tracking-[-0.018em] inked uppercase select-none [font-variation-settings:'wdth'_116] phone:text-[length:clamp(44px,14vw,90px)] phone:[font-variation-settings:'wdth'_100]"
+    class="mt-1.5 font-display text-[112px] leading-[0.84] font-black tracking-[-0.018em] inked uppercase select-none [font-variation-settings:'wdth'_116] phone:text-[length:clamp(44px,14vw,90px)] phone:[font-variation-settings:'wdth'_100]"
     data-lit
     aria-hidden="true"
   >
@@ -19,7 +19,7 @@ const { title, lead, slug = title.toLowerCase() } = Astro.props
   <h1 class="sr-only">{title}</h1>
   {
     lead && (
-      <p class="mt-18 max-w-620 text-[19px] leading-[1.55] text-muted">
+      <p class="mt-[18px] max-w-[620px] text-[19px] leading-[1.55] text-muted">
         {lead}
       </p>
     )
