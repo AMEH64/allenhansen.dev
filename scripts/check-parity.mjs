@@ -176,6 +176,15 @@ function expected(path, a, b, diffs) {
       'no charset in Content-Type; the file is ASCII or declares <meta charset="utf-8"> in its first 1024 bytes',
     )
   }
+  if (addsOnlyPublished(a.html?.anchors, b.html?.anchors)) {
+    drop(
+      d => d.startsWith('html anchors '),
+      'adds links to the published pages',
+    )
+  }
+  if (addsOnlyPublished(a.sitemap, b.sitemap)) {
+    drop(d => d.startsWith('body '), 'sitemap adds the published pages')
+  }
   if (!rest.length) return ok(reasons.join('; '))
   const only = (...fields) => rest.every(d => fields.some(f => d.startsWith(f)))
   const isHtml = r => r.headers['content-type']?.startsWith('text/html')
@@ -269,6 +278,17 @@ function expected(path, a, b, diffs) {
     }
   }
   return undefined
+}
+
+/** True when `after` is `before` plus one or more PUBLISHED pages. */
+function addsOnlyPublished(before, after) {
+  if (!before || !after) return false
+  const added = after.filter(x => !before.includes(x))
+  return (
+    added.length > 0 &&
+    added.every(x => PUBLISHED.includes(x)) &&
+    before.every(x => after.includes(x))
+  )
 }
 
 function onWorkersDev() {
@@ -403,6 +423,11 @@ async function probe(base, path) {
   }
   if (headers['content-type']?.startsWith('text/')) {
     result.ascii = body.every(byte => byte < 0x80)
+  }
+  if (/^\/sitemap-\d+\.xml$/.test(path) && res.ok) {
+    result.sitemap = [
+      ...body.toString('utf8').matchAll(/<loc>([^<]+)<\/loc>/g),
+    ].map(m => new URL(m[1]).pathname)
   }
   if (headers['content-type']?.startsWith('text/html')) {
     const html = body.toString('utf8')
