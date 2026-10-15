@@ -71,7 +71,7 @@ export const links = {
 
 export const meta = {
   index:
-    'I’m Allen Hansen, a full-stack engineer. I write short, dated notes on what I learn and build small projects that each get their own subdomain.',
+    'I’m Allen Hansen, a full-stack engineer. I write short, dated notes on what I learn and build small projects along the way.',
   blog: 'Notes on what I’ve learned, and the stories behind them.',
   projects:
     'Small things I build to learn, each on its own subdomain, each with an honest status.',
