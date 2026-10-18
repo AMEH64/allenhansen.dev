@@ -8,11 +8,14 @@ type Props = {
   src: ImageMetadata
   alt: string
   caption?: string
-  /** portrait sits beside the About opener; wide runs the full width between sections. */
+  /** portrait sits in the About sidebar; wide runs the full width between sections. */
   shape: 'portrait' | 'wide'
+  loading?: 'eager' | 'lazy'
 }
 const { src, alt, caption, shape } = Astro.props
 const wide = shape === 'wide'
+const loading = Astro.props.loading ?? (wide ? 'lazy' : 'eager')
+const widths = wide ? [720, 1280, 1920, 2400] : [280, 480, 720]
 const Tag = caption ? 'figure' : 'div'
 ---
 
@@ -31,13 +34,14 @@ const Tag = caption ? 'figure' : 'div'
       ]}
       src={src}
       alt={alt}
-      widths={wide ? [720, 1280, 1920, 2400] : [280, 480, 720]}
+      width={Math.min(src.width, widths.at(-1)!)}
+      widths={widths}
       sizes={wide
         ? '(max-width: 760px) calc(100vw - 40px), 1180px'
         : '(max-width: 760px) 240px, 260px'}
       format="webp"
       quality={72}
-      loading={wide ? 'lazy' : 'eager'}
+      loading={loading}
       decoding="async"
     />
   </div>
