@@ -185,6 +185,10 @@ function expected(path, a, b, diffs) {
   if (addsOnlyPublished(a.sitemap, b.sitemap)) {
     drop(d => d.startsWith('body '), 'sitemap adds the published pages')
   }
+  drop(d => {
+    const [, from, to] = d.match(/^html description (".*") → (".*")$/) ?? []
+    return from !== undefined && retitled(JSON.parse(from)) === JSON.parse(to)
+  }, 'description calls Allen a senior software engineer')
   if (!rest.length) return ok(reasons.join('; '))
   const only = (...fields) => rest.every(d => fields.some(f => d.startsWith(f)))
   const isHtml = r => r.headers['content-type']?.startsWith('text/html')
@@ -278,6 +282,13 @@ function expected(path, a, b, diffs) {
     }
   }
   return undefined
+}
+
+/** A description from before Allen's title changed, reworded the way the build words it now. */
+function retitled(description) {
+  return description
+    .replace('senior full-stack software engineer', 'senior software engineer')
+    .replace('a full-stack engineer', 'a senior software engineer')
 }
 
 /** True when `after` is `before` plus one or more PUBLISHED pages. */
