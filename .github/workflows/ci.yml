@@ -1,5 +1,5 @@
 # Checks every push to main and every pull request: `pnpm build` checks the
-# palette's contrast, type-checks with astro check, and builds the site.
+# palette's contrast, type-checks with astro check, builds the site, and checks its images.
 # Deploys and Previews come from Cloudflare Workers Builds (see README › Deploying).
 name: CI
 
