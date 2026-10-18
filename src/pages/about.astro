@@ -1,5 +1,5 @@
 ---
-// Two photos: a portrait beside the opener, and Boba full width between sections.
+// Two photos in the sidebar: a portrait above At a glance, and Allen with Boba below it.
 import { SITE_TITLE } from '~/consts'
 import Anchor from '~/components/mdx/anchor.astro'
 import PageTitle from '~/components/page-title.astro'
@@ -7,8 +7,8 @@ import PhotoPlate from '~/components/photo-plate.astro'
 import MainLayout from '~/layouts/main-layout.astro'
 import { rssPath } from '~/lib/posts'
 import { links, meta, yearsInWords } from '~/site.config'
-import portrait from '~/assets/images/allen/allen-portrait.jpg'
-import bobaWide from '~/assets/images/boba/boba-wide.jpg'
+import headshot from '~/assets/images/allen/allen-headshot.jpg'
+import allenAndBoba from '~/assets/images/boba/allen-and-boba.jpg'
 
 const body = 'text-[18.5px]'
 const dropCap =
@@ -80,8 +80,8 @@ const colophonText = 'text-[15px] leading-[1.55] text-muted'
     </div>
     <div>
       <PhotoPlate
-        src={portrait}
-        alt="Allen smiling in glasses and a light linen shirt, with trees softly out of focus behind him."
+        src={headshot}
+        alt="Allen smiling in glasses and a linen button-up shirt, with trees softly out of focus behind him."
         shape="portrait"
       />
       <section
@@ -123,14 +123,17 @@ const colophonText = 'text-[15px] leading-[1.55] text-muted'
           </div>
         </dl>
       </section>
+      <div class="mt-9">
+        <PhotoPlate
+          src={allenAndBoba}
+          alt="Allen sitting on a stone wall with his dog, Boba."
+          caption="Boba and me"
+          shape="portrait"
+          loading="lazy"
+        />
+      </div>
     </div>
   </div>
-  <PhotoPlate
-    src={bobaWide}
-    alt="Allen sits in the grass with an arm around Boba, a black dog with a white chest and a collar, and smiles down at him."
-    caption="Boba and me"
-    shape="wide"
-  />
   <section
     class="relative grid grid-cols-[repeat(2,1fr)] gap-7 pt-[30px] pb-10 [counter-reset:col] phone:grid-cols-[1fr]"
     aria-label="Colophon"
