@@ -10,12 +10,13 @@
   "scripts": {
     "dev": "astro dev",
     "start": "astro dev",
-    "build": "node scripts/check-contrast.mjs && astro check && astro build",
+    "build": "node scripts/check-contrast.mjs && astro check && astro build && node scripts/check-images.mjs",
     "preview": "wrangler dev",
     "deploy": "wrangler deploy",
     "astro": "astro",
     "format": "prettier . --write",
     "check:contrast": "node scripts/check-contrast.mjs",
+    "check:images": "node scripts/check-images.mjs",
     "check:parity": "node scripts/check-parity.mjs"
   },
   "dependencies": {

@@ -17,10 +17,11 @@ Run these from the project root:
 | :-------------------- | :------------------------------------------------------------------ |
 | `pnpm install`        | Install dependencies                                                |
 | `pnpm dev`            | Start the dev server at `localhost:4321`                            |
-| `pnpm build`          | Check contrast, type-check, and build the site to `./dist/`         |
+| `pnpm build`          | Check contrast, type-check, build to `./dist/`, and check images    |
 | `pnpm preview`        | Build, then serve `./dist/` with `wrangler dev` as Cloudflare would |
 | `pnpm run deploy`     | Build, then deploy to the production Worker                         |
 | `pnpm check:contrast` | Check that the palette meets WCAG AA on both stocks                 |
+| `pnpm check:images`   | Check that images carry no metadata and `dist/` serves WebP         |
 | `pnpm check:parity`   | Compare a deployment's routes and headers with the live site        |
 | `pnpm format`         | Format everything with Prettier                                     |
 
@@ -101,6 +102,21 @@ Notes and stories look and behave the same; `type` is only a small label on the
 list and the post. The top of a post shows when it was published, plus "Updated
 {date}" when `updatedDate` is set. The foot shows the change log when the post
 has a `log`, then "See something wrong or out of date? Open an issue →".
+
+### Images
+
+Keep a post's images next to its `index.mdx` and show them with `<Image>` from
+`astro:assets` (or Markdown's `![alt](./file.png)`). Astro writes them to
+`/_astro/` as WebP with the metadata stripped, so the committed file can stay
+PNG or JPEG. The `image` field is different: nothing renders it, but the build
+still copies the file to `/_astro/` unchanged, so commit it as WebP.
+
+`pnpm build` fails if a committed image carries EXIF (which holds GPS), XMP,
+IPTC, ICC, or text metadata, or if `dist/` has a raster image that isn't WebP.
+Icons stay PNG and ICO, and OG images stay PNG, because some browsers and
+crawlers don't read WebP there. Strip a photo before committing it, e.g. with
+`exiftool -all= photo.jpg`, after converting it to sRGB if it has another color
+profile.
 
 ### Tags
 
@@ -400,8 +416,8 @@ pnpm run deploy    # build, then deploy to production
 ```
 
 `.github/workflows/ci.yml` runs `pnpm build` (the contrast check, `astro check`,
-and the build) on every pull request and every push to `main`. It doesn't
-deploy.
+the build, and the image check) on every pull request and every push to `main`.
+It doesn't deploy.
 
 To check a deployment against the live site, build first so the check knows
 every route, then run:
