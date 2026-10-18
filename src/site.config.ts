@@ -56,12 +56,12 @@ export const links = {
 
 export const meta = {
   index:
-    'I’m Allen Hansen, a full-stack engineer who likes turning rough ideas into software people enjoy using. I write short, dated notes on what I learn.',
+    'I’m Allen Hansen, a senior software engineer who likes turning rough ideas into software people enjoy using. I write short, dated notes on what I learn.',
   blog: 'Notes on what I’ve learned, and the stories behind them.',
   projects: 'Side projects, experiments, and tools I’ve built.',
   about: `Senior software engineer, AI and full-stack. ${capitalize(yearsInWords)} years of making web apps faster and more accessible; now building Resource Advisor+ at Schneider Electric.`,
   now: 'What Allen Hansen is working on right now.',
   resume:
-    'Résumé of Allen Hansen, senior full-stack software engineer: experience, skills, and education.',
+    'Résumé of Allen Hansen, senior software engineer: experience, skills, and education.',
   notFound: 'This page doesn’t exist, or it moved.',
 }
