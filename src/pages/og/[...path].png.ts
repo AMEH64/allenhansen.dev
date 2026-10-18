@@ -12,7 +12,7 @@ export const getStaticPaths = (async () => {
       path: 'index',
       og: {
         title: 'Allen Hansen',
-        eyebrow: 'Blog & projects · Full-stack engineering',
+        eyebrow: 'Blog & projects · AI & full-stack engineering',
         description:
           'Senior software engineer who likes turning rough ideas into software people enjoy using.',
         pressed: true,
