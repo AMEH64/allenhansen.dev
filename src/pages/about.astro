@@ -6,7 +6,7 @@ import PageTitle from '~/components/page-title.astro'
 import PhotoPlate from '~/components/photo-plate.astro'
 import MainLayout from '~/layouts/main-layout.astro'
 import { rssPath } from '~/lib/posts'
-import { links, meta, yearsInWords } from '~/site.config'
+import { links, meta, yearsInWords, yearsOfExperience } from '~/site.config'
 import headshot from '~/assets/images/allen/allen-headshot.jpg'
 import allenAndBoba from '~/assets/images/boba/allen-and-boba.jpg'
 
@@ -105,8 +105,8 @@ const colophonText = 'text-[15px] leading-[1.55] text-muted'
             </dd>
           </div>
           <div class={glanceRow}>
-            <dt class={glanceTerm}>Since</dt><dd>
-              2017, from Web Forms to React
+            <dt class={glanceTerm}>Career</dt><dd>
+              {yearsOfExperience}+ years
             </dd>
           </div>
           <div class={glanceRow}>
