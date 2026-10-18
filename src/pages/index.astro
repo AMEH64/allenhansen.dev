@@ -8,7 +8,6 @@ import MainLayout from '~/layouts/main-layout.astro'
 import { row, rowDesc, rowTitle, status } from '~/lib/classes'
 import { BLOG, getPosts } from '~/lib/posts'
 import { displayUrl, getProjects, statusLabel } from '~/lib/projects'
-import { features } from '~/config/features'
 import { meta, now } from '~/site.config'
 
 const notes = await getPosts()
@@ -42,7 +41,9 @@ const dot = {
       ))
     }
     <SlugLine class="absolute top-3.5 left-0 phone:static phone:mb-[18px]">
-      Blog &amp; projects · Full-stack engineering
+      Blog &amp; projects · <span class="whitespace-nowrap"
+        >AI &amp; full-stack engineering</span
+      >
     </SlugLine>
     <h1 class="sr-only" id="hero-h">Allen Hansen</h1>
     <div
@@ -56,8 +57,8 @@ const dot = {
       class="absolute right-0 bottom-7 w-[410px] phone:relative phone:right-auto phone:bottom-auto phone:mt-[18px] phone:w-auto"
     >
       <p class="text-[21px] leading-[1.45] phone:text-[18px]">
-        Full-stack engineer who likes turning rough ideas into software people
-        enjoy using.
+        Senior software engineer who likes turning rough ideas into software
+        people enjoy using.
       </p>
     </div>
   </section>
@@ -117,15 +118,13 @@ const dot = {
           ))
         }
       </ul>
-      {
-        features.now && (
-          <p class="mt-7 rounded-xs border border-rule px-[22px] py-5 text-[14.5px] leading-[1.55] text-muted">
-            <b class="font-[560] text-text">Now:</b>
-            {now.summary}
-            <a href="/now/">Updated {now.updated}</a>.
-          </p>
-        )
-      }
+      <p
+        class="mt-7 rounded-xs border border-rule px-[22px] py-5 text-[14.5px] leading-[1.55] text-muted"
+      >
+        <b class="font-[560] text-text">Now:</b>
+        {now.summary}
+        <a href="/now/">Updated {now.updated}</a>.
+      </p>
     </section>
   </div>
 </MainLayout>

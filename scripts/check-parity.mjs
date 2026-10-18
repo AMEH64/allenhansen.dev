@@ -36,6 +36,8 @@ const EDGE_CASES = [
   '/404',
   '/_vercel/insights/script.js',
 ]
+// Pages that redirect home (302) or 404 on a reference built before they were published.
+const PUBLISHED = ['/about/', '/now/']
 
 const args = process.argv.slice(2)
 const flag = name => {
@@ -174,6 +176,19 @@ function expected(path, a, b, diffs) {
       'no charset in Content-Type; the file is ASCII or declares <meta charset="utf-8"> in its first 1024 bytes',
     )
   }
+  if (addsOnlyPublished(a.html?.anchors, b.html?.anchors)) {
+    drop(
+      d => d.startsWith('html anchors '),
+      'adds links to the published pages',
+    )
+  }
+  if (addsOnlyPublished(a.sitemap, b.sitemap)) {
+    drop(d => d.startsWith('body '), 'sitemap adds the published pages')
+  }
+  drop(d => {
+    const [, from, to] = d.match(/^html description (".*") → (".*")$/) ?? []
+    return from !== undefined && retitled(JSON.parse(from)) === JSON.parse(to)
+  }, 'description calls Allen a senior software engineer')
   if (!rest.length) return ok(reasons.join('; '))
   const only = (...fields) => rest.every(d => fields.some(f => d.startsWith(f)))
   const isHtml = r => r.headers['content-type']?.startsWith('text/html')
@@ -236,6 +251,29 @@ function expected(path, a, b, diffs) {
   ) {
     return ok('new redirect from a URL that 404s on the reference')
   }
+  const published = PUBLISHED.find(
+    p => path.replace(/\/(index\.html)?$/, '') === p.slice(0, -1),
+  )
+  if (published) {
+    const unpublished = isRedirect(a) || a.status === 404
+    if (unpublished && path === published && b.status === 200 && isHtml(b)) {
+      return ok('published page; the reference redirects it home')
+    }
+    if (
+      unpublished &&
+      [307, 308].includes(b.status) &&
+      b.location === published
+    ) {
+      return ok(`published page; redirects to ${published}`)
+    }
+  }
+  if (
+    PUBLISHED.some(p => path === `/og${p.slice(0, -1)}.png`) &&
+    a.status === 404 &&
+    b.status === 200
+  ) {
+    return ok('OG image for a published page')
+  }
   if (path.startsWith('/og/') && only('body')) {
     return {
       result: 'review',
@@ -244,6 +282,24 @@ function expected(path, a, b, diffs) {
     }
   }
   return undefined
+}
+
+/** A description from before Allen's title changed, reworded the way the build words it now. */
+function retitled(description) {
+  return description
+    .replace('senior full-stack software engineer', 'senior software engineer')
+    .replace('a full-stack engineer', 'a senior software engineer')
+}
+
+/** True when `after` is `before` plus one or more PUBLISHED pages. */
+function addsOnlyPublished(before, after) {
+  if (!before || !after) return false
+  const added = after.filter(x => !before.includes(x))
+  return (
+    added.length > 0 &&
+    added.every(x => PUBLISHED.includes(x)) &&
+    before.every(x => after.includes(x))
+  )
 }
 
 function onWorkersDev() {
@@ -378,6 +434,11 @@ async function probe(base, path) {
   }
   if (headers['content-type']?.startsWith('text/')) {
     result.ascii = body.every(byte => byte < 0x80)
+  }
+  if (/^\/sitemap-\d+\.xml$/.test(path) && res.ok) {
+    result.sitemap = [
+      ...body.toString('utf8').matchAll(/<loc>([^<]+)<\/loc>/g),
+    ].map(m => new URL(m[1]).pathname)
   }
   if (headers['content-type']?.startsWith('text/html')) {
     const html = body.toString('utf8')
