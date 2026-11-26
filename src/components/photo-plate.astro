@@ -8,17 +8,26 @@ type Props = {
   src: ImageMetadata
   alt: string
   caption?: string
-  /** portrait sits beside the About opener; wide runs the full width between sections. */
+  /** portrait sits in the About sidebar; wide runs the full width between sections. */
   shape: 'portrait' | 'wide'
+  loading?: 'eager' | 'lazy'
+  class?: string
+  /** Extra image classes, e.g. an object position for where the crop falls. */
+  imageClass?: string
+  /** Overrides the shape's sizes when the frame is narrower than the shape assumes. */
+  sizes?: string
 }
-const { src, alt, caption, shape } = Astro.props
+const { src, alt, caption, shape, class: className, imageClass } = Astro.props
 const wide = shape === 'wide'
+const loading = Astro.props.loading ?? (wide ? 'lazy' : 'eager')
+const widths = wide ? [720, 1280, 1920, 2400] : [280, 480, 720]
 const Tag = caption ? 'figure' : 'div'
 ---
 
 <Tag
   class:list={[
     wide ? 'mt-6 mb-16 phone:mt-2 phone:mb-11' : 'max-w-65 phone:max-w-60',
+    className,
   ]}
 >
   <div
@@ -28,16 +37,19 @@ const Tag = caption ? 'figure' : 'div'
       class:list={[
         'block h-auto w-full object-cover filter-[grayscale(1)_contrast(1.06)]',
         wide ? 'aspect-[12/5] phone:aspect-[3/2]' : 'aspect-[4/5]',
+        imageClass,
       ]}
       src={src}
       alt={alt}
-      widths={wide ? [720, 1280, 1920, 2400] : [280, 480, 720]}
-      sizes={wide
-        ? '(max-width: 760px) calc(100vw - 40px), 1180px'
-        : '(max-width: 760px) 240px, 260px'}
+      width={Math.min(src.width, widths.at(-1)!)}
+      widths={widths}
+      sizes={Astro.props.sizes ??
+        (wide
+          ? '(max-width: 760px) calc(100vw - 40px), 1180px'
+          : '(max-width: 760px) 240px, 260px')}
       format="webp"
       quality={72}
-      loading={wide ? 'lazy' : 'eager'}
+      loading={loading}
       decoding="async"
     />
   </div>
