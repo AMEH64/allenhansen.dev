@@ -65,9 +65,9 @@ const pnLabel = 'mb-1 block text-[12.5px] font-normal text-muted'
   modifiedTime={data.updatedDate ?? data.date}
   current="blog"
 >
-  <a class="text-[14px] text-muted no-underline hover:text-text" href={BLOG}
-    >← Blog</a
-  >
+  <a class="text-[14px] text-muted no-underline hover:text-text" href={BLOG}>
+    ← Blog
+  </a>
   <header class="max-w-[900px] pt-[18px] pb-[30px]">
     <h1
       class="mt-3.5 mb-[18px] font-display text-[50px] leading-[1.04] font-extrabold tracking-[-0.01em] text-balance relief [font-variation-settings:'wdth'_112] phone:text-[32px]"
@@ -78,108 +78,99 @@ const pnLabel = 'mb-1 block text-[12.5px] font-normal text-muted'
     <div class="flex flex-wrap items-center gap-[18px] text-[14px] text-muted">
       <span class={postType}>{typeLabel[data.type]}</span>
       <time datetime={data.date}>{formatDate(data.date)}</time>
-      {
-        data.updatedDate && (
-          <span>
-            Updated{' '}
-            {log.length > 0 ? (
-              <a href="#changes">
-                <time datetime={data.updatedDate}>
-                  {formatDate(data.updatedDate)}
-                </time>
-              </a>
-            ) : (
+      {data.updatedDate && (
+        <span>
+          Updated{' '}
+          {log.length > 0 ? (
+            <a href="#changes">
               <time datetime={data.updatedDate}>
                 {formatDate(data.updatedDate)}
               </time>
-            )}
-          </span>
-        )
-      }
+            </a>
+          ) : (
+            <time datetime={data.updatedDate}>
+              {formatDate(data.updatedDate)}
+            </time>
+          )}
+        </span>
+      )}
       <span>{readingMinutes(note.body)} min read</span>
     </div>
     <PostTags class="mt-3.5" tags={data.tags} />
   </header>
-  <div
-    class="grid grid-cols-[minmax(0,680px)_280px] gap-18 pb-10 phone:grid-cols-[minmax(0,1fr)] phone:gap-10"
-  >
+  <div class="grid grid-cols-[minmax(0,680px)_280px] gap-18 pb-10 phone:grid-cols-[minmax(0,1fr)] phone:gap-10">
     <article class="prose">
-      {
-        newerWay && (
-          <p class:list={[callout, 'mt-0 mb-[1.6em] border-l-3']}>
-            There’s a newer way to do this →{' '}
-            <a href={postPath(newerWay.id)}>{newerWay.data.title}</a>
-          </p>
-        )
-      }
+      {newerWay && (
+        <p class:list={[callout, 'mt-0 mb-[1.6em] border-l-3']}>
+          There’s a newer way to do this →{' '}
+          <a href={postPath(newerWay.id)}>{newerWay.data.title}</a>
+        </p>
+      )}
       <Content components={{ a: Anchor }} />
       {log.length > 0 && <ChangeLog log={log} filePath={note.filePath} />}
       <p class="mt-[22px] text-[14.5px] leading-[1.5] print:hidden">
         <a
           class="font-mono text-[13.5px] tracking-[0.02em]"
           href={reportUrl(data.title, url)}
-          >See something wrong or out of date? Open an issue →</a
         >
+          See something wrong or out of date? Open an issue →
+        </a>
       </p>
       <CodeCopy />
     </article>
-    {
-      toc.length > 0 && (
-        <aside
-          class="text-[14px] leading-[1.55] text-muted"
-          aria-label="On this page"
-        >
-          <nav aria-labelledby="toc-h">
-            <h2
-              class="mb-2.5 text-[12px] font-semibold tracking-[0.1em] uppercase"
-              id="toc-h"
-            >
-              On this page
-            </h2>
-            <ol class="*:relative *:py-2">
-              {toc.map(h => (
-                <li>
-                  <a class={tocLink} href={`#${h.slug}`}>
-                    {h.text}
-                  </a>
-                </li>
-              ))}
-              {log.length > 0 && (
-                <li>
-                  <a class={tocLink} href="#changes">
-                    Change log
-                  </a>
-                </li>
-              )}
-            </ol>
-          </nav>
-        </aside>
-      )
-    }
-  </div>
-  {
-    (older || newer) && (
-      <nav
-        class="relative grid grid-cols-[1fr_1fr] gap-[30px] pt-[30px] pb-[50px]"
-        aria-label="More posts"
+    {toc.length > 0 && (
+      <aside
+        class="text-[14px] leading-[1.55] text-muted"
+        aria-label="On this page"
       >
-        <span class="absolute inset-x-0 top-0 rule" />
-        {older && (
-          <a class={pnLink} href={postPath(older.id)}>
-            <small class={pnLabel}>← Older</small>
-            {older.data.title}
-          </a>
-        )}
-        {newer && (
-          <a
-            class:list={[pnLink, 'col-start-2 text-right']}
-            href={postPath(newer.id)}
+        <nav aria-labelledby="toc-h">
+          <h2
+            class="mb-2.5 text-[12px] font-semibold tracking-[0.1em] uppercase"
+            id="toc-h"
           >
-            <small class={pnLabel}>Newer →</small>
-            {newer.data.title}
-          </a>
-        )}
-      </nav>
-    )
-  }
+            On this page
+          </h2>
+          <ol class="*:relative *:py-2">
+            {toc.map(h => (
+              <li>
+                <a class={tocLink} href={`#${h.slug}`}>
+                  {h.text}
+                </a>
+              </li>
+            ))}
+            {log.length > 0 && (
+              <li>
+                <a class={tocLink} href="#changes">
+                  Change log
+                </a>
+              </li>
+            )}
+          </ol>
+        </nav>
+      </aside>
+    )}
+  </div>
+  {(older || newer) && (
+    <nav
+      class="relative grid grid-cols-[1fr_1fr] gap-[30px] pt-[30px] pb-[50px]"
+      aria-label="More posts"
+    >
+      <span class="absolute inset-x-0 top-0 rule" />
+      {older && (
+        <a class={pnLink} href={postPath(older.id)}>
+          <small class={pnLabel}>← Older</small>
+          {older.data.title}
+        </a>
+      )}
+      {newer && (
+        <a
+          class:list={[pnLink, 'col-start-2 text-right']}
+          href={postPath(newer.id)}
+        >
+          <small class={pnLabel}>Newer →</small>
+          {newer.data.title}
+        </a>
+      )}
+    </nav>
+  )}
 </MainLayout>

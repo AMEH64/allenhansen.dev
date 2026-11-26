@@ -15,11 +15,13 @@ const { data } = note
   data-type={data.type}
   data-tags={data.tags.join(' ')}
 >
-  <time class="text-[13px] text-muted tabular-nums" datetime={data.date}
-    >{formatDate(data.date)}</time
-  >
+  <time class="text-[13px] text-muted tabular-nums" datetime={data.date}>
+    {formatDate(data.date)}
+  </time>
   <span>
-    <a class={rowTitle} href={postPath(note.id)}>{data.title}</a>
+    <a class={rowTitle} href={postPath(note.id)}>
+      {data.title}
+    </a>
     <span class={rowDesc}>{data.summary}</span>
     <span class="mt-[7px] flex flex-wrap items-baseline gap-x-3 gap-y-1">
       <span class={postType}>{typeLabel[data.type]}</span>

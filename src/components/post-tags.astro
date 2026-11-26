@@ -12,16 +12,14 @@ const { tags, class: className } = Astro.props
   ]}
   aria-label="Tags"
 >
-  {
-    tags.map(tag => (
-      <li>
-        <a
-          class="tag-hash text-muted no-underline hover:text-text hover:underline hover:decoration-brand hover:decoration-auto data-on:text-text data-on:underline data-on:decoration-brand data-on:decoration-auto"
-          href={tagPath(tag)}
-          data-filter-tag={tag}
-          set:text={tag}
-        />
-      </li>
-    ))
-  }
+  {tags.map(tag => (
+    <li>
+      <a
+        class="tag-hash text-muted no-underline hover:text-text hover:underline hover:decoration-brand hover:decoration-auto data-on:text-text data-on:underline data-on:decoration-brand data-on:decoration-auto"
+        href={tagPath(tag)}
+        data-filter-tag={tag}
+        set:text={tag}
+      />
+    </li>
+  ))}
 </ul>

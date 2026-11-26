@@ -18,15 +18,19 @@ import { meta } from '~/site.config'
     lead="This page doesn’t exist, or it moved."
   />
   <ul class="mb-15 flex flex-wrap gap-6 [&_a]:font-mono [&_a]:text-[14px]">
-    <li><a href="/">Home</a></li>
-    <li><a href={BLOG}>Blog</a></li>
-    <li><a href="/projects/">Projects</a></li>
-    {
-      features.about && (
-        <li>
-          <a href="/about/">About</a>
-        </li>
-      )
-    }
+    <li>
+      <a href="/">Home</a>
+    </li>
+    <li>
+      <a href={BLOG}>Blog</a>
+    </li>
+    <li>
+      <a href="/projects/">Projects</a>
+    </li>
+    {features.about && (
+      <li>
+        <a href="/about/">About</a>
+      </li>
+    )}
   </ul>
 </MainLayout>

@@ -23,12 +23,10 @@ const NowCopy = features.nowCopy === 'old' ? NowOld : NowNew
   <NowCopy />
   <p class="max-w-[640px] pb-10 text-[15px] text-muted">
     Inspired by the <a href="https://nownownow.com/about">/now movement</a>.
-    {
-      features.about && (
-        <>
-          Want to know more? <a href="/about/">See the about page →</a>
-        </>
-      )
-    }
+    {features.about && (
+      <>
+        Want to know more? <a href="/about/">See the about page →</a>
+      </>
+    )}
   </p>
 </MainLayout>

@@ -17,12 +17,10 @@ const { title, lead, slug = title.toLowerCase() } = Astro.props
     {title}
   </div>
   <h1 class="sr-only">{title}</h1>
-  {
-    lead && (
-      <p class="mt-[18px] max-w-[620px] text-[19px] leading-[1.55] text-muted">
-        {lead}
-      </p>
-    )
-  }
+  {lead && (
+    <p class="mt-[18px] max-w-[620px] text-[19px] leading-[1.55] text-muted">
+      {lead}
+    </p>
+  )}
   <slot />
 </header>

@@ -36,25 +36,24 @@ const dot = {
     class="relative mt-1.5 min-h-[560px] phone:min-h-0 phone:pt-[34px]"
     aria-labelledby="hero-h"
   >
-    {
-      corners.map(corner => (
-        <span class:list={[crop, corner]} aria-hidden="true" />
-      ))
-    }
+    {corners.map(corner => (
+      <span class:list={[crop, corner]} aria-hidden="true" />
+    ))}
     <SlugLine class="absolute top-3.5 left-0 phone:static phone:mb-[18px]">
       Blog &amp; projects · Full-stack engineering
     </SlugLine>
-    <h1 class="sr-only" id="hero-h">Allen Hansen</h1>
+    <h1 class="sr-only" id="hero-h">
+      Allen Hansen
+    </h1>
     <div
       class="absolute top-15 -left-1.5 font-display text-[172px] leading-[0.8] font-black tracking-[-0.022em] deboss uppercase select-none [font-variation-settings:'wdth'_116] phone:relative phone:top-0 phone:-left-[3px] phone:text-[length:clamp(50px,16.5vw,120px)] phone:[font-variation-settings:'wdth'_100]"
       data-lit
       aria-hidden="true"
     >
-      <span class="block">Allen</span><span class="block">Hansen</span>
+      <span class="block">Allen</span>
+      <span class="block">Hansen</span>
     </div>
-    <div
-      class="absolute right-0 bottom-7 w-[410px] phone:relative phone:right-auto phone:bottom-auto phone:mt-[18px] phone:w-auto"
-    >
+    <div class="absolute right-0 bottom-7 w-[410px] phone:relative phone:right-auto phone:bottom-auto phone:mt-[18px] phone:w-auto">
       <p class="text-[21px] leading-[1.45] phone:text-[18px]">
         Full-stack engineer who likes turning rough ideas into software people
         enjoy using.
@@ -62,70 +61,68 @@ const dot = {
     </div>
   </section>
 
-  <div
-    class="grid grid-cols-[7fr_5fr] gap-20 pt-[34px] pb-[50px] phone:grid-cols-[minmax(0,1fr)] phone:gap-10"
-  >
+  <div class="grid grid-cols-[7fr_5fr] gap-20 pt-[34px] pb-[50px] phone:grid-cols-[minmax(0,1fr)] phone:gap-10">
     <section aria-labelledby="h-lately">
       <SectionHead
         id="h-lately"
         href={BLOG}
-        link={`All ${notes.length} posts →`}>Lately</SectionHead
+        link={`All ${notes.length} posts →`}
       >
+        Lately
+      </SectionHead>
       <ul>
-        {notes.slice(0, 3).map(note => <PostRow note={note} />)}
+        {notes.slice(0, 3).map(note => (
+          <PostRow note={note} />
+        ))}
       </ul>
     </section>
     <section aria-labelledby="h-projects">
-      <SectionHead id="h-projects" href="/projects/" link="All projects →"
-        >Projects</SectionHead
-      >
+      <SectionHead id="h-projects" href="/projects/" link="All projects →">
+        Projects
+      </SectionHead>
       <ul>
-        {
-          projects.map(({ data: p }) => (
-            <li
+        {projects.map(({ data: p }) => (
+          <li
+            class:list={[
+              row,
+              'grid-cols-[20px_1fr_auto] phone:grid-cols-[20px_1fr]',
+            ]}
+          >
+            <span
+              class:list={['mt-2 size-2', dot[p.status]]}
+              aria-hidden="true"
+            />
+            <span>
+              {p.url ? (
+                <Anchor class={rowTitle} href={p.url}>
+                  {p.name}
+                </Anchor>
+              ) : (
+                <span class={rowTitle}>{p.name}</span>
+              )}
+              <span class={rowDesc}>
+                {p.url ? displayUrl(p.url) : p.tagline}
+              </span>
+            </span>
+            <span
               class:list={[
-                row,
-                'grid-cols-[20px_1fr_auto] phone:grid-cols-[20px_1fr]',
+                status.base,
+                status[p.status],
+                'phone:col-[2] phone:justify-self-start',
               ]}
             >
-              <span
-                class:list={['mt-2 size-2', dot[p.status]]}
-                aria-hidden="true"
-              />
-              <span>
-                {p.url ? (
-                  <Anchor class={rowTitle} href={p.url}>
-                    {p.name}
-                  </Anchor>
-                ) : (
-                  <span class={rowTitle}>{p.name}</span>
-                )}
-                <span class={rowDesc}>
-                  {p.url ? displayUrl(p.url) : p.tagline}
-                </span>
-              </span>
-              <span
-                class:list={[
-                  status.base,
-                  status[p.status],
-                  'phone:col-[2] phone:justify-self-start',
-                ]}
-              >
-                {statusLabel[p.status]}
-              </span>
-            </li>
-          ))
-        }
+              {statusLabel[p.status]}
+            </span>
+          </li>
+        ))}
       </ul>
-      {
-        features.now && (
-          <p class="mt-7 rounded-xs border border-rule px-[22px] py-5 text-[14.5px] leading-[1.55] text-muted">
-            <b class="font-[560] text-text">Now:</b>
-            {now.summary}
-            <a href="/now/">Updated {now.updated}</a>.
-          </p>
-        )
-      }
+      {features.now && (
+        <p class="mt-7 rounded-xs border border-rule px-[22px] py-5 text-[14.5px] leading-[1.55] text-muted">
+          <b class="font-[560] text-text">Now:</b>
+          {now.summary}
+          <a href="/now/">Updated {now.updated}</a>.
+        </p>
+      )}
     </section>
   </div>
 </MainLayout>
