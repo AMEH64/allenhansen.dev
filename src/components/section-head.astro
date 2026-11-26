@@ -11,7 +11,9 @@ const { id, href, link } = Astro.props
   <slot />
   <a
     class="font-[450] tracking-normal text-muted normal-case no-underline hover:text-text hover:underline hover:decoration-brand hover:decoration-auto"
-    href={href}>{link}</a
+    href={href}
   >
+    {link}
+  </a>
 </h2>
 <span class="relative rule"></span>

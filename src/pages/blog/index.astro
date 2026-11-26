@@ -48,73 +48,68 @@ const pill =
     >
       <ul class="flex gap-1.5">
         <li>
-          <a class={pill} href={BLOG} data-filter-type="" aria-current="true"
-            >All</a
-          >
+          <a class={pill} href={BLOG} data-filter-type="" aria-current="true">
+            All
+          </a>
         </li>
-        {
-          (['note', 'story'] as const).map(type => (
-            <li>
-              <a class={pill} href={typePath(type)} data-filter-type={type}>
-                {typePlural[type]}
-              </a>
-            </li>
-          ))
-        }
+        {(['note', 'story'] as const).map(type => (
+          <li>
+            <a class={pill} href={typePath(type)} data-filter-type={type}>
+              {typePlural[type]}
+            </a>
+          </li>
+        ))}
       </ul>
       <ul class="flex basis-full flex-wrap gap-1.5" aria-label="Filter by tag">
-        {
-          tagCounts.map(([tag, n]) => (
-            <li>
-              <a
-                class="tag-hash inline-flex items-baseline gap-1.5 rounded-xs border border-rule px-[9px] py-[3px] font-mono text-[12px] tracking-[0.02em] text-muted no-underline [--tag-hash-gap:-4px] hover:border-muted hover:text-text aria-pressed:border-brand aria-pressed:bg-brand-wash aria-pressed:text-text"
-                href={tagPath(tag)}
-                data-filter-toggle={tag}
-              >
-                {tag}
-                <span class="text-muted tabular-nums">
-                  {n}
-                  <span class="sr-only">{n === 1 ? 'post' : 'posts'}</span>
-                </span>
-              </a>
-            </li>
-          ))
-        }
+        {tagCounts.map(([tag, n]) => (
+          <li>
+            <a
+              class="tag-hash inline-flex items-baseline gap-1.5 rounded-xs border border-rule px-[9px] py-[3px] font-mono text-[12px] tracking-[0.02em] text-muted no-underline [--tag-hash-gap:-4px] hover:border-muted hover:text-text aria-pressed:border-brand aria-pressed:bg-brand-wash aria-pressed:text-text"
+              href={tagPath(tag)}
+              data-filter-toggle={tag}
+            >
+              {tag}
+              <span class="text-muted tabular-nums">
+                {n}
+                <span class="sr-only">{n === 1 ? 'post' : 'posts'}</span>
+              </span>
+            </a>
+          </li>
+        ))}
       </ul>
-      <p
-        class="flex basis-full gap-3.5 text-[13.5px] whitespace-nowrap text-muted tabular-nums"
-      >
-        <span aria-live="polite"
-          ><span data-filter-count
-            >{notes.length} {notes.length === 1 ? 'post' : 'posts'}</span
-          ><span class="sr-only" data-filter-detail></span></span
-        >
+      <p class="flex basis-full gap-3.5 text-[13.5px] whitespace-nowrap text-muted tabular-nums">
+        <span aria-live="polite">
+          <span data-filter-count>
+            {notes.length} {notes.length === 1 ? 'post' : 'posts'}
+          </span>
+          <span class="sr-only" data-filter-detail></span>
+        </span>
         <a
           class="font-mono text-[12.5px] data-off:invisible"
           href={BLOG}
           data-filter-clear
-          data-off>Clear</a
+          data-off
         >
+          Clear
+        </a>
       </p>
     </nav>
-    {
-      years.map(([year, list]) => (
-        <section
-          class="grid grid-cols-[140px_1fr] gap-5 pt-[30px] phone:grid-cols-[1fr] phone:gap-0"
-          aria-labelledby={`y${year}`}
-          data-year
-        >
-          <h2 class="pt-4 text-[15px] font-semibold text-muted" id={`y${year}`}>
-            {year}
-          </h2>
-          <ul>
-            {list.map(note => (
-              <PostRow note={note} />
-            ))}
-          </ul>
-        </section>
-      ))
-    }
+    {years.map(([year, list]) => (
+      <section
+        class="grid grid-cols-[140px_1fr] gap-5 pt-[30px] phone:grid-cols-[1fr] phone:gap-0"
+        aria-labelledby={`y${year}`}
+        data-year
+      >
+        <h2 class="pt-4 text-[15px] font-semibold text-muted" id={`y${year}`}>
+          {year}
+        </h2>
+        <ul>
+          {list.map(note => (
+            <PostRow note={note} />
+          ))}
+        </ul>
+      </section>
+    ))}
     <p class="pt-10 pb-5 text-muted" data-filter-empty hidden>
       No posts match these filters. <a href={BLOG}>Clear filters</a>
     </p>

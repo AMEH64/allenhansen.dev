@@ -21,22 +21,19 @@ const hidden = 'contrast-more:hidden forced-colors:hidden print:hidden'
 <div
   class:list={['pointer-events-none fixed inset-0 z-0 glow', hidden]}
   aria-hidden="true"
->
-</div>
+></div>
 <div
   class:list={['pointer-events-none absolute inset-0 paper-layers z-0', hidden]}
   aria-hidden="true"
 >
-  {
-    layers.map(([dir, az, el]) => (
-      <i
-        class:list={[
-          'absolute inset-0 bg-size-[280px] will-change-[opacity]',
-          dir === 'base' ? 'opacity-100' : 'opacity-0',
-        ]}
-        data-dir={dir}
-        style={`background-image:url("${bakedUri(az, el)}")`}
-      />
-    ))
-  }
+  {layers.map(([dir, az, el]) => (
+    <i
+      class:list={[
+        'absolute inset-0 bg-size-[280px] will-change-[opacity]',
+        dir === 'base' ? 'opacity-100' : 'opacity-0',
+      ]}
+      data-dir={dir}
+      style={`background-image:url("${bakedUri(az, el)}")`}
+    />
+  ))}
 </div>

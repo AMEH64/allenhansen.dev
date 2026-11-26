@@ -29,20 +29,28 @@ const colophonText = 'text-[15px] leading-[1.55] text-muted'
   current="about"
 >
   <PageTitle title="About" />
-  <div
-    class="grid grid-cols-[minmax(0,640px)_300px] gap-20 pb-10 phone:grid-cols-[minmax(0,1fr)] phone:gap-10"
-  >
+  <div class="grid grid-cols-[minmax(0,640px)_300px] gap-20 pb-10 phone:grid-cols-[minmax(0,1fr)] phone:gap-10">
     <div class="prose">
       <AboutCopy />
       <ul
         class="mt-[22px] flex list-none flex-wrap gap-6 p-0 *:mt-0 [&_a]:font-mono [&_a]:text-[14px]"
         aria-label="Contact and elsewhere"
       >
-        <li><a href={`mailto:${links.email}`}>{links.email}</a></li>
-        <li><a href={links.github}>GitHub</a></li>
-        <li><a href={links.linkedin}>LinkedIn</a></li>
-        <li><a href={rssPath}>RSS</a></li>
-        <li><a href="/resume/">Résumé</a></li>
+        <li>
+          <a href={`mailto:${links.email}`}>{links.email}</a>
+        </li>
+        <li>
+          <a href={links.github}>GitHub</a>
+        </li>
+        <li>
+          <a href={links.linkedin}>LinkedIn</a>
+        </li>
+        <li>
+          <a href={rssPath}>RSS</a>
+        </li>
+        <li>
+          <a href="/resume/">Résumé</a>
+        </li>
       </ul>
     </div>
     <div>
@@ -63,23 +71,24 @@ const colophonText = 'text-[15px] leading-[1.55] text-muted'
         </h2>
         <dl>
           <div class={glanceRow}>
-            <dt class={glanceTerm}>Role</dt><dd>Senior full-stack engineer</dd>
+            <dt class={glanceTerm}>Role</dt>
+            <dd>Senior full-stack engineer</dd>
           </div>
           <div class={glanceRow}>
-            <dt class={glanceTerm}>Now</dt><dd>
-              Schneider Electric Sustainability Business
-            </dd>
+            <dt class={glanceTerm}>Now</dt>
+            <dd>Schneider Electric Sustainability Business</dd>
           </div>
           <div class={glanceRow}>
-            <dt class={glanceTerm}>Since</dt><dd>
-              2017, from Web Forms to React
-            </dd>
+            <dt class={glanceTerm}>Since</dt>
+            <dd>2017, from Web Forms to React</dd>
           </div>
           <div class={glanceRow}>
-            <dt class={glanceTerm}>Lately</dt><dd>Python, FastAPI, MCP</dd>
+            <dt class={glanceTerm}>Lately</dt>
+            <dd>Python, FastAPI, MCP</dd>
           </div>
           <div class={glanceRow}>
-            <dt class={glanceTerm}>More</dt><dd>
+            <dt class={glanceTerm}>More</dt>
+            <dd>
               <a href="/resume/">The full résumé →</a>
             </dd>
           </div>

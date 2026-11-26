@@ -24,31 +24,27 @@ const nameParts = name.split(/(?=\.)/)
   <div class="flex items-center justify-between">
     <span
       class="font-display text-[64px] leading-[0.9] font-black deboss [--deboss:1.2px] [font-variation-settings:'wdth'_116] phone:text-[48px]"
-      aria-hidden="true">{mark}</span
+      aria-hidden="true"
     >
-    <span class:list={[statusClass.base, statusClass[status]]}
-      >{statusLabel[status]}</span
-    >
+      {mark}
+    </span>
+    <span class:list={[statusClass.base, statusClass[status]]}>
+      {statusLabel[status]}
+    </span>
   </div>
-  <h2
-    class="font-display text-[26px] leading-[1.1] font-[750] tracking-[-0.005em] uppercase [font-variation-settings:'wdth'_118]"
-  >
+  <h2 class="font-display text-[26px] leading-[1.1] font-[750] tracking-[-0.005em] uppercase [font-variation-settings:'wdth'_118]">
     {nameParts.map((part, i) => (i > 0 ? [<wbr />, part] : part))}
   </h2>
   <p class="mb-auto text-[15.5px] leading-[1.5] text-muted">{tagline}</p>
-  {
-    url && (
-      <span class="font-mono text-[13.5px]">
-        {displayUrl(url)} <span aria-hidden="true">↗</span>
-      </span>
-    )
-  }
-  {
-    (started || stack.length > 0) && (
-      <div class="flex flex-wrap gap-x-3.5 gap-y-1.5 text-[12.5px] text-muted">
-        {started && <span>Since {formatDate(`${started}-01`, 'month')}</span>}
-        {stack.length > 0 && <span>{stack.join(' · ')}</span>}
-      </div>
-    )
-  }
+  {url && (
+    <span class="font-mono text-[13.5px]">
+      {displayUrl(url)} <span aria-hidden="true">↗</span>
+    </span>
+  )}
+  {(started || stack.length > 0) && (
+    <div class="flex flex-wrap gap-x-3.5 gap-y-1.5 text-[12.5px] text-muted">
+      {started && <span>Since {formatDate(`${started}-01`, 'month')}</span>}
+      {stack.length > 0 && <span>{stack.join(' · ')}</span>}
+    </div>
+  )}
 </Tag>

@@ -22,44 +22,42 @@ const { log, filePath } = Astro.props
     Change log
   </h2>
   <ol class="m-0 list-none p-0 text-[15.5px] leading-[1.55]">
-    {
-      log.map(entry => {
-        const href = changeUrl(entry, filePath)
-        const [label, more] = entry.commit
-          ? ['Diff', 'of this change on GitHub']
-          : ['History', 'of this post on GitHub']
-        return (
-          <li
-            class:list={[
-              'mt-0 grid grid-cols-[118px_1fr] gap-4 border-t border-rule py-[9px] first:border-t-0 phone:grid-cols-[1fr] phone:gap-0',
-              (entry.kind === 'tweak' || entry.kind === 'published') &&
-                'text-muted',
-            ]}
+    {log.map(entry => {
+      const href = changeUrl(entry, filePath)
+      const [label, more] = entry.commit
+        ? ['Diff', 'of this change on GitHub']
+        : ['History', 'of this post on GitHub']
+      return (
+        <li
+          class:list={[
+            'mt-0 grid grid-cols-[118px_1fr] gap-4 border-t border-rule py-[9px] first:border-t-0 phone:grid-cols-[1fr] phone:gap-0',
+            (entry.kind === 'tweak' || entry.kind === 'published') &&
+              'text-muted',
+          ]}
+        >
+          <time
+            class="pt-0.5 font-mono text-[12.5px] tracking-[0.02em] whitespace-nowrap text-brand"
+            datetime={entry.date}
           >
-            <time
-              class="pt-0.5 font-mono text-[12.5px] tracking-[0.02em] whitespace-nowrap text-brand"
-              datetime={entry.date}
-            >
-              {formatDate(entry.date)}
-            </time>
-            <span>
-              {entry.text}
-              {href && (
-                <>
-                  {' '}
-                  <a
-                    class="ml-[0.3em] font-mono text-[12px] tracking-[0.04em] whitespace-nowrap"
-                    href={href}
-                  >
-                    {label}
-                    <span class="sr-only">{more}</span>
-                  </a>
-                </>
-              )}
-            </span>
-          </li>
-        )
-      })
-    }
+            {formatDate(entry.date)}
+          </time>
+          <span>
+            {entry.text}
+            {href && (
+              <>
+                {' '}
+                <a
+                  class="ml-[0.3em] font-mono text-[12px] tracking-[0.04em] whitespace-nowrap"
+                  href={href}
+                >
+                  {label}
+                  <span class="sr-only">{more}</span>
+                </a>
+              </>
+            )}
+          </span>
+        </li>
+      )
+    })}
   </ol>
 </section>
